@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>יוגה שושן — מדריך מורה</title>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel" data-presets="react">
+const { useState } = React;
+
+
+const FONTS = `
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Cinzel:wght@400;600&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #1F3D3455; border-radius: 10px; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+@keyframes slideIn { from { opacity:0; transform:translateX(-10px); } to { opacity:1; transform:none; } }
+.fade { animation: fadeIn 0.3s ease both; }
+.slide { animation: slideIn 0.25s ease both; }
+.sidebar-btn-hover:hover { background: rgba(31,61,52,0.08) !important; }
+@media print {
+  header, footer, aside, .no-print { display: none !important; }
+  body { background: white !important; }
+  main { overflow: visible !important; }
+  .print-area { page-break-inside: avoid; }
+  * { box-shadow: none !important; }
+}
+`;
+
+/* ─────────────────────────────────────────────
+   PALETTE  — Deep Forest Green + Warm Ivory + Earthy Tones
+   Sidebar: warm ivory            #F4EFE6
+   Header:  soft sage             #E0EBE4
+   BG:      warm white            #FAFAF7
+   Paper:   pure warm white       #FFFCF7
+   Accent:  forest green          #1F3D34
+   Gold:    warm bronze           #8B6914
+   Teal:    dusty sage            #5B7D6E
+───────────────────────────────────────────── */
+const C = {
+  bg:        "#FAFAF7",
+  paper:     "#FFFCF7",
+  dark:      "#1F3D34",
+  sidebar:   "#F4EFE6",
+  header:    "#E0EBE4",
+  plum:      "#1F3D34",
+  terra:     "#8B6914",
+  terraLight:"#C4A54A",
+  gold:      "#5B7D6E",
+  goldLight: "#3A5A4E",
+  muted:     "#7A8A80",
+  dusty:     "#9AA89E",
+  border:    "#D8E0DA",
+  teacher:   "#5B7D6E",
+  warn:      "#C04040",
+  accent:    "#4A8A6D",
+};
+
+const F = "'Heebo',sans-serif";
+const WIKI = (file) => `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(file)}`;
+
+/* ── UI strings ── */
+const UI = {
+  he: {
+    subtitle: "מדריך מורה · יוגה",
+    poses: "תנוחות",
+    ethicsBtn: "🙏 אתיקת מגע",
+    ethicsTitle: "אתיקת ליווי ידני",
+    ethicsSubtitle: "Hands-On Touch Ethics",
+    ethicsIntro: "ליווי ידני הוא מתנה — לא מובן מאליו. עקרונות אלה מגנים עלייך ועל תלמידותייך, ובונים תרבות כיתה של ביטחון עמוק.",
+    ethicsFooter: "זכרי: כל ליווי הוא הזמנה — לעולם לא כפייה.",
+    close: "סגור · Close",
+    level: "רמה",
+    duration: "משך",
+    refLabel: "English Reference",
+    beforeTouch: "לפני שנוגעים:",
+    beforeTouchBody: "צרי קשר עין, בקשי רשות. תארי מה עומדת לעשות. רק עם אישור ברור.",
+    tabs: [
+      { id:"assist",        label:"ליווי ידני",    icon:"✋" },
+      { id:"cueing",        label:"הנחיה מילולית", icon:"🗣" },
+      { id:"alignment",     label:"יישור",          icon:"📐" },
+      { id:"modifications", label:"התאמות",         icon:"🔧" },
+      { id:"watchFor",      label:"שימי לב",       icon:"👁" },
+    ],
+    dir: "rtl",
+  },
+  en: {
+    subtitle: "Teacher Guide · Yoga",
+    poses: "poses",
+    ethicsBtn: "🙏 Touch Ethics",
+    ethicsTitle: "Hands-On Touch Ethics",
+    ethicsSubtitle: "עקרונות ליווי ידני",
+    ethicsIntro: "Hands-on assists are a gift — not a given. These principles protect both you and your students, and build a classroom culture of deep safety and trust.",
+    ethicsFooter: "Remember: every assist is an invitation — never an imposition.",
+    close: "Close · סגור",
+    level: "Level",
+    duration: "Duration",
+    refLabel: "תרגום לעברית",
+    beforeTouch: "Before touching:",
+    beforeTouchBody: "Make eye contact, ask permission. Describe what you're about to do. Only proceed with clear consent.",
+    tabs: [
+      { id:"assist",        label:"Hands-On Assist",  icon:"✋" },
+      { id:"cueing",        label:"Verbal Cueing",     icon:"🗣" },
+      { id:"alignment",     label:"Alignment",         icon:"📐" },
+      { id:"modifications", label:"Modifications",     icon:"🔧" },
+      { id:"watchFor",      label:"Watch For",         icon:"👁" },
+    ],
+    dir: "ltr",
+  },
+};
+
+const touchEthics = [
+  { icon:"🙏",
+    he:{ title:"בקשי רשות תמיד", body:"לפני כל ליווי — צרי קשר עין ושאלי בבירור. חיוך, מבט חיובי, או 'כן' — הם האישור שלך. שתיקה איננה הסכמה." },
+    en:{ title:"Ask Permission Always", body:"Before every assist, make eye contact and ask clearly. A nod or verbal yes is your green light. Silence is not consent." } },
+  { icon:"👐",
+    he:{ title:"כף יד מלאה, לא אצבעות", body:"השתמשי בשטח כף היד הרחב — מגע בקצות אצבעות מרגיש פולשני. לחץ יציב מתקשר בביטחון." },
+    en:{ title:"Full Palm, Not Fingertips", body:"Use the broad surface of your hand — fingertip contact feels intrusive. Confident, even pressure communicates care." } },
+  { icon:"🌬",
+    he:{ title:"עקבי אחר הנשימה", body:"הנשימה היא מד-החזרה שלך בזמן אמת. אם היא נעצרת — הסתלקי מיד. נשימה חופשית אומרת שהליווי עובד." },
+    en:{ title:"Watch the Breath Always", body:"The breath is your real-time feedback system. If it stops — back off immediately. A full, easy breath means the assist is working." } },
+  { icon:"⏳",
+    he:{ title:"הנח ואז המתיני", body:"הניחי ידייך, הציעי תמיכה עדינה, ואז עצרי. תני לגוף 2-3 נשימות להגיב. לעולם אל תכריחי." },
+    en:{ title:"Apply, Then Wait", body:"Place your hands, offer gentle support, then pause. Give the body 2–3 full breaths to respond. Never force." } },
+  { icon:"🚫",
+    he:{ title:"כבדי כל סירוב מיד", body:"אם תלמידה אומרת לא, מתכווצת, מגיבה בבהלה — עצרי מיד, ללא שאלות. אמרי 'כמובן' והמשיכי." },
+    en:{ title:"Honour Refusal Instantly", body:"If a student says no, tenses up, or flinches — stop immediately, without comment. Simply say 'of course' and move on." } },
+  { icon:"📢",
+    he:{ title:"הכריזי לפני שנוגעת", body:"תארי מה עומדת לעשות: 'אני הולכת להניח ידיים על האגן שלך.' זה מפחית הפתעה ובונה אמון." },
+    en:{ title:"Announce Before Touching", body:"Name what you're about to do: 'I'm going to place my hands on your hips to help square them.' This removes surprise and builds trust." } },
+  { icon:"🎯",
+    he:{ title:"הנחי, אל תעצבי", body:"תפקידך לעזור לגוף למצוא את האינטליגנציה שלו. עקבי אחר התנועה שלה, אל תעקפי אותה." },
+    en:{ title:"Guide, Never Mould", body:"Your role is to help the body find its own intelligence — not to sculpt it. Follow the movement, don't override it." } },
+  { icon:"💬",
+    he:{ title:"שאלי אחרי", body:"לאחר ליווי: 'איך הרגשת את זה?' — זה סוגר לולאה, מדגים קשב, ומלמד תלמידות להקשיב לגופן." },
+    en:{ title:"Ask After", body:"After an assist, check in: 'How did that feel?' This closes the loop, models attunement, and teaches students to listen to their body's wisdom." } },
+];
+
+const poseGroups = [
+  { he:"סוריה נמסקרה א׳", en:"Surya Namaskara A", color:"#1F3D34", poses:[
+    { id:"samasthiti",
+      he:{ name:"סמאסתיתי", level:"בסיס" }, en:{ name:"Samasthiti", level:"Foundation" },
+      sanskrit:"Samasthiti", duration_he:"5 נשימות", duration_en:"5 breaths",
+      img: WIKI("Tadasana.jpg"),
+      assist_he:["עמדי מאחורה: כפות ידיים על מותן חיצוני — הדרכה כלפי מעלה ואחורה","קצות אצבעות על עצם החזה — הזכירי לה לפתוח","יד על העצה — הזמיני אורך, מנעי לחיצה"],
+      assist_en:["Stand behind, hands on outer hips — guide up & back gently","Fingertip on sternum — remind her to open","Hand on sacrum — invite length, prevent compression"],
+      cueing_he:["כפות רגליים ביחד, אגודלים נוגעים","ידיים לצד הגוף, כפות פתוחות קדימה","ברכיים רכות, חזה מורם","נשמי לתוך כל עומק הגוף","משקל שווה על ארבעת פינות כפות הרגליים"],
+      cueing_en:["Feet together, big toes touching","Arms alongside body, palms open forward","Soften knees, lift chest","Breathe into the whole torso","Equal weight through all four corners of feet"],
+      alignment_he:["אוזניים, כתפיים, אגן, קרסוליים — קו אנכי אחד","ירכיים מעורבות בעדינות, ברכיים לא נעולות","סנטר מקביל לרצפה"],
+      alignment_en:["Ears, shoulders, hips, ankles — one vertical line","Thighs gently engaged without locking knees","Chin parallel to the floor"],
+      mods_he:["רגליים ברוחב אגן לאיזון","עיניים עצומות להעמקת תחושת הגוף הפנימית","גב כנגד קיר לנקודת ייחוס"],
+      mods_en:["Feet hip-width apart for balance","Eyes closed to deepen proprioception","Stand at wall for alignment reference"],
+      watch_he:["קשת יתר בגב התחתון — טיקול קל של העצה","סנטר מורם — האריכי את עורף הצוואר","קשתות שקועות — פרשי האצבעות לרוחב"],
+      watch_en:["Overarched lower back — gently cue tailbone tuck","Lifted chin — lengthen the back of the neck","Collapsed arches — spread toes wide"] },
+
+    { id:"uttanasana",
+      he:{ name:"אוטאנאסנה", level:"מתחילות" }, en:{ name:"Uttanasana", level:"Beginner" },
+      sanskrit:"Uttānāsana", duration_he:"5 נשימות", duration_en:"5 breaths",
+      img: WIKI("Uttanasana_Yoga-Asana_Nina-Mel.jpg"),
+      assist_he:["שתי ידיים על עצמות האגן — נדנדי אגן קדימה מעל הקרסוליים","יד אחת על העצה — לחץ עדין כלפי מעלה","לחץ עדין על גב עליון בנשיפה — לעולם אל תכריחי"],
+      assist_en:["Both hands on hip bones — gently rock hips forward over ankles","One hand on sacrum — gentle upward press to lengthen","Light downward press on upper back on exhale — never force"],
+      cueing_he:["שאפי להאריך, נשפי לקפל מהאגן","כפפי ברכיים בנדיבות בהתחלה","תני לראש לתלות — שחררי את הצוואר","פרשי אצבעות לעבר המחצלת","בכל נשיפה — הפשירי עמוק יותר"],
+      cueing_en:["Inhale to lengthen, exhale to fold from the hips","Bend knees generously to begin","Let the head hang heavy — release the neck","Spread fingers toward the mat","Each exhale, melt a little deeper"],
+      alignment_he:["אגן ממש מעל הקרסוליים","עמוד שדרה ארוך לפני העמקת הכפיפה","משקל קל לעבר ראש כפות הרגליים"],
+      alignment_en:["Hips stack directly over ankles","Spine long before folding deeper","Weight slightly toward the balls of feet"],
+      mods_he:["ברכיים כפופות כמה שנדרש","ידיים על בלוקים לשמירת עמוד שדרה ארוך","ידיים שלובות מאחורי הגב לפתיחת כתפיים"],
+      mods_en:["Bent knees as much as needed","Hands on blocks to maintain long spine","Hands clasped behind for shoulder opening"],
+      watch_he:["עיגול מהמותן — הדריכי קיפול מהאגן","נעילת ברכיים — הצעי כיפוף עדין","מתח בצוואר — הנחי לו להשתחרר לגמרי"],
+      watch_en:["Rounding from the waist — cue hip hinge","Locking knees — suggest micro-bend","Neck straining — encourage full release"] },
+
+    { id:"chaturanga",
+      he:{ name:"צ׳אטורנגה דנדאסנה", level:"בינוניות" }, en:{ name:"Chaturanga Dandasana", level:"Intermediate" },
+      sanskrit:"Caturaṅga Daṇḍāsana", duration_he:"נשימה אחת", duration_en:"1 breath",
+      img: WIKI("Chaturanga-Dandasana_low-plank_yoga-posture_Nina-Mel.jpg"),
+      assist_he:["רכבי לצד: יד אחת מתחת לאגן — שמרי על ישר, מנעי שקיעה","יד אחת מתחת לחזה — תני ציפה, לא הרמה","לעולם אל תלחצי למטה — תמיכה ועידוד בלבד"],
+      assist_en:["Kneel beside: one hand under hips — keep level, prevent sagging","One hand under chest — give buoyancy, not lifting","Never push down — always support and encourage"],
+      cueing_he:["ירדי לאט — מרפקים מתכופפים ישר לאחור","החזה ריחף 5-7 ס״מ מהמחצלת","ליבה ורגליים מאורסים — גוף בקו ישר","מרפקים צמודים לצלעות","מבט קל קדימה"],
+      cueing_en:["Lower slowly — elbows bend straight back, not out","Chest hovers 2–3 inches off the mat","Core and legs firmed, body one plank line","Elbows hug into sides of the ribs","Gaze slightly forward on the mat"],
+      alignment_he:["מרפקים ב-90° — לא נמוך מגובה הכתפיים","אגן ישר עם הכתפיים — לא שוקע ולא מרום","מעורבות רגליים לאורך כל הדרך"],
+      alignment_en:["Elbows at 90° — no lower than shoulder height","Hips level with shoulders — not sagging or piking","Strong leg engagement throughout"],
+      mods_he:["ברכיים על המחצלת לבניית כוח","תרגול כנגד קיר","החזיקי פלאנק גבוה לפני ניסיון הנמוך"],
+      mods_en:["Knees on mat for strength-building","Practice against wall to learn the action","Hold high plank before attempting the lower"],
+      watch_he:["אגן שוקע למחצלת — הרימי וחזקי ליבה","מרפקים נפרשים הצידה — הצמידי","חזה מתמוטט — החזיקי גבוה יותר"],
+      watch_en:["Hips sagging to mat — lift and firm core","Elbows flaring out — hug them in","Collapsing chest — hold higher or drop knees"] },
+
+    { id:"urdhva-mukha",
+      he:{ name:"אורדהווה מוקהה שוואנאסנה", level:"מתחילות" }, en:{ name:"Urdhva Mukha Svanasana", level:"Beginner" },
+      sanskrit:"Ūrdhva Mukha Śvānāsana", duration_he:"נשימה אחת", duration_en:"1 breath",
+      img: WIKI("Urdhva_Mukha_Svanasana_Yoga-Asana_Nina-Mel.jpg"),
+      assist_he:["כפות ידיים על העצה — עודדי אורך, לא כיווץ","קצות אצבעות על עצמות השכמה — הנחי אותן למטה ואחורה","יד אחת מתחת לעצם החזה — הרימי אותה לפתיחה"],
+      assist_en:["Palms on sacrum — encourage length not compression","Fingertips on shoulder blades — guide them down & back","One hand under sternum — lift her open"],
+      cueing_he:["לחצי דרך גב הרגליים למחצלת","יישרי ידיים לגמרי, הרימי ירכיים מהמחצלת","פתחי חזה לרוחב — עצמות הבריח מתרחבות","גלגלי כתפיים אחורה ומטה מהאוזניים","מבט קדימה או בעדינות למעלה"],
+      cueing_en:["Press down through the tops of the feet","Straighten arms fully, lift thighs off the mat","Open chest wide — collarbones broad","Roll shoulders back and down away from ears","Gaze forward or softly up"],
+      alignment_he:["רק ידיים וגב כפות הרגליים נוגעים במחצלת","פרקי כפות ידיים מתחת לכתפיים","רגליים מעורבות, ירכיים פנימיות מתגלגלות למעלה"],
+      alignment_en:["Only hands and tops of feet touch the mat","Wrists below shoulders","Legs actively engaged, inner thighs rotating up"],
+      mods_he:["קוברה תינוקית — מרפקים כפופים","תנוחת ספינקס — כניסה עדינה לכיפוף אחורה","מגבת מגולגלת מתחת לקרסוליים"],
+      mods_en:["Baby Cobra — elbows bent, forearms on mat","Sphinx pose for gentle backbend entry","Rolled blanket under ankles if wrist discomfort"],
+      watch_he:["ירכיים על המחצלת — הדריכי הרמה","כיווץ בגב התחתון — עודדי האראה ואורך","כתפיים בגובה האוזניים — הדריכי ירידה"],
+      watch_en:["Thighs on mat — cue them to lift","Crunching lower back — encourage lengthening","Shoulders at ears — cue them to drop"] },
+
+    { id:"adho-mukha",
+      he:{ name:"אדהו מוקהה שוואנאסנה", level:"מתחילות" }, en:{ name:"Adho Mukha Svanasana", level:"Beginner" },
+      sanskrit:"Adho Mukha Śvānāsana", duration_he:"5 נשימות", duration_en:"5 breaths",
+      img: WIKI("Adho_mukha_svanasana.jpg"),
+      assist_he:["עמדי מאחורה, אחזי בירכיים חיצוניות — משכי בחוזקה אחורה ומעלה","שתי ידיים על העצה — לחצי בעדינות כלפי מעלה","לחץ עדין על גב עליון בין עצמות השכמה — עודדי פתיחה"],
+      assist_en:["Stand behind, hold outer hips — firmly drag them back and up","Both hands on sacrum — gentle upward press with thumbs","Gentle press on upper back between shoulder blades — encourage opening"],
+      cueing_he:["לחצי את כל קשרי האצבעות שווה במחצלת","סובבי חלק עליון של ידיים החוצה — שקעי המרפקים פונים קדימה","נשפי — אגן גבוה ואחורה","עקבות לעבר הרצפה","הראש תלוי בחופשיות, מבט לעבר הטבור"],
+      cueing_en:["Press all knuckles evenly into the mat","Externally rotate upper arms — pits of elbows face forward","Exhale hips high and back","Heels reach toward the floor","Head hangs freely, gaze toward navel"],
+      alignment_he:["צורת V הפוכה — אורך שווה משני צדי הגוף","אוזניים בקו עם חלק עליון הידיים","עמוד שדרה ארוך — לא מעוגל בגב עליון"],
+      alignment_en:["Inverted V — equal length on both sides","Ears in line with upper arms","Spine long, not rounded at the upper back"],
+      mods_he:["ברכיים כפופות אם גידים מתוחים","ידיים על בלוקים","תנוחת גור ככלב כחלופה"],
+      mods_en:["Bent knees if hamstrings are very tight","Hands on blocks to reduce wrist strain","Puppy Pose as a milder alternative"],
+      watch_he:["פרקים שוקעים — לחצי דרך כל ארבעת קשרי האצבעות","גב עליון מעוגל — סובבי חלק עליון ידיים החוצה","סנטר לחוץ — תני לראש לתלות"],
+      watch_en:["Wrists collapsing — press through all four knuckle joints","Rounded upper back — externally rotate upper arms","Chin tucked hard — let head hang naturally"] },
+  ]},
+
+  { he:"סוריה נמסקרה ב׳", en:"Surya Namaskara B", color:"#5B7D6E", poses:[
+    { id:"utkatasana",
+      he:{ name:"אוטקאטאסנה", level:"מתחילות" }, en:{ name:"Utkatasana", level:"Beginner" },
+      sanskrit:"Utkaṭāsana", duration_he:"5 נשימות", duration_en:"5 breaths",
+      img: WIKI("Utkatasana_Yoga-Asana_Nina-Mel.jpg"),
+      assist_he:["ידיים על ירכיים חיצוניות — לחצי בעדינות למטה כאילו מכבידה אותה לישיבה","מגע עדין על ברך פנימית — עודדי הברך לעקוב החוצה","אצבע אחת מתחת לסנטר — הזמיני הרמת הראש"],
+      assist_en:["Hands on outer hips — gently press down as if loading her into the squat","Light touch on inner knee — encourage it to track outward","One finger under chin — invite head to lift"],
+      cueing_he:["רגליים ביחד, שקעי לישיבה כאילו יש כיסא מאחוריך","ידיים מורמות לצד האוזניים","ברכיים עוקבות מעל אצבע השנייה","העתיקי משקל לעקבות","נשמי לחזה"],
+      cueing_en:["Feet together, sink hips as if toward a chair","Arms lift alongside the ears, palms face each other","Knees track over second toes","Shift weight into the heels","Breathe into the chest"],
+      alignment_he:["שוקיים אנכיים, ברכיים מעל אצבעות הרגליים","עמוד שדרה ארוך — הימנעי מעיגול","ידיים ואוזניים בקו אחד"],
+      alignment_en:["Shins vertical, knees above (not past) toes","Spine long — avoid rounding in the mid-back","Arms and ears in one line"],
+      mods_he:["רגליים ברוחב אגן ליציבות גדולה","ידיים על ירכיים","כיסא לתמיכה"],
+      mods_en:["Feet hip-width apart for more stability","Hands on thighs instead of overhead","Chair for full balance support"],
+      watch_he:["ברכיים נכנסות פנימה","עקבות מורמות","קריסה קדימה — פתחי חזה"],
+      watch_en:["Knees caving inward — cue inner thigh engagement","Heels lifting — shift weight back","Forward lean collapsing spine — open chest"] },
+
+    { id:"vira1-b",
+      he:{ name:"ווירבהדראסנה א׳", level:"מתחילות" }, en:{ name:"Virabhadrasana I", level:"Beginner" },
+      sanskrit:"Vīrabhadrāsana I", duration_he:"5 נשימות לכל צד", duration_en:"5 breaths each side",
+      img: WIKI("Virabhadrasana_I.jpg"),
+      assist_he:["עמדי מאחורה: שתי ידיים על עצמות האגן — סובבי לעמוד מול הקדמה","לחצי את ירך האחורית קדימה תוך עיגון הירך הקדמית","יד על העצה — עודדי אורך"],
+      assist_en:["Stand behind, both hands on hip points — rotate them to face forward","Press back of back hip forward while anchoring front hip","Hand on sacrum — encourage length, prevent compression"],
+      cueing_he:["פסעי רגל אחת אחורה כ-90 ס״מ; כף הרגל האחורית ב-45°","כפפי ברך קדמית ל-90° מעל הקרסול","רבעי את האגן לעמוד מול המחצלת","הרימי שתי ידיים מעל הראש","מבט קדימה"],
+      cueing_en:["Step one foot back 3–4 feet; back foot at 45° angle","Bend front knee to 90° directly over ankle","Square hips toward the front of the mat","Raise both arms overhead","Gaze forward or up toward thumbs"],
+      alignment_he:["ברך קדמית עוקבת מעל אצבע השנייה","עקב אחורית נחתת ויציבה","אגן מרובע — לא פתוח הצדה"],
+      alignment_en:["Front knee tracks over second toe","Back heel is grounded and firm","Hips are square — not rotated open"],
+      mods_he:["ידיים על אגן אם כתפיים נוקשות","מחלקה קצרה יותר","בלוק מתחת לעקב"],
+      mods_en:["Hands on hips if shoulders are tight","Shorter stance to reduce hip flexor strain","Block under front heel if needed"],
+      watch_he:["ברך קדמית נכנסת פנימה","עקב אחורית מורמת","קשת יתר בגב — הפעילי ליבה"],
+      watch_en:["Front knee collapsing inward","Back heel lifting off the mat","Overarching the lower back — engage the core"] },
+  ]},
+
+  { he:"עמידה", en:"Utthita Sthiti — Standing", color:"#4A8A6D", poses:[
+    { id:"trikonasana",
+      he:{ name:"אוטהיטה טריקונאסנה", level:"מתחילות" }, en:{ name:"Utthita Trikonasana", level:"Beginner" },
+      sanskrit:"Utthita Trikoṇāsana", duration_he:"5 נשימות לכל צד", duration_en:"5 breaths each side",
+      img: WIKI("Utthita_Trikonasana_Yoga-Asana_Nina-Mel.jpg"),
+      assist_he:["עמדי מאחורה: יד אחת מתחת למותניים — הרימי, יד שנייה על ירך עליונה — סובבי אחורה","לחצי בעדינות על עצם שכמה עליונה לעבר עמוד השדרה","מגע עדין על יד עליונה — עודדי הגעה מלאה למעלה"],
+      assist_en:["Stand behind: one hand under waist to lift, one on top hip to rotate it back","Gently press top shoulder blade toward spine","Light hand on upper arm — encourage the arm to reach up fully"],
+      cueing_he:["מחלקה רחבה, כף קדמית קדימה, אחורית ב-90°","קפלי מהאגן והארכי את הגוף מעל הרגל הקדמית","יד קדמית לשוק, בלוק או רצפה","יד עליונה מגיעה ישר למעלה","מבט למעלה, או למטה אם צוואר רגיש"],
+      cueing_en:["Wide stance, front foot forward, back foot at 90°","Hinge from the hip to extend torso over front leg","Front hand to shin, block, or floor","Top arm reaches straight up — stacked over bottom shoulder","Gaze up toward top hand, or down for neck sensitivity"],
+      alignment_he:["שתי רגליים ישרות ומאורסות","אגן מוערם — ירך עליונה נפתחת אחורה","גוף ארוך לצד — לא נקמט"],
+      alignment_en:["Both legs straight and firm","Hips stacked — top hip opens back","Side body long, not collapsed"],
+      mods_he:["בלוק מתחת ליד תחתונה","יד על שוק","מבט למטה אם צוואר נוקשה"],
+      mods_en:["Block under bottom hand for more support","Hand on shin instead of floor","Gaze down if neck is tight"],
+      watch_he:["גוף מסתובב קדימה במקום נפתח לצד","מתיחת יתר בברך הקדמית — שמרי על כיפוף קל","קריסה לתוך ירך תחתונה — הרימי מהמותניים"],
+      watch_en:["Torso rotating forward instead of opening to the side","Front knee hyperextending — keep micro-bend","Collapsing into the bottom hip — lift through the waist"] },
+
+    { id:"vrksasana",
+      he:{ name:"וורקשאסנה", level:"מתחילות" }, en:{ name:"Vrksasana", level:"Beginner" },
+      sanskrit:"Vṛkṣāsana", duration_he:"5–10 נשימות לכל צד", duration_en:"5–10 breaths each side",
+      img: WIKI("Yoga-Baum.jpg"),
+      assist_he:["עמדי לצד: יד קלה על כתפה לייצוב בלבד — לא אחיזה ממש","מגע עדין על אמת ידה — עוגן קל","אם מאבדת שיווי משקל: לאפשר לה לאתחל לבד קודם"],
+      assist_en:["Stand to the side: one hand on her shoulder for light stabilization only","Gentle touch on her forearm — a soft anchor","If losing balance: allow her to reset independently first"],
+      cueing_he:["עמדי על רגל ימין, הביאי כף שמאל לפנים הירך הימנית — מעל או מתחת לברך","לחצי כף רגל לירך וירך לכף רגל — שתי הפעולות שוות","ידיים בלב, ואז הושיטי אותן מעלה כמו ענפים","מצאי נקודת מיקוד קבועה לפניך","הרגישי שורשים יוצאים מכף הרגל העומדת"],
+      cueing_en:["Stand on right foot, bring left sole to inner right thigh — above or below the knee","Press foot into thigh and thigh into foot — equal and opposite","Hands at heart, then grow branches upward","Find one unmoving focal point (drishti) in front of you","Feel roots growing down through your standing foot"],
+      alignment_he:["ירך עמידה ישרה — אל תדחפי אגן הצדה","כף רגל מורמת פתוחה לצד","גוף זקוף, כתפיים מוריד"],
+      alignment_en:["Standing hip is straight — don't push it to the side","Raised foot opens to the side — not forward","Upright torso, shoulders relaxed down"],
+      mods_he:["כף הרגל על הקרסול — אצבעות נוגעות ברצפה כאנקר","יד על קיר לתמיכה","עיניים עצומות לאחר שיווי משקל נרכש"],
+      mods_en:["Foot at ankle — toes touching the floor as kickstand","Hand on wall for balance support","Eyes closed once balance is found — to deepen proprioception"],
+      watch_he:["אגן נדחף הצידה — יישרי ירך עמידה","כף רגל על ברך — פציעת מפרק","נשימה עצורה — עץ נושם"],
+      watch_en:["Hip jutting out — straighten the standing hip","Foot pressing on the knee joint — redirect above or below","Holding breath — a tree breathes"] },
+
+    { id:"vira2",
+      he:{ name:"ווירבהדראסנה ב׳", level:"מתחילות" }, en:{ name:"Virabhadrasana II", level:"Beginner" },
+      sanskrit:"Vīrabhadrāsana II", duration_he:"5 נשימות לכל צד", duration_en:"5 breaths each side",
+      img: WIKI("Virabhadrasana_II_Yoga-Asana_Nina-Mel.jpg"),
+      assist_he:["עמדי מול ברך קדמית: יד אחת על ברך חיצונית — הנחי את הברך לעקוב מעל האצבע השנייה","יד אחת על עורף האגן — עודדי גוף זקוף","עברי סביב לבדוק ששתי הידיים באותו גובה"],
+      assist_en:["Stand in front of front knee: one hand on outer knee — guide tracking over 2nd toe","One hand at back of hips — encourage upright torso","Walk around to check both arms are at equal height"],
+      cueing_he:["מחלקה רחבה, כף קדמית קדימה, אחורית ב-90°","כפפי ברך קדמית ל-90° מעל הקרסול","ידיים מושטות לצדדים בגובה הכתפיים","אגן פתוח לצד הארוך","מבט מעבר לאצבעות קדמיות"],
+      cueing_en:["Wide stance, front foot forward, back foot at 90°","Bend front knee to 90° over the ankle","Arms extend in opposite directions at shoulder height","Hips open to the long side of the mat","Gaze past the front fingertips"],
+      alignment_he:["ברך קדמית מעל קרסול קדמי — לא מעבר","רגל אחורית ישרה ויציבה","גוף זקוף — לא נשען מעל רגל קדמית"],
+      alignment_en:["Front knee over front ankle — no further","Back leg straight and strong, outer foot grounded","Torso upright — not leaning over front leg"],
+      mods_he:["מחלקה קצרה יותר","ידיים על אגן","כיסא מתחת לירך קדמית"],
+      mods_en:["Shorter stance reduces intensity","Hands on hips to focus on lower body","Chair under front thigh for deep holds"],
+      watch_he:["ברך קדמית נכנסת פנימה","גוף נשען קדימה","כף אחורית — בדקי הזווית"],
+      watch_en:["Front knee caving inward — firm inner thigh","Torso leaning forward over front leg","Back foot parallel to short edge — check the angle"] },
+  ]},
+
+  { he:"סדרה ראשונה — ישיבה", en:"Primary Series — Seated", color:"#3A6A5A", poses:[
+    { id:"dandasana",
+      he:{ name:"דנדאסנה", level:"בסיס" }, en:{ name:"Dandasana", level:"Foundation" },
+      sanskrit:"Daṇḍāsana", duration_he:"5 נשימות", duration_en:"5 breaths",
+      img: WIKI("Dandasana.jpg"),
+      assist_he:["רכבי מאחורה: שתי ידיים על קודקודי כתפיים — לחצי בעדינות למטה לעיגון, ואז שחררי","יד אחת על גב תחתון — הדריכי עמוד שדרה ניטרלי","קצות אצבעות משני צדי העצה — עודדי הטיית אגן קדימה"],
+      assist_en:["Kneel behind: both hands on shoulder tops — gently press down to ground, then release","One hand at lower back — cue neutral lumbar","Fingertips at either side of sacrum — encourage pelvis to tip forward"],
+      cueing_he:["שבי זקוף, רגליים מושטות ויחד","פרשי כפות הרגליים — פרשי האצבעות לרוחב","ידיים לצד האגן, קצות אצבעות לוחצות","הרימי מכתר הראש","נשמי לתוך גב הגוף"],
+      cueing_en:["Sit tall, legs extended and together","Flex feet strongly — spread toes wide","Hands beside hips, fingertips pressing into the mat","Lift through the crown of the head","Breathe into the back body"],
+      alignment_he:["עצמות ישיבה עוגנות ושוות","אגן ניטרלי — לא נוטה אחורה","רגליים יחד ומאורסות לגמרי"],
+      alignment_en:["Sit bones grounded and even","Pelvis neutral — not tilting back","Legs together and fully engaged"],
+      mods_he:["שמיכה מתחת לעצמות ישיבה","כיפוף עדין בברכיים","ידיים על בלוקים"],
+      mods_en:["Blanket under sit bones to tilt pelvis forward","Slight bend in knees if hamstrings are tight","Hands on blocks if they don't reach the floor"],
+      watch_he:["אגן נוטה אחורה — עיגול C בגב","רגליים מסתובבות החוצה","מתאמצת מאוד — עודדי רכות"],
+      watch_en:["Pelvis tilting back — creating a C-curve spine","Legs rolling out — internally rotate thighs slightly","Straining to hold — encourage softness with strength"] },
+
+    { id:"paschimottanasana",
+      he:{ name:"פאשצ׳ימוטאנאסנה א׳", level:"מתחילות" }, en:{ name:"Paschimottanasana A", level:"Beginner" },
+      sanskrit:"Paścimottānāsana A", duration_he:"5 נשימות", duration_en:"5 breaths",
+      img: WIKI("Paschimottanasana_Yoga-Asana_Nina-Mel.jpg"),
+      assist_he:["רכבי לצד: יד אחת על העצה — הנחי קדימה (לא למטה)","יד שנייה נחה בעדינות על גב עליון — המתיני לה להשתחרר","בנשיפה: לחץ עדין על העצה — לעולם לא על גב אמצעי"],
+      assist_en:["Kneel beside: one hand at sacrum — guide it forward, not down","Other hand rests lightly on upper back — wait for student to release into it","On exhale: gentle press on sacrum — never the mid-back"],
+      cueing_he:["מדנדאסנה — שאפי, ידיים למעלה, עמוד שדרה ארוך","נשפי, קפלי מקדמת הירכיים — לא מהמותניים","ידיים לכפות הרגליים, שוקיים, או חגורה","עם כל שאיפה: האריכי; כל נשיפה: השתחררי קדימה","שחררי את הראש אחרונה — אל תכריחי"],
+      cueing_en:["From Dandasana — inhale, arms up, spine long","Exhale, hinge from the hip crease — not the waist","Hands to feet, shins, or a strap","With each inhale: lengthen; each exhale: release forward","Surrender the head last — don't force it down"],
+      alignment_he:["קיפול מהאגן — תמיד קודם","עמוד שדרה ארוך לפני העמקה","כפות רגליים כפופות, רגליים יחד"],
+      alignment_en:["Hip hinge first — fold from top of thighs","Spine long before deepening","Feet flexed, legs together and active"],
+      mods_he:["חגורה סביב כפות הרגליים","ברכיים כפופות","בולסטר על רגליים"],
+      mods_en:["Strap around feet","Bent knees to preserve spinal length","Bolster on legs to rest forehead on"],
+      watch_he:["עיגול מגב תחתון — קיפול מהאגן — תמיד קודם","אחיזה חזקה ומשיכה בכוח — הזמיני רכות ועדינות","עצירת נשימה — שאפי להאריך, נשפי להשתחרר"],
+      watch_en:["Rounding from the lower back — always cue hip hinge first","Gripping the feet and pulling hard — invite softness","Holding breath — inhale to lengthen, exhale to release"] },
+
+    { id:"baddha-konasana",
+      he:{ name:"בדהא קונאסנה א׳", level:"מתחילות" }, en:{ name:"Baddha Konasana A", level:"Beginner" },
+      sanskrit:"Baddha Koṇāsana A", duration_he:"5 נשימות", duration_en:"5 breaths",
+      img: WIKI("Baddha_konasana.jpg"),
+      assist_he:["⚠️ לעולם אל תלחצי את הברכיים למטה — זהו גורם נפוץ לפציעה","עמדי מאחורה: שתי ידיים על ירכיים עליונות חיצוניות — הניחי הגרביטציה לעבוד","ידיים עדינות על העצה — עודדי הטיה קדימה בנשיפה"],
+      assist_en:["⚠️ NEVER press the knees down — this is a common injury cause","Stand behind: both hands on top of outer thighs — allow gravity to work, no pushing","Light hands on sacrum — encourage forward tilt on exhale"],
+      cueing_he:["כפות רגליים יחד, עקבות קרובות לבשל","אחזי הכפות וקפלי קדימה","הניחי לברכיים להיפתח — לעולם אל תכריחי","עמוד שדרה ארוך — חזה נע לעבר הכפות","נשמי לתוך מפשעות פנימיות"],
+      cueing_en:["Soles of feet together, heels close to the groin","Grip the feet and fold forward from the hips","Allow knees to open like butterfly wings — never force them down","Spine long — chest moves toward the feet","Breathe into the inner groins"],
+      alignment_he:["שתי עצמות ישיבה עוגנות ושוות","עמוד שדרה ארוך לפני הקיפול","ברכיים נפתחות מכוחן שלהן"],
+      alignment_en:["Both sit bones equally grounded","Spine long before folding","Knees open by their own weight — not pushed"],
+      mods_he:["שמיכה מתחת לעצמות ישיבה","בלוקים מתחת לברכיים","ידיים על הרצפה לגרסה זקופה"],
+      mods_en:["Blanket under sit bones to assist forward pelvic tilt","Blocks under knees if they're very high","Hands on floor in front for upright version"],
+      watch_he:["⚠️ דחיפת ברכיים למטה — מותח מפרקי ברכיים","עיגול עמוד שדרה — הארכי קודם","ברכיים גבוהות — בלוקים, לא דחיפה"],
+      watch_en:["⚠️ Pushing knees down — strains inner knee ligaments — never assist this way","Rounding the spine — lengthen first","Knees floating high — offer blocks, not pushing"] },
+
+    { id:"upavistha-konasana",
+      he:{ name:"אופאוויסתה קונאסנה", level:"מתחילות" }, en:{ name:"Upavistha Konasana", level:"Beginner" },
+      sanskrit:"Upaviṣṭha Koṇāsana", duration_he:"5–10 נשימות", duration_en:"5–10 breaths",
+      img: WIKI("Upavistha_Konasana.jpg"),
+      assist_he:["עמדי מאחורה: שתי ידיים על עצמות האגן — הנחי אגן קדימה ומטה","יד על העצה בנשיפה — לחץ עדין כלפי הקרקע","⚠️ לעולם אל תדחפי רגליים רחוק יותר — עובדי על האגן, לא הרגליים"],
+      assist_en:["Stand behind: both hands on hip bones — guide pelvis forward and down","Hand on sacrum on exhale — gentle downward press","⚠️ Never push legs wider — work the pelvis, not the legs"],
+      cueing_he:["שבי עם רגליים פרושות לרוחב — כמה שנוח, לא כמה שאפשר","פרשי כפות הרגליים — אצבעות ועקבות בישור","הניחי ידיים קדימה בין הרגליים, שאפי להאריך","נשפי, הלכי ידיים קדימה — קיפול מהאגן לא מהמותניים","שחררי ראש ורכי קצת יותר עמוקה עם כל נשיפה"],
+      cueing_en:["Sit with legs wide — as comfortable, not as wide as possible","Flex feet — toes and heels in alignment","Place hands forward between legs, inhale to lengthen","Exhale, walk hands forward — hinge from hips not waist","Release head and melt a little deeper with each exhale"],
+      alignment_he:["עצמות ישיבה עוגנות שווה — לא צד אחד מורם","כפות רגליים כפופות ומוצבות ישר למעלה","עמוד שדרה ארוך לפני הכניסה לפתיחה"],
+      alignment_en:["Sit bones equally grounded — not one side lifting","Feet flexed and pointed straight up to the ceiling","Long spine before entering the opening"],
+      mods_he:["שמיכה מתחת לעצמות ישיבה לסיוע בהטיית אגן קדימה","ידיים על בלוקים אם לא מגיעות לרצפה","גרסה זקופה — ידיים על ירכיים"],
+      mods_en:["Blanket under sit bones to assist forward pelvic tilt","Hands on blocks if they don't reach the floor","Upright version — hands resting on thighs"],
+      watch_he:["רגליים פתוחות יתר על המידה — הקטיני טווח לשמירת עמוד שדרה ארוך","עיגול מהגב התחתון — קיפול מהאגן — תמיד קודם","ברכיים מסתובבות פנימה — כפות הרגליים ישר למעלה"],
+      watch_en:["Legs too wide — reduce range to preserve long spine","Rounding from lower back — hip hinge first","Knees rolling inward — feet point straight up"] },
+
+    { id:"krounchasana",
+      he:{ name:"קרונצ׳אסנה", level:"בינוניות" }, en:{ name:"Krounchasana", level:"Intermediate" },
+      sanskrit:"Krauñcāsana", duration_he:"5 נשימות לכל צד", duration_en:"5 breaths each side",
+      img: WIKI("Krounchasana.jpg"),
+      assist_he:["רכבי לצד: יד אחת על עצה — הנחי אגן קדימה, לא הטיה אחורה","יד שנייה על גב עליון — עודדי פתיחה, לא עיגול","מגע עדין על ברך הרגל המורמת — עודדי יישור, לא כוח"],
+      assist_en:["Kneel beside: one hand on sacrum — encourage pelvis forward, not tilting back","Other hand on upper back — encourage opening, not rounding","Light touch on raised knee — encourage straightening, never force"],
+      cueing_he:["מדנדאסנה — כופפי ברך ימין, הניחי כף רגל חיצונית לירך ימין","אחזי כף שמאל בשתי ידיים, שאפי, הרימי רגל שמאל","יישרי הרגל לאט — חגורה אם לא מגיעה","עמוד שדרה ארוך, חזה קרוב לרגל המורמת","נשמי לגב הרגל — האריכי את פי הקאלף"],
+      cueing_en:["From Dandasana — bend right knee, foot outside right hip","Hold left foot in both hands, inhale, begin to raise left leg","Straighten the leg slowly — use a strap if hamstrings are tight","Long spine, chest draws toward the raised leg","Breathe into the back of the leg — lengthen the hamstring"],
+      alignment_he:["עצמות ישיבה שוות ועוגנות — לא חצי גוף מורם","רגל מורמת ישרה ופעילה — לא תלויה בפסיביות","עמוד שדרה ארוך — לא מעוגל"],
+      alignment_en:["Sit bones level and grounded — not one side lifting","Raised leg straight and active — not passively hanging","Spine long — not rounding to chase the foot"],
+      mods_he:["חגורה סביב כף הרגל המורמת","ברך כפופה קלות בתחילה","שמיכה מתחת לעצמות ישיבה"],
+      mods_en:["Strap around the raised foot","Slight bend in the raised knee to begin","Blanket under sit bones for pelvis support"],
+      watch_he:["גוף נשען אחורה — עצמות ישיבה חייבות לעגן","עיגול חזק בגב — קיפול מהאגן","ברך כפופה מכריחה — עבדי בטווח פתוח"],
+      watch_en:["Torso leaning back — sit bones must stay grounded","Strong rounding in back — hinge from hip first","Forcing a straight knee — work in a comfortable range"] },
+  ]},
+
+  { he:"פתיחות אגן ותנוחות צד", en:"Hip Openers & Lateral Poses", color:"#6A8A4A", poses:[
+
+    { id:"eka-pada-kapotasana",
+      he:{ name:"יונה — אקה פאדה ראג'קפוטאסנה", level:"בינוניות" }, en:{ name:"Eka Pada Rajakapotasana", level:"Intermediate" },
+      sanskrit:"Eka Pāda Rājakapotāsana", duration_he:"8–10 נשימות לכל צד", duration_en:"8–10 breaths each side",
+      img: WIKI("Eka_Pada_Rajakapotasana.jpg"),
+      assist_he:["עמדי מאחורה: שתי ידיים על עצמות האגן — בדקי שהאגן מרובע לפני כל ליווי","לחצי בעדינות את ירך האחורית קדימה ומטה — עודדי הורדה שווה","⚠️ לעולם אל תלחצי את גב ימין (הרגל הקדמית) כלפי מטה — לחץ על הברך"],
+      assist_en:["Stand behind: both hands on hip points — check that hips are level before any assist","Gently press back hip forward and down — encourage equal lowering","⚠️ Never press the right hip (front leg side) down — creates knee torque"],
+      cueing_he:["מכלב למטה — כופפי ברך ימין, הביאי אותה לפרק כף יד ימין","הניחי שוק ימין בזווית נוחה — לא חייב להיות מקביל למחצלת","שלחי רגל שמאל ישר לאחור, גב כף הרגל על המחצלת","רבעי את האגן — ירך שמאל לפנים, ירך ימין לאחור","הישארי זקופה, או קפלי קדימה עם שאיפה"],
+      cueing_en:["From Down Dog — bend right knee, bring it toward right wrist","Place shin at a comfortable angle — parallel to mat is not required","Extend left leg straight back, top of foot flat","Square the hips — left hip forward, right hip back","Stay upright, or fold forward on an exhale"],
+      alignment_he:["שוק קדמי בזווית שמאפשרת אגן מרובע","ירך שמאל נמוכה ומרובעת — לא מוטה לצד","עמוד שדרה ארוך בגרסה הזקופה"],
+      alignment_en:["Front shin at angle that allows square hips","Left hip low and square — not tilting sideways","Long spine in the upright version"],
+      mods_he:["שמיכה מתחת לירך ימין לתמיכה באגן","גרסת שכיבה — יונה שכובה (Supta Kapotasana)","כיסא — רגל על מושב הכיסא"],
+      mods_en:["Blanket under right hip to support the pelvis","Reclined version — Supta Kapotasana (figure-four stretch)","Chair version — shin resting on chair seat"],
+      watch_he:["אגן נוטה לצד הרגל הקדמית — הביאי ירך שמאל קדימה","מתח בברך ימין — הקטיני זווית השוק","שכחת הגב — הדריכי עמוד שדרה ארוך"],
+      watch_en:["Hip tilting toward front leg — bring left hip forward","Knee pain in right knee — reduce shin angle","Forgetting the back — cue long spine"] },
+
+    { id:"parighasana",
+      he:{ name:"פאריגהאסנה", level:"מתחילות" }, en:{ name:"Parighasana", level:"Beginner" },
+      sanskrit:"Parighāsana", duration_he:"5–8 נשימות לכל צד", duration_en:"5–8 breaths each side",
+      img: WIKI("Parighasana.jpg"),
+      assist_he:["עמדי מאחורה: יד אחת על ירך חיצונית — עודדי גלגול ירך פנימה","יד שנייה על צלע העליונה — עודדי האראה לצד, לא קפיצה קדימה","מגע עדין על כתף עליונה — פתחי לתקרה"],
+      assist_en:["Stand behind: one hand on outer hip — encourage inner thigh rotation","Other hand on upper ribs — cue lengthening to the side, not collapsing forward","Light touch on top shoulder — open it toward the ceiling"],
+      cueing_he:["כרכי על ברך ימין, פרשי רגל שמאל ישר לצד — כף רגל שטוחה","יד ימין על ירך ימין, שאפי — האריכי למעלה","נשפי, הרחיבי ידיים שמאל לאורך השוק השמאלית, יד ימין מעל הראש","גוף פתוח לתקרה — אל תניחי לו להתגלגל קדימה","נשמי לצלע העליונה"],
+      cueing_en:["Kneel on right knee, extend left leg straight to the side — foot flat","Right hand on right thigh, inhale — lengthen upward","Exhale, slide left arm along left shin, right arm over head","Body opens toward the ceiling — don't rotate forward","Breathe into the upper ribs"],
+      alignment_he:["ברך ימין מתחת לירך ימין — לא קדימה","כף רגל שמאל שטוחה ופעילה — לא כפופה","גוף במישור אנכי — לא נשען קדימה"],
+      alignment_en:["Right knee directly under right hip — not forward","Left foot flat and active — not flexed","Body in one vertical plane — not leaning forward"],
+      mods_he:["שמיכה מתחת לברך להנחה רכה","יד תחתונה על בלוק","גרסה זקופה — ללא נטייה לצד"],
+      mods_en:["Blanket under knee for cushioning","Lower hand on block if can't reach the shin","Upright version — no lateral bend, just the leg extension"],
+      watch_he:["גוף מסתובב קדימה — שמרי על המישור הצדדי","ברך לא מתחת לאגן — יישרי","כף רגל מורמת מהרצפה — שמרי שטוחה"],
+      watch_en:["Body rotating forward — keep the lateral plane","Knee not under hip — realign","Foot lifting off the floor — keep it flat and active"] },
+
+    { id:"vasisthasana",
+      he:{ name:"ואסישטהאסנה", level:"בינוניות" }, en:{ name:"Vasisthasana", level:"Intermediate" },
+      sanskrit:"Vasiṣṭhāsana", duration_he:"5–8 נשימות לכל צד", duration_en:"5–8 breaths each side",
+      img: WIKI("Vasisthasana_yoga.jpg"),
+      assist_he:["עמדי מאחורה: יד אחת מתחת לאגן — תמכי הרמה, לא תחזיקי","יד שנייה על עצמות שכמה — עודדי ערימה ופתיחת חזה","לעולם אל תלחצי אגן למטה — הסכנה לפרק כף היד"],
+      assist_en:["Stand behind: one hand under hip — support the lift, not holding it up","Other hand on shoulder blades — encourage stacking and chest opening","Never press hip down — creates dangerous wrist load"],
+      cueing_he:["מפלאנק גבוה — סובבי לצד ימין, הניחי כף רגל שמאל על כף ימין","הרימי ירך שמאל — גוף בקו אנכי ישר מראש לרגליים","יד ימין ישר מתחת לכתף ימין — אצבעות פרושות","יד שמאל מרחפת לצד, מבט שמאלה","אם יציב: הרימי רגל שמאל אחיזה בבוהן"],
+      cueing_en:["From high plank — rotate onto right side, stack left foot on right","Lift the left hip — body in one straight line head to heels","Right hand directly under right shoulder — fingers spread wide","Left arm floats up, gaze to the left","If stable: lift left leg, hold big toe with left hand"],
+      alignment_he:["כתפיים מוערמות אנכית — לא נפשטות","ירכיים מורמות — לא שוקעות","כף היד פרושה ופעילה — לא שוקעת"],
+      alignment_en:["Shoulders stacked vertically — not splaying","Hips lifted — not sagging","Weight hand spread and active — not collapsing"],
+      mods_he:["ברך תחתונה על המחצלת לתמיכה","כף יד על בלוק","מבט למטה אם הצוואר מתאמץ"],
+      mods_en:["Bottom knee on the mat for support","Hand on a block to reduce wrist angle","Gaze down if neck is straining"],
+      watch_he:["ירך שוקעת — הרימי ועייני בגוף ישר","כף יד מתמוטטת — לחצי כל אצבעות שווה","כתפיים לא מוערמות — בדקי מלמעלה"],
+      watch_en:["Hip sagging — lift and check straight body line","Wrist collapsing — press through all fingers evenly","Shoulders not stacked — check the vertical alignment"] },
+
+    { id:"parivrtta-surya-yantrasana",
+      he:{ name:"מצפן — פאריוורטה סוריה יאנטראסנה", level:"מתקדמות" }, en:{ name:"Compass Pose", level:"Advanced" },
+      sanskrit:"Parivrtta Sūrya Yantrāsana", duration_he:"5 נשימות לכל צד", duration_en:"5 breaths each side",
+      img: WIKI("Sundial_pose.jpg"),
+      assist_he:["⚠️ תנוחה מתקדמת — ודאי שהתלמידה חמה לגמרי לפני הכניסה","מגע עדין על כתף העליונה — עודדי פתיחה לאחור","לא לסייע בדחיפת הרגל — הפתיחה חייבת להגיע מבפנים"],
+      assist_en:["⚠️ Advanced pose — ensure student is thoroughly warm before entering","Light touch on top shoulder — encourage it to open back","Do not assist by pushing the leg — opening must come from within"],
+      cueing_he:["שבי בדנדאסנה — כופפי ברך ימין, הניחי כף יד ימין מתחת לירך ימין","העבירי את כתף ימין מתחת לברך ימין — השוק נשענת על הזרוע","יד שמאל על הרצפה לצד שמאל לתמיכה","שאפי — האריכי רגל ימין לצד ימין ומעלה","הרימי יד שמאל — עמוד שדרה מתפתל"],
+      cueing_en:["Sit in Dandasana — bend right knee, place right hand under right thigh","Thread right shoulder under right knee — leg rests on the upper arm","Left hand on the floor to the left for support","Inhale — extend right leg out to the right and upward","Raise left arm — spine in rotation"],
+      alignment_he:["כתף תחת ברך — לא תחת שוק","עמוד שדרה ארוך — לא קורס לצד","ירך ישיבה עוגנת"],
+      alignment_en:["Shoulder under the knee — not under the shin","Long spine — not collapsing sideways","Grounded sitting hip anchors the pose"],
+      mods_he:["חגורה סביב כף הרגל המורמת","הישארי בשלב ראשון — כתף תחת ברך בלי הרמה","שימי יד ישיבה על בלוק"],
+      mods_en:["Strap around the raised foot to bridge the gap","Stay in stage one — shoulder under knee without lifting","Place sitting hand on a block"],
+      watch_he:["כתר נופל — שמרי על עמוד שדרה ארוך","ירך נפרדת מהרצפה — עיגני","ניסיון מהר מדי — הכנה מאוד חשובה כאן"],
+      watch_en:["Spine collapsing — maintain length throughout","Hip lifting off the floor — ground it","Rushing the entry — thorough warm-up is essential here"] },
+
+    { id:"eka-pada-koundinyasana",
+      he:{ name:"אקה פאדה קונדיניאסנה", level:"מתקדמות" }, en:{ name:"Eka Pada Koundinyasana", level:"Advanced" },
+      sanskrit:"Eka Pāda Kauṇḍinyāsana", duration_he:"3–5 נשימות לכל צד", duration_en:"3–5 breaths each side",
+      img: WIKI("Eka_Pada_Koundinyasana_II.jpg"),
+      assist_he:["⚠️ תנוחת זרועות מתקדמת — ודאי שהתלמידה בנתה כוח ידיים ובסיס מוצק","עמדי מלפנים עם ידיים פרושות — רשת בטיחות בלבד","מגע עדין מתחת לשוקיים — תחושת הרמה, לא הרמה ממשית"],
+      assist_en:["⚠️ Advanced arm balance — ensure student has built wrist and arm strength","Stand in front with open hands — safety net only, not catching","Light touch under the shins — sensation of lift, not actual lifting"],
+      cueing_he:["מתנוחת לטאה — הכניסי ברך ימין מעל לזרוע ימין","כופפי מרפקים, העתיקי משקל קדימה לאט","ברך ימין על זרוע ימין — שוק שמאל מרחף לאחור ולמעלה","חבקי ליבה חזק — גב עגול בעדינות","מבט קצת קדימה על הרצפה"],
+      cueing_en:["From Lizard pose — walk right knee to the outside of right arm","Bend elbows slowly, lean weight forward","Right knee hooked on right upper arm — left leg floats back and up","Engage core strongly — gentle rounded back, not sagging","Gaze slightly forward on the floor"],
+      alignment_he:["מרפקים מוגנים — לא נפרשים הצדה","גוף ישר מהאגן לרגל האחורית","מרכז כובד מעל כפות הידיים"],
+      alignment_en:["Elbows protected — not flaring outward","Body level from hip to back leg","Center of gravity over the hands"],
+      mods_he:["תרגלי חיבור הברך לזרוע בלי הרמה","כפות ידיים על בלוקים לזווית מרפק נוחה יותר","חזקי צ׳אטורנגה — בסיס כוח הכרחי"],
+      mods_en:["Practice hooking the knee on the arm without lifting off","Hands on blocks for more comfortable elbow angle","Work on Chaturanga strength — arm foundation is essential"],
+      watch_he:["מרפקים נפרשים — חיוני להצמידם","אגן גבוה — העתיקי משקל קדימה","קפיצה — לימדי תהליך, לא תוצאה"],
+      watch_en:["Elbows flaring — essential to hug them in","Hips too high — lean more weight forward","Jumping — teach the process, not the result"] },
+  ]},
+
+  { he:"כיפופי אחורה", en:"Backbends", color:"#8B6914", poses:[
+    { id:"ustrasana",
+      he:{ name:"אוסטראסנה", level:"בינוניות" }, en:{ name:"Ustrasana", level:"Intermediate" },
+      sanskrit:"Uṣṭrāsana", duration_he:"5 נשימות", duration_en:"5 breaths",
+      img: WIKI("Ustrasana.jpg"),
+      assist_he:["עמדי מאחורה: ידיים על עצמות האגן — תמכי הרמה, לא לחץ אחורה","יד אחת על גב עליון — עודדי פתיחת חזה, לא כפיפה","⚠️ לעולם אל תלחצי ראש אחורה — סיכון לצוואר"],
+      assist_en:["Stand behind: hands on hip bones — support the lift, not a backward push","One hand on upper back — encourage chest opening not spinal compression","⚠️ Never push the head back — serious neck risk"],
+      cueing_he:["כרכי על הברכיים ברוחב אגן, אגן מעל הברכיים","ידיים על הגב התחתון — האציל ופתחי חזה תחילה","הושיטי ידיים לעקבות — רק אם חזה כבר פתוח","אצבעות בוהן לאחור","מבט קל למעלה — אל תשליכי ראש לאחור"],
+      cueing_en:["Kneel hip-width, hips directly over knees","Hands to lower back — lengthen and open chest first","Reach hands to heels — only when chest is already open","Toes tucked under or tops of feet flat","Gaze lightly upward — don't throw head back"],
+      alignment_he:["אגן ישר מעל הברכיים — לא מאחורה","עמוד שדרה ארוך — כפיפה מהחזה, לא הגב התחתון","ירכיים מקבילות — לא מתפשטות"],
+      alignment_en:["Hips directly over knees — not shifted back","Spine long — bend from the thoracic, not the lumbar","Thighs parallel — not splaying outward"],
+      mods_he:["ידיים על הגב התחתון במקום על העקבות","אצבעות בוהן כפופות להגבהת העקבות","בלוקים על העקבות"],
+      mods_en:["Hands on lower back instead of heels","Toes tucked to raise the heels","Blocks placed on heels to bridge the gap"],
+      watch_he:["אגן מוטה אחורה — שמרי אגן מעל ברכיים","כיווץ בגב התחתון — פתחי חזה קודם","מתח בצוואר — מבט ניטרלי"],
+      watch_en:["Hips shifting back — keep them over knees","Crunching in the lower back — open chest first","Neck straining — neutral gaze, no head drop"] },
+
+    { id:"setu-bandha",
+      he:{ name:"סטו בנדהא", level:"מתחילות" }, en:{ name:"Setu Bandhasana", level:"Beginner" },
+      sanskrit:"Setu Bandhāsana", duration_he:"5–8 נשימות", duration_en:"5–8 breaths",
+      img: WIKI("Setubandhasana.jpg"),
+      assist_he:["רכבי לצד: יד אחת מתחת לגב העליון — תמיכה ועידוד לפתיחה","יד שנייה על אגן — עודדי הרמה ויישור","מגע עדין על ברכיים מבפנים — עודדי מקביליות"],
+      assist_en:["Kneel beside: one hand under upper back — support and encourage opening","Other hand on hip — cue it to lift and stay level","Light touch on inner knees — encourage parallel alignment"],
+      cueing_he:["שכבי על הגב, ברכיים כפופות, כפות שטוחות ליד הישבן","בדקי: קצות האצבעות יכולות לגעת בעקבות","בנשיפה: לחצי דרך העקבות, הרימי את האגן ועמוד השדרה","שלבי ידיים מתחת לגוף, קרבי כתף אל כתף","לחצי דרך העקבות כלפי מעלה"],
+      cueing_en:["Lie on back, knees bent, feet flat close to hips","Check: fingertips can just brush the heels","On exhale: press through heels, lift hips and spine","Interlace hands under the body, walk shoulders together","Press actively through heels throughout"],
+      alignment_he:["ברכיים מעל קרסוליים — לא נפרשות","אגן שווה — שני צדדים בגובה אחד","כתפיים מוערמות, לא מרוחות"],
+      alignment_en:["Knees over ankles — not splaying outward","Hips level — both sides at equal height","Shoulders rolled together, not splayed"],
+      mods_he:["בלוק בין הירכיים לשמירת מקביליות","בולסטר מתחת לעצה לגרסה פאסיבית","ידיים לצד הגוף ללא שילוב"],
+      mods_en:["Block between inner thighs to maintain parallel alignment","Bolster under sacrum for a passive restorative version","Arms alongside body without interlacing"],
+      watch_he:["ברכיים נפרשות — בלוק בין הירכיים","אגן לא שווה — בדקי הגובה","כפות הרגליים מתהפכות — בדקי ישר"],
+      watch_en:["Knees splaying outward — block between thighs","Uneven hips — verbally cue the lower side to lift","Feet turning outward — cue them parallel"] },
+  ]},
+
+  { he:"רצף סיום", en:"Finishing Sequence", color:"#7A9A70", poses:[
+    { id:"sarvangasana",
+      he:{ name:"סאלמבה סארוואנגאסנה", level:"בינוניות" }, en:{ name:"Salamba Sarvangasana", level:"Intermediate" },
+      sanskrit:"Sālamba Sarvāṅgāsana", duration_he:"10–25 נשימות", duration_en:"10–25 breaths",
+      img: WIKI("Salamba_sarvangasana.jpg"),
+      assist_he:["⚠️ זהירות גבוהה — הימנעי מסיוע חזק באזור הצוואר","עמדי לצד: ידיים עדינות על גב עליון ליציבות בלבד","הדריכות מילוליות לגבי יישור לעיתים בטוחות יותר מגשמיות"],
+      assist_en:["⚠️ HIGH CAUTION — avoid strong assists on the neck area","Stand to the side: light hands on upper back for stabilization only","Verbal alignment cues are often safer than physical ones here"],
+      cueing_he:["שכבי על הגב, נדנדי רגליים מעלה ומעבר לראש להלאסנה","לחצי כפות הידיים על הגב, הלכי את הידיים לעבר השכמות","הרימי רגליים ישר למעלה לתקרה","משקל על חלק עליון הידיים ועורף הראש — לא הצוואר","מבט לעבר החזה"],
+      cueing_en:["Lie on back, swing legs up and overhead into Halasana first","Press palms into the back, walk hands toward shoulder blades","Lift legs straight up to the ceiling","Weight on the upper arms and back of the head — not the neck","Gaze toward the chest"],
+      alignment_he:["גוף בקו אנכי ישר","סנטר לוחץ לחזה","מרפקים ברוחב כתפיים"],
+      alignment_en:["Body in one straight vertical line","Chin pressing into chest (jalandhara bandha)","Elbows shoulder-width — not wider"],
+      mods_he:["תמיכה על שמיכות מקופלות","גרסת כיסא לרגישות בצוואר","ויפריטה קארני — תנוחת רגליים על הקיר"],
+      mods_en:["Supported on folded blankets to protect cervical spine","Chair-supported version for neck sensitivity","Viparita Karani (legs up the wall) as an alternative"],
+      watch_he:["משקל על הצוואר — תיקון מיידי","מרפקים רחבים מהכתפיים","לא נשארת — הניחי לה לרדת"],
+      watch_en:["Weight on the neck — immediate correction needed","Elbows wider than shoulders — they destabilize","Not staying — allow coming down if tired"] },
+
+    { id:"sirsasana",
+      he:{ name:"שירשאסנה", level:"מתקדמות" }, en:{ name:"Sirsasana", level:"Advanced" },
+      sanskrit:"Śīrṣāsana", duration_he:"10–25 נשימות", duration_en:"10–25 breaths",
+      img: WIKI("Shirshasana_(Sirsasana).jpg"),
+      assist_he:["⚠️ סיכון גבוה — סייעי רק לתלמידות שאת מכירה ושמוכנות","עמדי מול התלמידה: ידיים על ירכיים חיצוניות לסיוע במציאת האנכי","לעולם אל תמשכי או תדחפי בפתאומיות — איטי, יציב, מכוון"],
+      assist_en:["⚠️ HIGH RISK — only assist students you know well and who are ready","Stand facing student: hands on outer hips to help find vertical","Never pull or push suddenly — slow, steady, deliberate"],
+      cueing_he:["בני מתנוחת דולפין — אמות על המחצלת, ידיים שלובות","כתר הראש לרצפה, עורף הגולגולת נתמך בידיים","הלכי ברגליים פנימה עד שהאגן מעל הכתפיים — רק אז להרים","הרימי רגל אחת בכל פעם","לחצי דרך האמות, הרימי כתפיים מהאוזניים"],
+      cueing_en:["Build from Dolphin Pose — forearms on mat, hands interlaced","Crown of head to floor, back of skull cradled by hands","Walk feet in — hips over shoulders — before lifting","One leg at a time, then both if stable","Press into forearms, lift shoulders away from ears"],
+      alignment_he:["גוף בקו אנכי אחד","אגן ישר מעל הכתפיים","רגליים יחד"],
+      alignment_en:["Body in one vertical line — from head through heels","Hips directly over shoulders, over head","Legs together, feet pointed or flexed"],
+      mods_he:["תרגול כנגד קיר","חצי שירשאסנה — רגל אחת מעלה","תנוחת דולפין כהכנת כוח"],
+      mods_en:["Practice at the wall until balance is established","Half headstand — one leg up at a time","Dolphin Pose as strength preparation"],
+      watch_he:["משקל על הצוואר — בדיקה מיידית","אגן מאחורי קו הכתפיים","קפיצה למעלה — לימדי הרמה איטית"],
+      watch_en:["Weight on the neck instead of forearms — check immediately","Hips behind the shoulder line — must be directly above","Jumping up — teach the slow controlled lift"] },
+
+    { id:"savasana",
+      he:{ name:"שאוואסנה", level:"בסיס" }, en:{ name:"Savasana", level:"Foundation" },
+      sanskrit:"Śavāsana", duration_he:"5–10 דקות", duration_en:"5–10 minutes",
+      img: WIKI("Savasana.jpg"),
+      assist_he:["זה רגע של שקט — מינימום ליווי גשמי","אם מציעה ליווי: תמשכי בעדינות בקרסוליים — הרחק מהגוף","מגע עדין על רקות או מרכז גבות — שאלי קודם"],
+      assist_en:["This is a moment for stillness — minimal physical assists","If offering: very gentle traction at the heels — pull ankles softly away","Light touch at temples or eyebrow center to invite release — ask first"],
+      cueing_he:["שכבי שטוח על הגב — כפות קצת רחבות מהאגן","ידיים קצת מהגוף, כפות פונות למעלה","עיניים עצומות בעדינות, לסת רכה","שחררי במודע: כפות, רגליים, אגן, בטן, חזה, ידיים, פנים","פשוט נשמי — אין מה לעשות"],
+      cueing_en:["Lie flat on the back — feet slightly wider than hips","Arms slightly away from the body, palms face up","Eyes gently closed, jaw soft","Consciously release: feet, legs, hips, belly, chest, arms, face","Simply breathe — there is nothing to do"],
+      alignment_he:["גוף סימטרי לגמרי ושקוע","ראש במנוחה טבעית","אין חלק גוף שמתוח"],
+      alignment_en:["Body completely symmetrical and still","Head in natural resting position","No part of the body braced or held"],
+      mods_he:["שמיכה מתחת לברכיים לרגישות גב","כרית עיניים","בולסטר מתחת לברכיים להריון"],
+      mods_en:["Blanket under knees for lower back sensitivity","Eye pillow to deepen relaxation","Bolster under knees for pregnancy or back pain"],
+      watch_he:["תלמידות עוזבות מוקדם — שמרי על זמן השוואסנה","התפתלות — עודדי שקט","תלמידות נוחרות — השאירי אותן, זו מחמאה"],
+      watch_en:["Students leaving early — protect the practice time","Fidgeting — encourage stillness without demand","Snoring students — leave them, it's a compliment"] },
+  ]},
+  { he:"ויניאסה — תנוחות מתקדמות", en:"Vinyasa — Advanced Poses", color:"#2A5A4A", poses:[
+
+    { id:"ardha-chandrasana",
+      he:{ name:"חצי ירח", level:"בינוניות" }, en:{ name:"Ardha Chandrasana", level:"Intermediate" },
+      sanskrit:"Ardha Chandrāsana", duration_he:"5 נשימות לכל צד", duration_en:"5 breaths each side",
+      img: WIKI("Ardha_Chandrasana_Yoga-Asana_Nina-Mel.jpg"),
+      assist_he:["עמדי מאחורה: יד אחת על ירך עליונה — סובבי אחורה ופתחי","יד שנייה על עצמות שכמה — הדריכי ערימה אנכית","לעולם לא על הגב — רק על האגן ועצמות השכמה"],
+      assist_en:["Stand behind: one hand on top hip — rotate it open and back","Other hand on shoulder blades — guide vertical stacking","Never on the spine — only hips and shoulder blades"],
+      cueing_he:["מטריקונאסנה — כופפי ברך קדמית, הניחי יד תחתונה 30 ס״מ קדימה","הרימי רגל אחורית לגובה האגן — מקבילה לרצפה","יישרי ברך קדמית תוך שמירה על עמוד שדרה ארוך","פתחי ירכיים וחזה לצד — גוף שטוח כמו בין שתי קירות","יד עליונה לשמיים — מבט למעלה אם נוח"],
+      cueing_en:["From Trikonasana — bend front knee, plant lower hand 30cm forward","Lift back leg to hip height — parallel to the floor","Straighten front knee while keeping a long spine","Open hips and chest to the side — body flat like between two walls","Top arm reaches up — gaze upward if comfortable"],
+      alignment_he:["רגל מורמת, ירכיים ועמוד שדרה בישור אחד","ירך עליונה נפתחת כלפי מעלה — לא מסתובבת קדימה","כתף עליונה ישר מעל תחתונה"],
+      alignment_en:["Raised leg, hips, and spine in one long line","Top hip opens upward — not rotating forward","Top shoulder stacked directly over the bottom one"],
+      mods_he:["יד תחתונה על בלוק גבוה","גב מול קיר לתחושת הקו האנכי","מבט למטה אם סחרחורת"],
+      mods_en:["Bottom hand on a tall block","Back against wall to feel the vertical plane","Gaze down if balance is challenging"],
+      watch_he:["ירך עליונה מתגלגלת קדימה — פתחי את האגן כלפי מעלה","ברך קדמית כפופה — יישרי מבלי לנעול","כתפיים לא מוערמות — בדקי מלמעלה"] ,
+      watch_en:["Top hip rolling forward — open the pelvis upward","Front knee bent — straighten without locking","Shoulders not stacked — check the vertical alignment"] },
+
+    { id:"bakasana",
+      he:{ name:"עורב", level:"מתקדמות" }, en:{ name:"Bakasana", level:"Advanced" },
+      sanskrit:"Bakāsana", duration_he:"5–10 נשימות", duration_en:"5–10 breaths",
+      img: WIKI("Bakasana_yoga.jpg"),
+      assist_he:["⚠️ מנעי לפול — עמדי מול התלמידה עם ידיים פרושות כרשת","מגע עדין מתחת לשוקיים — תמיכה בהרמה, לא הרמה עצמה","כפות ידיים על גב עליון להרגשת מגע קרקע — עוגן"],
+      assist_en:["⚠️ Prevent falling — stand in front with open hands as safety net","Light touch under shins — support the lift, don't lift for them","Palms on upper back for grounding sensation — an anchor"],
+      cueing_he:["כופפי ברכיים, הניחי כפות ידיים שטוח לרצפה, אצבעות פרושות","הצמידי ברכיים לחלק העליון של זרועות עד כמה שניתן — קרוב לבתי שחי","העתיקי משקל קדימה לאט — כדורי כפות הרגליים מתרוממות מעצמן","חבקי ברכיים אל הזרועות בחוזקה","מבט קצת קדימה על הרצפה — לא למטה"],
+      cueing_en:["Bend knees, place palms flat on the floor, fingers spread wide","Perch knees as high on the upper arms as possible — close to armpits","Lean weight forward slowly — feet will float up on their own","Squeeze knees into the arms firmly","Gaze slightly forward on the floor — not straight down"],
+      alignment_he:["מרפקים מעל פרקי כפות הרגליים — לא נפרשים הצדה","ליבה חבוקה — גב עגול בעדינות ולא מדולדל","עקבות לעבר הישבן"],
+      alignment_en:["Elbows above wrists — not flaring outward","Core hugged — gentle rounded back not sagging","Heels draw toward the seat"],
+      mods_he:["כפות ידיים על בלוקים לזווית פרק נוחה יותר","עבדי על יציבת הרמה לפני הרמה מלאה","תרגלי על ספה — ידיים על הרצפה, רגליים על הספה"],
+      mods_en:["Palms on blocks for a more comfortable wrist angle","Work on the weight-shift before full lift-off","Practice on a couch — hands on floor, knees on couch edge"],
+      watch_he:["ראש תלוי למטה — מבט קצת קדימה","ידיים מחליקות — לחצי כל האצבעות שווה","מרפקים נפרשים הצידה — הצמידי אותם"],
+      watch_en:["Head drooping — gaze slightly forward","Hands sliding — press all fingers firmly","Elbows flaring — hug them in toward center"] },
+
+    { id:"janu-d",
+      he:{ name:"ג׳אנו שירשאסנה ד׳", level:"מתקדמות" }, en:{ name:"Janu Sirsasana D", level:"Advanced" },
+      sanskrit:"Jānu Śīrṣāsana D", duration_he:"5 נשימות לכל צד", duration_en:"5 breaths each side",
+      img: WIKI("Janu_sirsasana.jpg"),
+      assist_he:["⚠️ תנוחה אינטנסיבית — ודאי שהתלמידה חמה ופתוחה לפני שנכנסת","יד עדינה על ברך כפופה — לא לחץ, רק נוכחות","יד על העצה — הנחי אגן קדימה בנשיפה"],
+      assist_en:["⚠️ Intense pose — ensure student is warm and open before entering","Light hand on bent knee — no pressure, just presence","Hand on sacrum — guide pelvis forward on exhale"],
+      cueing_he:["מדנדאסנה — כופפי ברך שמאל, הביאי כף רגל לברך פנימית, אצבעות כלפי מעלה","כופפי ברך ימין — כף רגל תחת ירך שמאל (כלפי מטה על המחצלת)","הסתובבי לעבר רגל ימין — שאפי, האריכי; נשפי, קפלי קדימה","אחזי כף שמאל ביד ימין — חגורה אם לא מגיעה","ברך ימין נפתחת לצד הרצפה"],
+      cueing_en:["From Dandasana — bend left knee, bring foot to inner right knee toes up","Bend right knee — heel under left thigh (top of foot on mat)","Rotate toward right leg — inhale lengthen; exhale fold forward","Hold left foot with right hand — use strap if needed","Right knee opens toward the floor"],
+      alignment_he:["גוף מסתובב ומקפל מעל הרגל המושטת","שתי עצמות ישיבה עוגנות ככל האפשר","עמוד שדרה ארוך לפני הכניסה לעומק"],
+      alignment_en:["Torso rotated and folding over the extended leg","Both sit bones grounded as much as possible","Long spine before going deep into the fold"],
+      mods_he:["חגורה סביב כף הרגל המושטת","שמיכה מתחת לעצמות ישיבה אם אגן נוטה אחורה","קפלי רק כמה שעמוד שדרה נשאר ארוך"],
+      mods_en:["Strap around extended foot","Blanket under sit bones if pelvis tilts back","Fold only as deep as spine stays long"],
+      watch_he:["כיפוף הברך הכפופה לכיוון לא נכון — הפנייה חשובה","עיגול מהמותן — קיפול מהאגן — תמיד קודם","מתיחת יתר בברך המושטת — שמרי על כיפוף קל"],
+      watch_en:["Bent knee orientation incorrect — placement matters","Rounding from waist — hip hinge first always","Overstretching extended knee — keep micro-bend"] },
+
+    { id:"pincha",
+      he:{ name:"פינצ׳ה מאיוראסנה", level:"מתקדמות" }, en:{ name:"Pincha Mayurasana", level:"Advanced" },
+      sanskrit:"Pīñcha Mayūrāsana", duration_he:"5–15 נשימות", duration_en:"5–15 breaths",
+      img: WIKI("Pincha_mayurasana.jpg"),
+      assist_he:["⚠️ סיכון גבוה — סייעי רק לתלמידות שיש להן בסיס חזק ושמוכנות","עמדי בצד: יד אחת על ירכיים לסיוע במציאת האנכי","אל תחזיקי את כל המשקל — עודדי עצמאות"],
+      assist_en:["⚠️ HIGH RISK — only assist students with strong foundation and readiness","Stand to the side: one hand at hips to help find vertical","Don't hold all the weight — encourage independence"],
+      cueing_he:["אמות על המחצלת כמו בתנוחת דולפין — ידיים שטוחות, לא שלובות","אמות מקבילות ברוחב כתפיים — אל תביאי ידיים יחד","הלכי רגליים פנימה — אגן מעל כתפיים","הרימי רגל אחת, ואז הצטרפי עם השנייה בעדינות","לחצי דרך האמות, הרימי כתפיים מהאוזניים"],
+      cueing_en:["Forearms on mat like Dolphin — palms flat, not interlaced","Forearms parallel, shoulder-width — do not bring hands together","Walk feet in — hips over shoulders","Lift one leg up, then float the second gently","Press into forearms, lift shoulders away from ears"],
+      alignment_he:["אמות מקבילות — לא מתכנסות","גוף בקו אנכי אחד מהמרפקים לעקבות","ראש בין הידיים — לא על הרצפה"],
+      alignment_en:["Forearms parallel — not converging","Body in one vertical line from elbows to heels","Head between the arms — not resting on the floor"],
+      mods_he:["תרגלי כנגד קיר עם בלוק בין הידיים לשמירת רוחב","דולפין ויישור אמות להכנת כוח","חצי פינצ׳ה — רגל אחת מורמת בלבד"],
+      mods_en:["Practice at wall with block between hands to maintain width","Dolphin pose and forearm plank for strength preparation","Half Pincha — one leg lifted only"],
+      watch_he:["אמות מתכנסות — השתמשי בבלוק בין כפות הידיים","אגן מאחורי קו הכתפיים","קפיצה למעלה — לימדי הרמה מבוקרת"],
+      watch_en:["Forearms converging — use block between hands","Hips behind the shoulder line","Jumping up — teach the controlled float"] },
+
+  ]},
+];
+
+const allPoses = poseGroups
+  .flatMap(g => g.poses.map(p => ({ ...p, group_he:g.he, group_en:g.en, groupColor:g.color })))
+  .sort((a, b) => a.en.name.localeCompare(b.en.name, "en"));
+const levelColor = { "בסיס":C.accent, "מתחילות":C.teacher, "בינוניות":C.gold, "מתקדמות":C.warn, "Foundation":C.accent, "Beginner":C.teacher, "Intermediate":C.gold, "Advanced":C.warn };
+
+function PoseImage({ src, name }) {
+  const [err, setErr] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  if (err) return (
+    <div style={{ width:"100%", aspectRatio:"3/4", background:`${C.border}40`, borderRadius:"12px", display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column", gap:"8px" }}>
+      <span style={{ fontSize:"32px", opacity:0.4 }}>🧘</span>
+      <span style={{ fontSize:"11px", color:C.dusty }}>{name}</span>
+    </div>
+  );
+  return (
+    <div style={{ position:"relative", width:"100%", aspectRatio:"3/4", borderRadius:"12px", overflow:"hidden", background:`${C.border}30` }}>
+      {!loaded && <div style={{ position:"absolute", inset:0, display:"flex", alignItems:"center", justifyContent:"center" }}><span style={{ fontSize:"24px", opacity:0.25 }}>🧘</span></div>}
+      <img src={src} alt={name} onLoad={() => setLoaded(true)} onError={() => setErr(true)}
+        style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"top center", display:loaded?"block":"none" }}/>
+    </div>
+  );
+}
+
+function YogaShoshan() {
+  const [lang, setLang] = useState("he");
+  const [selected, setSelected] = useState(allPoses[0]);
+  const [tab, setTab] = useState("assist");
+  const [showEthics, setShowEthics] = useState(false);
+  const [search, setSearch] = useState("");
+
+  const handlePrint = () => window.print();
+
+  const ui = UI[lang];
+  const isHe = lang === "he";
+  const dir = ui.dir;
+
+  const poseName = (p) => isHe ? p.he.name : p.en.name;
+  const groupName = (g) => isHe ? g.he : g.en;
+  const poseLevel = (p) => isHe ? p.he.level : p.en.level;
+  const poseDuration = (p) => isHe ? p.duration_he : p.duration_en;
+
+  const getContent = () => {
+    const k = isHe ? "_he" : "_en";
+    return ({
+      assist:        selected[`assist${k}`],
+      cueing:        selected[`cueing${k}`],
+      alignment:     selected[`alignment${k}`],
+      modifications: selected[`mods${k}`],
+      watchFor:      selected[`watch${k}`],
+    })[tab] || [];
+  };
+
+  const refContent = isHe ? selected.assist_en : selected.assist_he;
+
+  return (
+    <div style={{ minHeight:"100vh", background:C.bg, fontFamily:F, color:C.dark, display:"flex", flexDirection:"column", direction:dir }}>
+      <style>{FONTS}</style>
+
+      {/* HEADER */}
+      <header style={{ background:`linear-gradient(135deg, ${C.header} 0%, #EFF5F0 100%)`, padding:"0 20px", display:"flex", alignItems:"center", height:"58px", gap:"14px", borderBottom:`1px solid ${C.border}`, position:"sticky", top:0, zIndex:50, boxShadow:"0 2px 16px rgba(31,61,52,0.1)" }}>
+        <div>
+          <div style={{ fontFamily:"'Cinzel',Georgia,serif", fontSize:"17px", color:C.plum, letterSpacing:"3px", lineHeight:1 }}>יוגה שושן</div>
+          <div style={{ fontSize:"9px", letterSpacing:"1.5px", color:C.terra, marginTop:"2px", textTransform:"uppercase" }}>{ui.subtitle}</div>
+        </div>
+        <div style={{ flex:1 }}/>
+        <span style={{ fontSize:"11px", color:C.plum, background:`${C.plum}12`, padding:"3px 9px", borderRadius:"20px", border:`1px solid ${C.plum}25` }}>{allPoses.length} {ui.poses}</span>
+
+        {/* Language toggle */}
+        <div style={{ display:"flex", background:`${C.plum}10`, borderRadius:"8px", padding:"3px", border:`1px solid ${C.plum}25`, gap:"2px" }}>
+          {["he","en"].map(l => (
+            <button key={l} onClick={() => setLang(l)}
+              style={{ padding:"5px 12px", borderRadius:"6px", border:"none", background:lang===l ? C.plum : "transparent", color:lang===l ? "#FFF" : C.plum, fontFamily:F, fontSize:"12px", fontWeight:lang===l?"700":"500", cursor:"pointer", transition:"all 0.2s", letterSpacing:"0.5px" }}>
+              {l === "he" ? "עב" : "EN"}
+            </button>
+          ))}
+        </div>
+
+        <button onClick={() => setShowEthics(true)}
+          style={{ background:"transparent", border:`1.5px solid ${C.plum}50`, color:C.plum, borderRadius:"8px", padding:"6px 13px", fontFamily:F, fontSize:"12px", cursor:"pointer", transition:"all 0.2s", whiteSpace:"nowrap" }}
+          onMouseEnter={e => Object.assign(e.currentTarget.style, { background:C.plum, color:"#FFF" })}
+          onMouseLeave={e => Object.assign(e.currentTarget.style, { background:"transparent", color:C.plum })}>
+          {ui.ethicsBtn}
+        </button>
+        <button onClick={handlePrint} className="no-print"
+          title={isHe ? "הדפסה / שמירה כ-PDF" : "Print / Save as PDF"}
+          style={{ background:"transparent", border:`1.5px solid ${C.muted}50`, color:C.muted, borderRadius:"8px", padding:"6px 11px", fontFamily:F, fontSize:"14px", cursor:"pointer", transition:"all 0.2s", flexShrink:0 }}
+          onMouseEnter={e => Object.assign(e.currentTarget.style, { background:C.muted, color:"#FFF" })}
+          onMouseLeave={e => Object.assign(e.currentTarget.style, { background:"transparent", color:C.muted })}>
+          🖨️
+        </button>
+      </header>
+
+      <div style={{ display:"flex", flex:1, minHeight:0, overflow:"hidden" }}>
+
+        {/* SIDEBAR */}
+        <aside style={{ width:"220px", background:C.sidebar, overflowY:"auto", flexShrink:0, borderLeft: isHe ? `1px solid ${C.border}` : "none", borderRight: !isHe ? `1px solid ${C.border}` : "none" }}>
+          <div style={{ padding:"10px 7px" }}>
+            {/* Search */}
+            <div style={{ position:"relative", marginBottom:"8px" }}>
+              <span style={{ position:"absolute", top:"50%", transform:"translateY(-50%)", [isHe?"right":"left"]:"10px", fontSize:"13px", pointerEvents:"none" }}>🔍</span>
+              <input
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                placeholder={isHe ? "חיפוש תנוחה..." : "Search pose..."}
+                style={{ width:"100%", padding:isHe?"7px 32px 7px 10px":"7px 10px 7px 32px", borderRadius:"8px", border:`1px solid ${C.border}`, background:C.paper, fontFamily:F, fontSize:"12px", color:C.dark, outline:"none", direction:isHe?"rtl":"ltr" }}
+              />
+              {search && (
+                <button onClick={() => setSearch("")} style={{ position:"absolute", top:"50%", transform:"translateY(-50%)", [isHe?"left":"right"]:"8px", background:"none", border:"none", cursor:"pointer", fontSize:"12px", color:C.muted, padding:"2px" }}>✕</button>
+              )}
+            </div>
+
+            {/* Flat alphabetical list */}
+            {(() => {
+              const sorted = search.trim()
+                ? allPoses.filter(p => {
+                    const q = search.toLowerCase();
+                    return p.he.name.includes(q) || p.en.name.toLowerCase().includes(q) || p.sanskrit.toLowerCase().includes(q);
+                  })
+                : allPoses;
+
+              if (sorted.length === 0) return (
+                <div style={{ padding:"16px", textAlign:"center", color:C.dusty, fontSize:"12px" }}>
+                  {isHe ? "לא נמצאו תנוחות" : "No poses found"}
+                </div>
+              );
+
+              return sorted.map(pose => (
+                <button key={pose.id} onClick={() => { setSelected(pose); setSearch(""); setTab("assist"); }}
+                  className="sidebar-btn-hover"
+                  style={{ width:"100%", textAlign:isHe?"right":"left", padding:"8px 12px", marginBottom:"2px", borderRadius:"7px", background:selected.id===pose.id?`${pose.groupColor}18`:"transparent", border:`1.5px solid ${selected.id===pose.id ? pose.groupColor+"90":"transparent"}`, cursor:"pointer", fontFamily:F, transition:"all 0.15s" }}>
+                  <div style={{ display:"flex", alignItems:"center", gap:"6px" }}>
+                    <div style={{ width:6, height:6, borderRadius:"50%", background:pose.groupColor, flexShrink:0 }}/>
+                    <div style={{ fontSize:"12.5px", fontWeight:selected.id===pose.id?"700":"400", color:selected.id===pose.id ? C.plum : C.dark, lineHeight:1.3 }}>{poseName(pose)}</div>
+                  </div>
+                  <div style={{ fontSize:"9px", color:C.dusty, marginTop:"2px", [isHe?"paddingRight":"paddingLeft"]:"12px" }}>{pose.sanskrit}</div>
+                </button>
+              ));
+            })()}
+          </div>
+        </aside>
+
+        {/* MAIN */}
+        <main style={{ flex:1, minWidth:0, overflowY:"auto", display:"flex", flexDirection:"column" }}>
+
+          {/* Pose Header */}
+          <div style={{ background:C.paper, borderBottom:`1px solid ${C.border}`, padding:"16px 22px 0", position:"sticky", top:0, zIndex:10, boxShadow:"0 2px 14px rgba(0,0,0,0.05)" }}>
+            <div key={`${selected.id}-${lang}`} className="fade">
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:"10px", marginBottom:"11px", flexWrap:"wrap" }}>
+                <div>
+                  <div style={{ fontSize:"8px", letterSpacing:"3px", color:selected.groupColor, textTransform:"uppercase", fontWeight:"700", marginBottom:"4px" }}>
+                    {isHe ? selected.group_he : selected.group_en}
+                  </div>
+                  <h1 style={{ fontFamily:F, fontSize:"clamp(16px,2vw,22px)", fontWeight:"900", color:C.dark, margin:"0 0 3px" }}>{poseName(selected)}</h1>
+                  <div style={{ fontSize:"12px", color:C.muted, fontStyle:"italic" }}>
+                    {selected.sanskrit} · {isHe ? selected.en.name : selected.he.name}
+                  </div>
+                </div>
+                <div style={{ display:"flex", gap:"7px", flexWrap:"wrap" }}>
+                  {[[ui.level, poseLevel(selected), levelColor[poseLevel(selected)]], [ui.duration, poseDuration(selected), C.muted]].map(([k,v,col]) => (
+                    <div key={k} style={{ padding:"5px 12px", background:`${col}12`, border:`1px solid ${col}30`, borderRadius:"20px", textAlign:"center" }}>
+                      <div style={{ fontSize:"8px", color:col, letterSpacing:"1.5px", textTransform:"uppercase", marginBottom:"1px" }}>{k}</div>
+                      <div style={{ fontSize:"11px", fontWeight:"700", color:col }}>{v}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Tabs */}
+              <div style={{ display:"flex", overflowX:"auto" }}>
+                {ui.tabs.map(t => (
+                  <button key={t.id} onClick={() => setTab(t.id)}
+                    style={{ padding:"8px 13px 10px", border:"none", background:"transparent", cursor:"pointer", fontFamily:F, fontSize:"11.5px", color:tab===t.id?C.dark:C.dusty, borderBottom:tab===t.id?`2.5px solid ${selected.groupColor}`:"2.5px solid transparent", marginBottom:"-1px", fontWeight:tab===t.id?"700":"500", transition:"all 0.15s", whiteSpace:"nowrap", display:"flex", gap:"4px", alignItems:"center" }}>
+                    <span>{t.icon}</span><span>{t.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Content */}
+          <div key={`${selected.id}-${tab}-${lang}`} className="slide" style={{ flex:1, padding:"18px 22px 30px", display:"flex", gap:"18px", alignItems:"flex-start" }}>
+
+            {/* Image */}
+            <div style={{ width:"145px", flexShrink:0, position:"sticky", top:"18px" }}>
+              <PoseImage src={selected.img} name={poseName(selected)}/>
+              <div style={{ marginTop:"8px", textAlign:"center" }}>
+                <div style={{ fontSize:"10px", fontWeight:"700", color:C.dark }}>{poseName(selected)}</div>
+                <div style={{ fontSize:"9px", color:C.muted, fontStyle:"italic", marginTop:"1px" }}>{selected.sanskrit}</div>
+              </div>
+            </div>
+
+            {/* Text */}
+            <div style={{ flex:1, minWidth:0 }}>
+              {tab === "assist" && (
+                <div>
+                  <div style={{ background:`${C.teacher}0D`, border:`1px solid ${C.teacher}25`, borderRight: isHe?`3px solid ${C.teacher}`:"1px solid transparent", borderLeft: !isHe?`3px solid ${C.teacher}`:"1px solid transparent", borderRadius:"10px", padding:"11px 14px", marginBottom:"14px", display:"flex", gap:"8px" }}>
+                    <span style={{ fontSize:"14px", flexShrink:0 }}>✋</span>
+                    <p style={{ margin:0, fontSize:"12.5px", lineHeight:1.8, color:"#1A4A4A", fontFamily:F }}>
+                      <strong>{ui.beforeTouch}</strong> {ui.beforeTouchBody}
+                    </p>
+                  </div>
+                  <div style={{ display:"flex", flexDirection:"column", gap:"8px" }}>
+                    {getContent().map((item, i) => {
+                      const isWarn = item.startsWith("⚠️") || item.startsWith("⚠");
+                      const dotColors = [C.teacher, "#C47840", C.accent];
+                      const dc = isWarn ? C.warn : dotColors[i%dotColors.length];
+                      return (
+                        <div key={i} style={{ display:"flex", gap:"11px", padding:"11px 14px", background:isWarn?`${C.warn}08`:C.paper, borderRadius:"9px", border:`1px solid ${dc}${isWarn?"28":"15"}`, borderRight:isHe?`3px solid ${dc}`:"1px solid transparent", borderLeft:!isHe?`3px solid ${dc}`:"1px solid transparent", alignItems:"flex-start" }}>
+                          <p style={{ margin:0, fontSize:"13px", lineHeight:1.85, color:isWarn?C.warn:C.dark, flex:1, fontFamily:F }}>{item}</p>
+                          <div style={{ width:21, height:21, borderRadius:"50%", background:`${dc}15`, border:`1.5px solid ${dc}45`, color:dc, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"10px", fontWeight:"bold", flexShrink:0, marginTop:"2px" }}>{isWarn?"!":i+1}</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                </div>
+              )}
+
+              {tab !== "assist" && (
+                <div style={{ display:"flex", flexDirection:"column", gap:"8px" }}>
+                  {getContent().map((item, i) => {
+                    const isWarn = item.startsWith("⚠️") || item.startsWith("⚠");
+                    const lc = isWarn ? C.warn : tab==="watchFor" ? C.terra : selected.groupColor;
+                    return (
+                      <div key={i} style={{ display:"flex", gap:"11px", padding:"11px 14px", background:isWarn?`${C.warn}08`:C.paper, borderRadius:"9px", border:`1px solid ${lc}15`, borderRight:isHe?`3px solid ${lc}`:"1px solid transparent", borderLeft:!isHe?`3px solid ${lc}`:"1px solid transparent", alignItems:"flex-start" }}>
+                        <p style={{ margin:0, fontSize:"13px", lineHeight:1.85, color:isWarn?C.warn:C.dark, flex:1, fontFamily:F }}>{item}</p>
+                        <div style={{ width:20, height:20, borderRadius:"50%", background:`${lc}12`, border:`1.5px solid ${lc}40`, color:lc, display:"flex", alignItems:"center", justifyContent:"center", fontSize:isWarn||tab==="watchFor"?"11px":"10px", fontWeight:"bold", flexShrink:0, marginTop:"2px" }}>{isWarn?"!":tab==="watchFor"?"⚠":i+1}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+        </main>
+      </div>
+
+      {/* FOOTER */}
+      <footer style={{ background:`linear-gradient(135deg, ${C.header} 0%, #EFF5F0 100%)`, borderTop:`1px solid ${C.border}`, padding:"8px 22px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+        <span style={{ fontFamily:"'Cinzel',Georgia,serif", fontSize:"12px", color:C.plum, letterSpacing:"2px" }}>יוגה שושן</span>
+        <span style={{ fontSize:"9px", color:C.muted }}>Vinyasa & Ashtanga · {allPoses.length} {ui.poses}</span>
+      </footer>
+
+      {/* ETHICS MODAL */}
+      {showEthics && (
+        <div onClick={() => setShowEthics(false)} style={{ position:"fixed", inset:0, background:"rgba(15,22,15,0.88)", zIndex:100, display:"flex", alignItems:"center", justifyContent:"center", padding:"20px", backdropFilter:"blur(6px)" }}>
+          <div onClick={e => e.stopPropagation()} style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"680px", width:"100%", maxHeight:"88vh", overflowY:"auto", border:`2px solid ${C.gold}35`, boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"4px" }}>
+              <div>
+                <div style={{ fontFamily:"'Cinzel',Georgia,serif", fontSize:"8px", letterSpacing:"4px", color:C.gold, textTransform:"uppercase", marginBottom:"5px" }}>יוגה שושן</div>
+                <h2 style={{ fontFamily:F, fontSize:"20px", fontWeight:"900", color:C.dark, margin:0 }}>{ui.ethicsTitle}</h2>
+                <div style={{ fontSize:"12px", color:C.muted, fontStyle:"italic", marginTop:"2px" }}>{ui.ethicsSubtitle}</div>
+              </div>
+              <button onClick={() => setShowEthics(false)} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:"8px", width:32, height:32, cursor:"pointer", color:C.muted, fontSize:"16px", display:"flex", alignItems:"center", justifyContent:"center" }}>×</button>
+            </div>
+            <p style={{ fontSize:"13px", lineHeight:1.9, color:C.muted, borderBottom:`1px solid ${C.border}`, paddingBottom:"14px", marginBottom:"18px", marginTop:"12px" }}>
+              {ui.ethicsIntro}
+            </p>
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))", gap:"10px", marginBottom:"16px" }}>
+              {touchEthics.map((item, i) => {
+                const t = isHe ? item.he : item.en;
+                return (
+                  <div key={i} style={{ padding:"14px 16px", background:i%2===0?"#F4EFE6":"#EFF5F0", borderRadius:"11px", borderRight:isHe?`3px solid ${C.terra}50`:"none", borderLeft:!isHe?`3px solid ${C.terra}50`:"none" }}>
+                    <div style={{ fontSize:"19px", marginBottom:"5px" }}>{item.icon}</div>
+                    <div style={{ fontWeight:"700", fontSize:"13px", color:C.dark, marginBottom:"5px" }}>{t.title}</div>
+                    <p style={{ margin:0, fontSize:"12px", lineHeight:1.8, color:"#5A4A3A" }}>{t.body}</p>
+                  </div>
+                );
+              })}
+            </div>
+            <div style={{ padding:"12px 16px", background:`${C.plum}10`, borderRadius:"10px", border:`1px solid ${C.plum}20`, display:"flex", gap:"10px", alignItems:"flex-start", marginBottom:"14px" }}>
+              <span>🌿</span>
+              <p style={{ margin:0, fontSize:"13px", lineHeight:1.85, color:C.dark }}><strong>{isHe?"זכרי:":"Remember:"}</strong> {ui.ethicsFooter}</p>
+            </div>
+            <button onClick={() => setShowEthics(false)} style={{ width:"100%", padding:"11px", background:C.header, color:"white", border:"none", borderRadius:"9px", fontFamily:F, fontSize:"13px", fontWeight:"700", cursor:"pointer" }}>{ui.close}</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+const domNode = document.getElementById('root');
+const root = ReactDOM.createRoot(domNode);
+root.render(React.createElement(YogaShoshan));
+</script>
+</body>
+</html>

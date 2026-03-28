@@ -13,6 +13,7 @@ on:
           - checkout
           - course
           - thankyou
+          - asanaguides
 
 jobs:
   deploy-landing:
@@ -20,51 +21,39 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: nwtgck/actions-netlify@v3
-        with:
-          publish-dir: './landing'
-          production-deploy: true
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_LANDING_SITE_ID }}
+      - run: npm i -g netlify-cli
+      - run: netlify deploy --prod --dir=./landing --site=${{ secrets.NETLIFY_LANDING_SITE_ID }} --auth=${{ secrets.NETLIFY_AUTH_TOKEN }}
 
   deploy-checkout:
     if: ${{ inputs.target == 'all' || inputs.target == 'checkout' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: nwtgck/actions-netlify@v3
-        with:
-          publish-dir: './checkout'
-          production-deploy: true
-          functions-dir: './checkout/netlify/functions'
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_CHECKOUT_SITE_ID }}
+      - run: npm i -g netlify-cli
+      - run: cd checkout && npm install --production 2>/dev/null; cd ..
+      - run: netlify deploy --prod --dir=./checkout --functions=./checkout/netlify/functions --site=${{ secrets.NETLIFY_CHECKOUT_SITE_ID }} --auth=${{ secrets.NETLIFY_AUTH_TOKEN }}
 
   deploy-course:
     if: ${{ inputs.target == 'all' || inputs.target == 'course' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: nwtgck/actions-netlify@v3
-        with:
-          publish-dir: './course'
-          production-deploy: true
-          functions-dir: './course/netlify/functions'
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_COURSE_SITE_ID }}
+      - run: npm i -g netlify-cli
+      - run: cd course && npm install --production 2>/dev/null; cd ..
+      - run: netlify deploy --prod --dir=./course --functions=./course/netlify/functions --site=${{ secrets.NETLIFY_COURSE_SITE_ID }} --auth=${{ secrets.NETLIFY_AUTH_TOKEN }}
 
   deploy-thankyou:
     if: ${{ inputs.target == 'all' || inputs.target == 'thankyou' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: nwtgck/actions-netlify@v3
-        with:
-          publish-dir: './thankyou'
-          production-deploy: true
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_THANKYOU_SITE_ID }}
+      - run: npm i -g netlify-cli
+      - run: netlify deploy --prod --dir=./thankyou --site=${{ secrets.NETLIFY_THANKYOU_SITE_ID }} --auth=${{ secrets.NETLIFY_AUTH_TOKEN }}
+
+  deploy-asanaguides:
+    if: ${{ inputs.target == 'all' || inputs.target == 'asanaguides' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm i -g netlify-cli
+      - run: netlify deploy --prod --dir=./asanaguides --site=${{ secrets.NETLIFY_ASANAGUIDES_SITE_ID }} --auth=${{ secrets.NETLIFY_AUTH_TOKEN }}

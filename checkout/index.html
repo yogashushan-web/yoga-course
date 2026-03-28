@@ -6,7 +6,7 @@
     <title>רכישת הקורס - התחלה מדויקת</title>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
+
     <!-- Meta Pixel Code -->
     <script>
     !function(f,b,e,v,n,t,s)
@@ -24,7 +24,7 @@
     src="https://www.facebook.com/tr?id=1448149729783570&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Meta Pixel Code -->
-    
+
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -190,8 +190,8 @@
             margin-top: 10px;
         }
 
-        .pay-btn:hover { 
-            transform: translateY(-3px); 
+        .pay-btn:hover {
+            transform: translateY(-3px);
             box-shadow: 0 15px 40px rgba(91,155,126,0.5);
             background: linear-gradient(135deg, #6AAE91, #5B9B7E);
         }
@@ -264,6 +264,16 @@
 
             <div class="security">🔒 תשלום מאובטח דרך PayMe</div>
         </div>
+
+        <!-- PayMe iframe - מוסתר עד שלוחצים על כפתור תשלום -->
+        <div id="paymentFrame" style="display:none;">
+            <div class="card" style="padding: 0; overflow: hidden;">
+                <iframe id="paymeIframe" style="width: 100%; height: 600px; border: none; display: block;"></iframe>
+            </div>
+            <div style="text-align: center; margin-top: 14px;">
+                <a onclick="closePayment()" style="color: var(--text); font-size: 14px; cursor: pointer; text-decoration: underline;">חזרה לפרטי ההזמנה</a>
+            </div>
+        </div>
     </div>
 
     <footer>
@@ -330,49 +340,43 @@
             const btn = document.getElementById('payBtn');
             const emailInput = document.getElementById('buyerEmail');
             const email = emailInput.value.trim();
-            
-            // בדיקת מייל
+
             if (!email || !email.includes('@')) {
                 alert('אנא הכניסי מייל תקין');
                 emailInput.focus();
                 return;
             }
-            
-            // 🔥 Facebook Pixel - InitiateCheckout
+
             fbq('track', 'InitiateCheckout', {
                 value: finalPrice,
                 currency: 'ILS',
                 content_name: 'קורס התחלה מדויקת'
             });
-            
+
             btn.disabled = true;
             btn.textContent = 'יוצרת תשלום...';
 
             try {
-                // שמור קוד הנחה אם יש
                 if (appliedCode) {
                     sessionStorage.setItem('appliedCode', appliedCode.code);
-                    // עדכן שימוש בקוד
                     await db.from('discount_codes')
                         .update({ used_count: appliedCode.used_count + 1 })
                         .eq('id', appliedCode.id);
                 }
 
-                // קרא לפונקציה שיוצרת Sale עם callback + email
                 const response = await fetch('/.netlify/functions/generate-sale', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
+                    body: JSON.stringify({
                         price: finalPrice,
-                        email: email 
+                        email: email
                     })
                 });
 
                 const data = await response.json();
 
-                // PayMe מחזיר sale_url
                 if (data.sale_url) {
-                    window.location.href = data.sale_url;
+                    showPaymentFrame(data.sale_url);
                 } else if (data.status_error_details) {
                     alert('שגיאה: ' + data.status_error_details);
                     btn.disabled = false;
@@ -391,7 +395,29 @@
             }
         }
 
-        // החל קוד עם Enter
+        function showPaymentFrame(url) {
+            document.querySelector('.card').style.display = 'none';
+            const frameContainer = document.getElementById('paymentFrame');
+            frameContainer.style.display = 'block';
+            document.getElementById('paymeIframe').src = url;
+            frameContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // בדיקה לוקאלית - אם הפונקציה לא זמינה, הצג iframe עם דמו
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            document.getElementById('payBtn').onclick = function() {
+                showPaymentFrame('https://live.payme.io/sale/generate/SALE1774-670825OZ-ZDYYZUKX-G8DTIJAH');
+            };
+        }
+
+        function closePayment() {
+            document.getElementById('paymentFrame').style.display = 'none';
+            document.getElementById('paymeIframe').src = '';
+            document.querySelector('.card').style.display = 'block';
+            document.getElementById('payBtn').disabled = false;
+            document.getElementById('payBtn').textContent = 'המשך לתשלום מאובטח 💳';
+        }
+
         document.getElementById('discountCode').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') applyDiscount();
         });
