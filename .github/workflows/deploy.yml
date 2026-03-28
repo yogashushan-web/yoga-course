@@ -1,11 +1,22 @@
 name: Deploy to Netlify
 
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'What to deploy'
+        required: true
+        type: choice
+        options:
+          - all
+          - landing
+          - checkout
+          - course
+          - thankyou
 
 jobs:
   deploy-landing:
+    if: ${{ inputs.target == 'all' || inputs.target == 'landing' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,6 +29,7 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_LANDING_SITE_ID }}
 
   deploy-checkout:
+    if: ${{ inputs.target == 'all' || inputs.target == 'checkout' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,6 +43,7 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_CHECKOUT_SITE_ID }}
 
   deploy-course:
+    if: ${{ inputs.target == 'all' || inputs.target == 'course' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -44,6 +57,7 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_COURSE_SITE_ID }}
 
   deploy-thankyou:
+    if: ${{ inputs.target == 'all' || inputs.target == 'thankyou' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
