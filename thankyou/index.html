@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>תודה על הרכישה! 🧘‍♀️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1448149729783570');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1448149729783570&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Heebo', sans-serif;
+            background: linear-gradient(135deg, #F4EFE6 0%, #E8F5E9 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            background: white;
+            padding: 50px;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        .success-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: 900;
+            color: #1F3D34;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #5B7D6E;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #E8F5E9, #F4EFE6);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 2px solid #5B7D6E;
+        }
+
+        .info-box h3 {
+            font-size: 20px;
+            color: #1F3D34;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .info-item {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-align: right;
+        }
+
+        .info-item .icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .info-item .text {
+            flex: 1;
+        }
+
+        .info-item strong {
+            color: #1F3D34;
+            font-size: 14px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .info-item .value {
+            color: #5B7D6E;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .next-steps {
+            background: #FFF9E6;
+            padding: 25px;
+            border-radius: 12px;
+            border-right: 4px solid #f39c12;
+            margin: 30px 0;
+            text-align: right;
+        }
+
+        .next-steps h3 {
+            color: #f39c12;
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .next-steps ol {
+            margin-right: 20px;
+            line-height: 1.8;
+        }
+
+        .next-steps li {
+            margin-bottom: 10px;
+            color: #3e3a36;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 18px 30px;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Heebo', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #1F3D34;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #15281f;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(31,61,52,0.3);
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #229954;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(39,174,96,0.3);
+        }
+
+        footer {
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px solid #F4EFE6;
+            color: #6F6F6F;
+            font-size: 14px;
+        }
+
+        .note {
+            background: #E8F5E9;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #1F3D34;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">🎉</div>
+        
+        <h1>תודה רבה!</h1>
+        <p class="subtitle">
+            התשלום עבר בהצלחה והצטרפת לקורס "התחלה מדויקת"!<br>
+            ברוכה הבאה למסע 💚
+        </p>
+
+        <div class="info-box">
+            <h3>📧 פרטי הכניסה שלך נשלחו למייל</h3>
+            
+            <div class="info-item">
+                <div class="icon">📬</div>
+                <div class="text">
+                    <strong>בדקי את תיבת הדואר</strong>
+                    <div class="value">פרטי הכניסה (מייל + סיסמה) נשלחו אלייך עכשיו</div>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="icon">🔍</div>
+                <div class="text">
+                    <strong>לא מצאת את המייל?</strong>
+                    <div class="value">בדקי בספאם / דואר זבל</div>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="icon">💬</div>
+                <div class="text">
+                    <strong>צריכה עזרה?</strong>
+                    <div class="value">כתבי לי בוואטסאפ: <a href="https://wa.me/972502018743" style="color:#27ae60; font-weight:700; text-decoration:underline;" target="_blank">050-201-8743</a></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="next-steps">
+            <h3>⭐ מה הלאה?</h3>
+            <ol>
+                <li>חפשי את המייל מ"התחלה מדויקת" (תוך מספר דקות)</li>
+                <li>שמרי את הסיסמה במקום בטוח</li>
+                <li>היכנסי לקורס והתחילי ללמוד!</li>
+                <li>הצטרפי לקבוצת הוואטסאפ לתמיכה וליווי</li>
+            </ol>
+        </div>
+
+        <div class="cta-buttons">
+            <a href="https://coursepageyogac.netlify.app" class="btn btn-primary">
+                🎓 כניסה לקורס
+            </a>
+            <a href="https://chat.whatsapp.com/BiN8sg5oTjo4DAjNCAMMaI" class="btn btn-success">
+                💬 קבוצת וואטסאפ
+            </a>
+        </div>
+
+        <div class="note">
+            <strong>💡 טיפ:</strong> המייל עלול להגיע תוך 5-10 דקות. אם לא הגיע תוך 30 דקות - <a href="https://wa.me/972502018743" style="color:#27ae60; font-weight:700;" target="_blank">כתבי לי בוואטסאפ (050-201-8743)</a> ואשלח לך את הפרטים ידנית.
+        </div>
+
+        <footer>
+            <p>© 2026 שרון שושן - התחלה מדויקת · כל הזכויות שמורות</p>
+            <p style="margin-top: 10px; font-size: 12px; opacity: 0.7;">
+                * התוכן מנוסח בלשון נקבה מטעמי נוחות, אך הקורס פונה למורים ומורות יוגה כאחד.
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // 🔥 Facebook Pixel - Purchase Event (הכי חשוב!)
+        const urlParams = new URLSearchParams(window.location.search);
+        const purchaseValue = urlParams.get('amount') || urlParams.get('price') || 220;
+        
+        fbq('track', 'Purchase', {
+            value: parseFloat(purchaseValue),
+            currency: 'ILS',
+            content_name: 'קורס התחלה מדויקת'
+        });
+    </script>
+</body>
+</html>

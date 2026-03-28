@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>רכישת הקורס - התחלה מדויקת</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1448149729783570');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1448149729783570&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Heebo', sans-serif;
+            background: linear-gradient(135deg, #F4EFE6 0%, #FFFFFF 100%);
+            color: #6F6F6F;
+            min-height: 100vh;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(31, 61, 52, 0.4), rgba(21, 40, 31, 0.5)), url('yoga-outdoor-2.jpg');
+            background-size: cover;
+            background-position: center center;
+            color: white;
+            padding: 80px 20px 60px;
+            text-align: center;
+        }
+
+        .hero-icon { font-size: 60px; margin-bottom: 20px; }
+        .hero h1 { font-size: 42px; font-weight: 900; margin-bottom: 15px; }
+        .hero p { font-size: 20px; opacity: 0.95; max-width: 600px; margin: 0 auto; }
+
+        .container {
+            max-width: 650px;
+            margin: -50px auto 60px;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .card h2 { font-size: 28px; font-weight: 900; color: #1F3D34; margin-bottom: 25px; }
+
+        .price-display {
+            background: linear-gradient(135deg, #F4EFE6, #F4EBD7);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border: 3px solid #1F3D34;
+        }
+
+        .original-price {
+            font-size: 18px;
+            text-decoration: line-through;
+            opacity: 0.5;
+            margin-bottom: 5px;
+        }
+
+        .current-price {
+            font-size: 54px;
+            font-weight: 900;
+            color: #1F3D34;
+            line-height: 1;
+        }
+
+        .price-note { font-size: 15px; color: #6F6F6F; margin-top: 10px; }
+
+        .discount-section {
+            margin: 25px 0;
+            text-align: right;
+        }
+
+        .discount-section label {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+            color: #1F3D34;
+            margin-bottom: 10px;
+        }
+
+        .discount-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .discount-input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 2px solid #F4EFE6;
+            border-radius: 50px;
+            font-family: 'Heebo', sans-serif;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+
+        .discount-input:focus { outline: none; border-color: #1F3D34; }
+
+        .apply-btn {
+            padding: 14px 25px;
+            background: #1F3D34;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Heebo', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .discount-msg {
+            margin-top: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            display: none;
+            text-align: center;
+        }
+
+        .discount-msg.success { color: #27ae60; }
+        .discount-msg.error { color: #e74c3c; }
+
+        .features {
+            text-align: right;
+            margin: 25px 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #F4EFE6;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: #5B7D6E;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .feature-text { flex: 1; }
+        .feature-text h3 { font-size: 17px; font-weight: 700; color: #1F3D34; }
+        .feature-text p { font-size: 14px; color: #6F6F6F; }
+
+        .pay-btn {
+            width: 100%;
+            padding: 22px;
+            background: linear-gradient(135deg, #5B9B7E, #4A8A6D);
+            color: white;
+            border: none;
+            border-radius: 60px;
+            font-family: 'Heebo', sans-serif;
+            font-size: 22px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(91,155,126,0.3);
+            margin-top: 10px;
+        }
+
+        .pay-btn:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 15px 40px rgba(91,155,126,0.5);
+            background: linear-gradient(135deg, #6AAE91, #5B9B7E);
+        }
+        .pay-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+        .security { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 15px; color: #6F6F6F; font-size: 14px; }
+
+        footer { background: #1F3D34; color: white; padding: 30px 20px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>כמעט שם! 🧘‍♀️</h1>
+        <p>עוד רגע את מתחילה את המסע</p>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2>רכישת הקורס</h2>
+
+            <div class="price-display">
+                <div class="current-price" id="currentPrice">₪550</div>
+                <div class="price-note">גישה ללא הגבלת זמן לכל החומרים + קבוצת וואטסאפ פרטית</div>
+            </div>
+
+            <!-- מייל -->
+            <div class="discount-section">
+                <h3>📧 המייל שלך</h3>
+                <input type="email" id="buyerEmail" class="discount-input" placeholder="הכניסי את המייל שלך..." required style="width: 100%; margin-bottom: 15px;" />
+            </div>
+
+            <!-- קוד הנחה -->
+            <div class="discount-section">
+                <label>יש לך קוד הנחה?</label>
+                <div class="discount-row">
+                    <input type="text" id="discountCode" class="discount-input" placeholder="הזיני קוד..." />
+                    <button class="apply-btn" onclick="applyDiscount()">החל</button>
+                </div>
+                <div class="discount-msg" id="discountMsg"></div>
+            </div>
+
+            <!-- תכולה -->
+            <div class="features">
+                <div class="feature-item">
+                    <div class="feature-icon">🎓</div>
+                    <div class="feature-text">
+                        <h3>6 שיעורים מוקלטים</h3>
+                        <p>גישה ללא הגבלת זמן</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📚</div>
+                    <div class="feature-text">
+                        <h3>דפי עבודה מעשיים</h3>
+                        <p>טבלאות ומדריכים להורדה</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💬</div>
+                    <div class="feature-text">
+                        <h3>קבוצת תמיכה</h3>
+                        <p>ליווי אישי בוואטסאפ</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="pay-btn" id="payBtn" onclick="goToPayment()">
+                המשך לתשלום מאובטח 💳
+            </button>
+
+            <div class="security">🔒 תשלום מאובטח דרך PayMe</div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 שרון שושן - התחלה מדויקת</p>
+        <p style="margin-top: 10px; font-size: 13px;">
+            <a href="https://landingpageyogac.netlify.app/terms.html" style="color: rgba(255,255,255,0.8); text-decoration: underline;">תנאי שימוש ומדיניות פרטיות</a>
+        </p>
+        <p style="margin-top: 12px; font-size: 11px; opacity: 0.7;">
+            * התוכן מנוסח בלשון נקבה מטעמי נוחות, אך הקורס פונה למורים ומורות יוגה כאחד.
+        </p>
+    </footer>
+
+    <script>
+        const SUPABASE_URL = 'https://tyjlyfyqwgihbhhxbeqe.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR5amx5Znlxd2dpaGJoaHhiZXFlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzMDY2NDMsImV4cCI6MjA4Njg4MjY0M30.SA9hudQQdroQhdQAg6aYICNmhg8aSavE3qZ5YhTmCE0';
+        const { createClient } = supabase;
+        const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        const BASE_PRICE = 550;
+        let finalPrice = 550;
+        let appliedCode = null;
+
+        async function applyDiscount() {
+            const code = document.getElementById('discountCode').value.trim().toUpperCase();
+            const msg = document.getElementById('discountMsg');
+
+            if (!code) return;
+
+            const { data, error } = await db
+                .from('discount_codes')
+                .select('*')
+                .eq('code', code)
+                .eq('active', true)
+                .single();
+
+            if (error || !data) {
+                msg.textContent = '❌ קוד לא תקין או לא פעיל';
+                msg.className = 'discount-msg error';
+                msg.style.display = 'block';
+                finalPrice = BASE_PRICE;
+                appliedCode = null;
+                document.getElementById('currentPrice').textContent = `₪${BASE_PRICE}`;
+                return;
+            }
+
+            if (data.used_count >= data.max_uses) {
+                msg.textContent = '❌ קוד זה הגיע למקסימום שימושים';
+                msg.className = 'discount-msg error';
+                msg.style.display = 'block';
+                return;
+            }
+
+            const discount = data.discount_percent;
+            finalPrice = Math.round(BASE_PRICE * (1 - discount / 100));
+            appliedCode = data;
+
+            document.getElementById('currentPrice').textContent = `₪${finalPrice}`;
+            msg.textContent = `✅ קוד הנחה של ${discount}% הוחל! חסכת ₪${BASE_PRICE - finalPrice}`;
+            msg.className = 'discount-msg success';
+            msg.style.display = 'block';
+        }
+
+        async function goToPayment() {
+            const btn = document.getElementById('payBtn');
+            const emailInput = document.getElementById('buyerEmail');
+            const email = emailInput.value.trim();
+            
+            // בדיקת מייל
+            if (!email || !email.includes('@')) {
+                alert('אנא הכניסי מייל תקין');
+                emailInput.focus();
+                return;
+            }
+            
+            // 🔥 Facebook Pixel - InitiateCheckout
+            fbq('track', 'InitiateCheckout', {
+                value: finalPrice,
+                currency: 'ILS',
+                content_name: 'קורס התחלה מדויקת'
+            });
+            
+            btn.disabled = true;
+            btn.textContent = 'יוצרת תשלום...';
+
+            try {
+                // שמור קוד הנחה אם יש
+                if (appliedCode) {
+                    sessionStorage.setItem('appliedCode', appliedCode.code);
+                    // עדכן שימוש בקוד
+                    await db.from('discount_codes')
+                        .update({ used_count: appliedCode.used_count + 1 })
+                        .eq('id', appliedCode.id);
+                }
+
+                // קרא לפונקציה שיוצרת Sale עם callback + email
+                const response = await fetch('/.netlify/functions/generate-sale', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        price: finalPrice,
+                        email: email 
+                    })
+                });
+
+                const data = await response.json();
+
+                // PayMe מחזיר sale_url
+                if (data.sale_url) {
+                    window.location.href = data.sale_url;
+                } else if (data.status_error_details) {
+                    alert('שגיאה: ' + data.status_error_details);
+                    btn.disabled = false;
+                    btn.textContent = 'המשך לתשלום מאובטח 💳';
+                } else {
+                    alert('שגיאה ביצירת תשלום. נסי שוב.');
+                    btn.disabled = false;
+                    btn.textContent = 'המשך לתשלום מאובטח 💳';
+                }
+
+            } catch (error) {
+                btn.disabled = false;
+                btn.textContent = 'המשך לתשלום מאובטח 💳';
+                alert('שגיאה ביצירת תשלום. נסי שוב.');
+                console.error(error);
+            }
+        }
+
+        // החל קוד עם Enter
+        document.getElementById('discountCode').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') applyDiscount();
+        });
+    </script>
+</body>
+</html>

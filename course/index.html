@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>התחלה מדויקת - אזור הקורס</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --primary: #1F3D34;
+            --primary-light: #F4EFE6;
+            --accent: #F4EBD7;
+            --text: #6F6F6F;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Heebo', sans-serif; 
+            background: linear-gradient(135deg, #F4EFE6 0%, #E8F5E9 50%, #FFFFFF 100%);
+            color: var(--text); 
+            line-height: 1.7; 
+        }
+
+        .login-screen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-light) 0%, #fff 100%);
+            padding: 20px;
+        }
+
+        .login-box {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .login-box h1 { font-size: 32px; font-weight: 900; color: var(--primary); margin-bottom: 10px; }
+        .login-box .subtitle { font-size: 16px; color: var(--text); margin-bottom: 30px; }
+
+        .input-field {
+            width: 100%;
+            padding: 16px 22px;
+            border: 2px solid var(--primary-light);
+            border-radius: 50px;
+            font-family: 'Heebo', sans-serif;
+            font-size: 16px;
+            margin-bottom: 15px;
+            transition: border-color 0.3s ease;
+            text-align: right;
+        }
+
+        .input-field:focus { outline: none; border-color: var(--primary); }
+
+        .password-wrapper {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .password-wrapper .input-field { margin-bottom: 0; flex: 1; }
+
+        .toggle-password {
+            background: none !important;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            opacity: 0.6;
+            padding: 0;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .toggle-password:hover { opacity: 1; }
+        .toggle-password:focus { outline: none; background: none !important; }
+
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Heebo', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover { background: #15281f; transform: translateY(-2px); }
+
+        .error-msg {
+            color: #e74c3c;
+            margin-top: 15px;
+            font-size: 15px;
+            display: none;
+        }
+
+        .course-content { display: none; }
+
+        header {
+            background: linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)), url('yoga-outdoor-2.jpg');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { font-size: 24px; font-weight: 900; color: var(--primary); }
+        .welcome-name { font-size: 16px; color: var(--text); }
+
+        .logout-btn {
+            background: none;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-family: 'Heebo', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover { background: var(--primary); color: white; }
+
+        .welcome-section {
+            background: linear-gradient(135deg, var(--primary) 0%, #15281f 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .welcome-section h1 { font-size: 42px; font-weight: 900; margin-bottom: 15px; }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+
+        .lesson-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+
+        .lesson-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .lesson-number { font-size: 14px; font-weight: 600; color: var(--primary); margin-bottom: 5px; }
+        .lesson-title { font-size: 28px; font-weight: 900; color: var(--primary); }
+        .lesson-duration { color: var(--text); font-size: 16px; }
+
+        .lesson-video {
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            background: #000;
+        }
+
+        .lesson-video video { width: 100%; height: auto; display: block; }
+
+        .lesson-attachments {
+            margin-top: 25px;
+            padding: 25px;
+            background: var(--primary-light);
+            border-radius: 15px;
+        }
+
+        .lesson-attachments h4 { color: var(--primary); margin-bottom: 15px; font-size: 18px; }
+
+        .attachment-link {
+            display: block;
+            padding: 12px 15px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 10px;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .attachment-link:hover { transform: translateX(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+
+        /* Feedback sections - HIDDEN (using modal instead) */
+        .lesson-feedback {
+            display: none !important;
+        }
+
+        .feedback-group {
+            margin-bottom: 20px;
+        }
+
+        .feedback-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .feedback-group textarea,
+        .feedback-group input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #E8F5E9;
+            border-radius: 10px;
+            font-family: 'Heebo', sans-serif;
+            font-size: 14px;
+            resize: vertical;
+        }
+
+        .feedback-group textarea {
+            min-height: 100px;
+        }
+
+        .feedback-group input[type="text"] {
+            min-height: 45px;
+        }
+
+        .feedback-group textarea:focus,
+        .feedback-group input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .rating-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .rating-btn {
+            width: 45px;
+            height: 45px;
+            border: 2px solid #E8F5E9;
+            background: white;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .rating-btn:hover {
+            border-color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .rating-btn.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .feedback-submit {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Heebo', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .feedback-submit:hover {
+            background: #15281f;
+            transform: translateY(-2px);
+        }
+
+        .feedback-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .feedback-success {
+            display: none;
+            padding: 15px;
+            background: #d4edda;
+            color: #155724;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+
+        footer { background: var(--primary); color: white; padding: 40px 20px; text-align: center; }
+
+        @media (max-width: 768px) {
+            .lesson-title { font-size: 22px; }
+            .lesson-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .login-box { padding: 35px 25px; }
+        }
+        
+        /* Feedback Button */
+        .feedback-button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #5B7D6E, #4A6B5E);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Heebo', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(91, 125, 110, 0.3);
+        }
+
+        .feedback-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(91, 125, 110, 0.4);
+            background: linear-gradient(135deg, #6A8E7D, #5B7D6E);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(3px);
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #E8F5E9;
+        }
+
+        .modal-header h3 {
+            color: var(--primary);
+            font-size: 24px;
+            font-weight: 900;
+            margin: 0;
+        }
+
+        .close-modal {
+            font-size: 32px;
+            font-weight: 300;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s;
+            background: none;
+            border: none;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .close-modal:hover {
+            color: #333;
+        }
+
+        /* Hide original feedback sections */
+        .lesson-feedback {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Login Screen -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-box">
+            <h1>ברוכה הבאה!</h1>
+            <p class="subtitle">הזיני את המייל והסיסמה שקיבלת</p>
+
+            <input type="email" id="emailInput" class="input-field" placeholder="כתובת מייל" />
+
+            <div class="password-wrapper">
+                <input type="password" id="passwordInput" class="input-field" placeholder="סיסמה" />
+                <button type="button" class="toggle-password" onclick="togglePassword()">
+                    <span id="eyeIcon">👁️</span>
+                </button>
+            </div>
+
+            <button class="login-btn" onclick="checkLogin()">כניסה לקורס</button>
+            <p class="error-msg" id="errorMsg">מייל או סיסמה שגויים, נסי שוב</p>
+        </div>
+    </div>
+
+    <!-- Course Content -->
+    <div class="course-content" id="courseContent">
+        <header>
+            <nav>
+                <div class="logo">התחלה מדויקת</div>
+                <span class="welcome-name" id="welcomeName"></span>
+                <button class="logout-btn" onclick="logout()">יציאה</button>
+            </nav>
+        </header>
+
+        <section class="welcome-section">
+            <h1>ברוכה הבאה לקורס!</h1>
+            <p>התחלת את הדרך להיות מורת יוגה בטוחה ומקצועית</p>
+        </section>
+
+        <div class="container">
+            <!-- שיעור היכרות -->
+            <div class="lesson-card">
+                <div class="lesson-header">
+                    <div>
+                        <div class="lesson-number">שיעור היכרות</div>
+                        <div class="lesson-title">ברוכות הבאות לקורס</div>
+                    </div>
+                    <div class="lesson-duration">⏱ 5:30 דקות</div>
+                </div>
+                <div class="lesson-video">
+                    <video controls controlsList="nodownload">
+                        <source src="video1.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="lesson-description">
+                    <p>שיעור היכרות עם הקורס - מה נלמד, איך לעבוד עם החומרים, ומה מצפה לך בדרך.</p>
+                </div>
+            </div>
+
+            <!-- שיעור 1 -->
+            <div class="lesson-card">
+                <div class="lesson-header">
+                    <div>
+                        <div class="lesson-number">שיעור 1</div>
+                        <div class="lesson-title">זהות המורה</div>
+                    </div>
+                    <div class="lesson-duration">⏱ 16 דקות</div>
+                </div>
+                <div class="lesson-video">
+                    <video controls controlsList="nodownload">
+                        <source src="video2.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="lesson-description">
+                    <p>מי את בתור מורה? נלמד איך למצוא את הקול שלך ולהתייצב מול קבוצה בביטחון.</p>
+                    <div class="lesson-attachments">
+                        <h4>📎 נספחים לשיעור:</h4>
+                        <a href="lesson1-attachment.pdf" class="attachment-link" download>📄 נספח זהות המורה</a>
+                    </div>
+                    
+                    <!-- Feedback Section -->
+                    <div class="lesson-feedback">
+                        <h4>💭 משוב על השיעור</h4>
+                        <div class="feedback-group">
+                            <label>מה למדתי בשיעור הזה?</label>
+                            <textarea id="learned_1" placeholder="שתפי מה למדת בשיעור..."></textarea>
+                        </div>
+                        <div class="feedback-group">
+                            <label>כמה השיעור עזר לי?</label>
+                            <div class="rating-container">
+                                <button class="rating-btn" onclick="selectRating('1', 1)">1</button>
+                                <button class="rating-btn" onclick="selectRating('1', 2)">2</button>
+                                <button class="rating-btn" onclick="selectRating('1', 3)">3</button>
+                                <button class="rating-btn" onclick="selectRating('1', 4)">4</button>
+                                <button class="rating-btn" onclick="selectRating('1', 5)">5</button>
+                                <span style="margin-right: 10px; font-size: 14px; color: var(--text);">⭐ לא עזר → עזר מאוד</span>
+                            </div>
+                        </div>
+                        <div class="feedback-group">
+                            <label>מה אהבתי במיוחד?</label>
+                            <input type="text" id="liked_1" placeholder="מה אהבתי במיוחד בשיעור הזה..." />
+                        </div>
+                        <button class="feedback-submit" onclick="submitFeedback('1', 'שיעור 1 - זהות המורה')">📤 שלח משוב</button>
+                        <div class="feedback-success" id="success_1">✅ תודה! המשוב נשלח בהצלחה</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- שיעור 2 -->
+            <div class="lesson-card">
+                <div class="lesson-header">
+                    <div>
+                        <div class="lesson-number">שיעור 2</div>
+                        <div class="lesson-title">קריאת הכיתה והתאמות</div>
+                    </div>
+                    <div class="lesson-duration">⏱ 19:35 דקות</div>
+                </div>
+                <div class="lesson-video">
+                    <video controls controlsList="nodownload">
+                        <source src="video3.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="lesson-description">
+                    <p>איך להבין את התלמידים שלך בזמן אמת ולהתאים את השיעור בהתאם.</p>
+                    <div class="lesson-attachments">
+                        <h4>📎 נספחים לשיעור:</h4>
+                        <a href="lesson2-attachment.pdf" class="attachment-link" download>📄 נספח קריאת הכיתה והתאמות</a>
+                    </div>
+                    
+                    <!-- Feedback Section -->
+                    <div class="lesson-feedback">
+                        <h4>💭 משוב על השיעור</h4>
+                        <div class="feedback-group">
+                            <label>מה למדתי בשיעור הזה?</label>
+                            <textarea id="learned_2" placeholder="שתפי מה למדת בשיעור..."></textarea>
+                        </div>
+                        <div class="feedback-group">
+                            <label>כמה השיעור עזר לי?</label>
+                            <div class="rating-container">
+                                <button class="rating-btn" onclick="selectRating('2', 1)">1</button>
+                                <button class="rating-btn" onclick="selectRating('2', 2)">2</button>
+                                <button class="rating-btn" onclick="selectRating('2', 3)">3</button>
+                                <button class="rating-btn" onclick="selectRating('2', 4)">4</button>
+                                <button class="rating-btn" onclick="selectRating('2', 5)">5</button>
+                                <span style="margin-right: 10px; font-size: 14px; color: var(--text);">⭐ לא עזר → עזר מאוד</span>
+                            </div>
+                        </div>
+                        <div class="feedback-group">
+                            <label>מה אהבתי במיוחד?</label>
+                            <input type="text" id="liked_2" placeholder="מה אהבתי במיוחד בשיעור הזה..." />
+                        </div>
+                        <button class="feedback-submit" onclick="submitFeedback('2', 'שיעור 2 - קריאת הכיתה')">📤 שלח משוב</button>
+                        <div class="feedback-success" id="success_2">✅ תודה! המשוב נשלח בהצלחה</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- שיעור 3 -->
+            <div class="lesson-card">
+                <div class="lesson-header">
+                    <div>
+                        <div class="lesson-number">שיעור 3</div>
+                        <div class="lesson-title">בניית שיעור משמעותי</div>
+                    </div>
+                    <div class="lesson-duration">⏱ 14:30 דקות</div>
+                </div>
+                <div class="lesson-video">
+                    <video controls controlsList="nodownload">
+                        <source src="video4.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="lesson-description">
+                    <p>מרעיון ועד ביצוע - איך לבנות שיעור עם עומק שמשרת את התלמידים.</p>
+                    <div class="lesson-attachments">
+                        <h4>📎 נספחים לשיעור:</h4>
+                        <a href="lesson3-attachment.pdf" class="attachment-link" download>📄 נספח בניית שיעור משמעותי</a>
+                    </div>
+                    
+                    <!-- Feedback Section -->
+                    <div class="lesson-feedback">
+                        <h4>💭 משוב על השיעור</h4>
+                        <div class="feedback-group">
+                            <label>מה למדתי בשיעור הזה?</label>
+                            <textarea id="learned_3" placeholder="שתפי מה למדת בשיעור..."></textarea>
+                        </div>
+                        <div class="feedback-group">
+                            <label>כמה השיעור עזר לי?</label>
+                            <div class="rating-container">
+                                <button class="rating-btn" onclick="selectRating('3', 1)">1</button>
+                                <button class="rating-btn" onclick="selectRating('3', 2)">2</button>
+                                <button class="rating-btn" onclick="selectRating('3', 3)">3</button>
+                                <button class="rating-btn" onclick="selectRating('3', 4)">4</button>
+                                <button class="rating-btn" onclick="selectRating('3', 5)">5</button>
+                                <span style="margin-right: 10px; font-size: 14px; color: var(--text);">⭐ לא עזר → עזר מאוד</span>
+                            </div>
+                        </div>
+                        <div class="feedback-group">
+                            <label>מה אהבתי במיוחד?</label>
+                            <input type="text" id="liked_3" placeholder="מה אהבתי במיוחד בשיעור הזה..." />
+                        </div>
+                        <button class="feedback-submit" onclick="submitFeedback('3', 'שיעור 3 - בניית שיעור')">📤 שלח משוב</button>
+                        <div class="feedback-success" id="success_3">✅ תודה! המשוב נשלח בהצלחה</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- שיעור 4 -->
+            <div class="lesson-card">
+                <div class="lesson-header">
+                    <div>
+                        <div class="lesson-number">שיעור 4</div>
+                        <div class="lesson-title">שיווק עצמי, נוכחות ותוכן ברשת</div>
+                    </div>
+                    <div class="lesson-duration">⏱ 6 דקות</div>
+                </div>
+                <div class="lesson-video">
+                    <video controls controlsList="nodownload">
+                        <source src="video5.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="lesson-description">
+                    <p>איך להביא תלמידים בלי להרגיש "משווקת" - שיווק שמרגיש נכון.</p>
+                    <div class="lesson-attachments">
+                        <h4>📎 נספחים לשיעור:</h4>
+                        <a href="lesson4-attachment.pdf" class="attachment-link" download>📄 נספח שיווק ונוכחות ברשת</a>
+                    </div>
+                    
+                    <!-- Feedback Section -->
+                    <div class="lesson-feedback">
+                        <h4>💭 משוב על השיעור</h4>
+                        <div class="feedback-group">
+                            <label>מה למדתי בשיעור הזה?</label>
+                            <textarea id="learned_4" placeholder="שתפי מה למדת בשיעור..."></textarea>
+                        </div>
+                        <div class="feedback-group">
+                            <label>כמה השיעור עזר לי?</label>
+                            <div class="rating-container">
+                                <button class="rating-btn" onclick="selectRating('4', 1)">1</button>
+                                <button class="rating-btn" onclick="selectRating('4', 2)">2</button>
+                                <button class="rating-btn" onclick="selectRating('4', 3)">3</button>
+                                <button class="rating-btn" onclick="selectRating('4', 4)">4</button>
+                                <button class="rating-btn" onclick="selectRating('4', 5)">5</button>
+                                <span style="margin-right: 10px; font-size: 14px; color: var(--text);">⭐ לא עזר → עזר מאוד</span>
+                            </div>
+                        </div>
+                        <div class="feedback-group">
+                            <label>מה אהבתי במיוחד?</label>
+                            <input type="text" id="liked_4" placeholder="מה אהבתי במיוחד בשיעור הזה..." />
+                        </div>
+                        <button class="feedback-submit" onclick="submitFeedback('4', 'שיעור 4 - שיווק')">📤 שלח משוב</button>
+                        <div class="feedback-success" id="success_4">✅ תודה! המשוב נשלח בהצלחה</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- שיעור 5 -->
+            <div class="lesson-card">
+                <div class="lesson-header">
+                    <div>
+                        <div class="lesson-number">שיעור 5</div>
+                        <div class="lesson-title">התנהלות מקצועית</div>
+                    </div>
+                    <div class="lesson-duration">⏱ 25:30 דקות</div>
+                </div>
+                <div class="lesson-video">
+                    <video controls controlsList="nodownload">
+                        <source src="video6.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="lesson-description">
+                    <p>כל מה שצריך לדעת על כסף, מיסים, ביטוח, עבודה מול סטודיו ותמחור.</p>
+                    <div class="lesson-attachments">
+                        <h4>📎 נספחים לשיעור:</h4>
+                        <a href="lesson5-attachment.pdf" class="attachment-link" download>📄 נספח התנהלות מקצועית</a>
+                    </div>
+                    
+                    <!-- Feedback Section -->
+                    <div class="lesson-feedback">
+                        <h4>💭 משוב על השיעור</h4>
+                        <div class="feedback-group">
+                            <label>מה למדתי בשיעור הזה?</label>
+                            <textarea id="learned_5" placeholder="שתפי מה למדת בשיעור..."></textarea>
+                        </div>
+                        <div class="feedback-group">
+                            <label>כמה השיעור עזר לי?</label>
+                            <div class="rating-container">
+                                <button class="rating-btn" onclick="selectRating('5', 1)">1</button>
+                                <button class="rating-btn" onclick="selectRating('5', 2)">2</button>
+                                <button class="rating-btn" onclick="selectRating('5', 3)">3</button>
+                                <button class="rating-btn" onclick="selectRating('5', 4)">4</button>
+                                <button class="rating-btn" onclick="selectRating('5', 5)">5</button>
+                                <span style="margin-right: 10px; font-size: 14px; color: var(--text);">⭐ לא עזר → עזר מאוד</span>
+                            </div>
+                        </div>
+                        <div class="feedback-group">
+                            <label>מה אהבתי במיוחד?</label>
+                            <input type="text" id="liked_5" placeholder="מה אהבתי במיוחד בשיעור הזה..." />
+                        </div>
+                        <button class="feedback-submit" onclick="submitFeedback('5', 'שיעור 5 - התנהלות מקצועית')">📤 שלח משוב</button>
+                        <div class="feedback-success" id="success_5">✅ תודה! המשוב נשלח בהצלחה</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feedback Modal -->
+        <div id="feedbackModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>💭 משוב על השיעור</h3>
+                    <button class="close-modal" onclick="closeFeedbackModal()">&times;</button>
+                </div>
+                
+                <div class="feedback-group">
+                    <label>מה למדתי בשיעור הזה?</label>
+                    <textarea id="modal_learned" placeholder="שתפי מה למדת בשיעור..."></textarea>
+                </div>
+                
+                <div class="feedback-group">
+                    <label>כמה השיעור עזר לי?</label>
+                    <div class="rating-container">
+                        <button class="rating-btn" onclick="selectModalRating(1)">1</button>
+                        <button class="rating-btn" onclick="selectModalRating(2)">2</button>
+                        <button class="rating-btn" onclick="selectModalRating(3)">3</button>
+                        <button class="rating-btn" onclick="selectModalRating(4)">4</button>
+                        <button class="rating-btn" onclick="selectModalRating(5)">5</button>
+                        <span style="margin-right: 10px; font-size: 14px; color: var(--text);">⭐ לא עזר → עזר מאוד</span>
+                    </div>
+                </div>
+                
+                <div class="feedback-group">
+                    <label>מה אהבתי במיוחד?</label>
+                    <input type="text" id="modal_liked" placeholder="מה אהבתי במיוחד בשיעור הזה..." />
+                </div>
+                
+                <button class="feedback-submit" onclick="submitModalFeedback()">📤 שלח משוב</button>
+                <div class="feedback-success" id="modal_success">✅ תודה! המשוב נשלח בהצלחה</div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2025 שרון שושן - התחלה מדויקת · כל הזכויות שמורות</p>
+        </footer>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://tyjlyfyqwgihbhhxbeqe.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR5amx5Znlxd2dpaGJoaHhiZXFlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzMDY2NDMsImV4cCI6MjA4Njg4MjY0M30.SA9hudQQdroQhdQAg6aYICNmhg8aSavE3qZ5YhTmCE0';
+        const { createClient } = supabase;
+        const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        function togglePassword() {
+            const input = document.getElementById('passwordInput');
+            const icon = document.getElementById('eyeIcon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.style.textDecoration = 'line-through';
+            } else {
+                input.type = 'password';
+                icon.style.textDecoration = 'none';
+            }
+        }
+
+        async function checkLogin() {
+            const email = document.getElementById('emailInput').value.trim().toLowerCase();
+            const password = document.getElementById('passwordInput').value.trim();
+            const errorMsg = document.getElementById('errorMsg');
+
+            if (!email || !password) {
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = 'נא למלא מייל וסיסמה';
+                return;
+            }
+
+            const { data, error } = await db
+                .from('students')
+                .select('*')
+                .eq('email', email)
+                .eq('password', password)
+                .single();
+
+            if (error || !data) {
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = 'מייל או סיסמה שגויים, נסי שוב';
+                return;
+            }
+
+            // עדכן זמן כניסה אחרון
+            await db
+                .from('students')
+                .update({
+                    last_login: new Date().toISOString(),
+                    login_count: (data.login_count || 0) + 1
+                })
+                .eq('email', email);
+
+            // רישום מכשיר
+            try {
+                const fp = btoa(unescape(encodeURIComponent(
+                    navigator.userAgent + '|' + screen.width + 'x' + screen.height + '|' +
+                    Intl.DateTimeFormat().resolvedOptions().timeZone
+                )));
+                await db.from('student_devices').upsert({
+                    student_email: email,
+                    device_fingerprint: fp,
+                    last_seen: new Date().toISOString()
+                }, { onConflict: 'student_email,device_fingerprint' });
+            } catch(e) { console.log('device log error', e); }
+
+            // שמור session
+            sessionStorage.setItem('yogaUser', JSON.stringify({ email, name: data.name }));
+
+            showCourse(data.name || email);
+        }
+
+        function showCourse(name) {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('courseContent').style.display = 'block';
+            document.getElementById('welcomeName').textContent = `שלום ${name} 👋`;
+        }
+
+        function logout() {
+            sessionStorage.removeItem('yogaUser');
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('courseContent').style.display = 'none';
+            document.getElementById('emailInput').value = '';
+            document.getElementById('passwordInput').value = '';
+        }
+
+        window.onload = function () {
+            const saved = sessionStorage.getItem('yogaUser');
+            if (saved) {
+                const user = JSON.parse(saved);
+                showCourse(user.name || user.email);
+            }
+        };
+
+        document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') checkLogin();
+        });
+
+        // Feedback System
+        let selectedRatings = {};
+
+        function selectRating(lessonId, rating) {
+            selectedRatings[lessonId] = rating;
+            
+            // Update visual
+            const container = event.target.closest('.rating-container');
+            container.querySelectorAll('.rating-btn').forEach((btn, idx) => {
+                if (idx < rating) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+        }
+
+        async function submitFeedback(lessonId, lessonTitle) {
+            const learned = document.getElementById(`learned_${lessonId}`).value.trim();
+            const rating = selectedRatings[lessonId];
+            const liked = document.getElementById(`liked_${lessonId}`).value.trim();
+            
+            // קריאה נכונה של האימייל
+            const saved = sessionStorage.getItem('yogaUser');
+            const studentEmail = saved ? JSON.parse(saved).email : 'anonymous';
+
+            if (!learned && !rating && !liked) {
+                alert('נא למלא לפחות שדה אחד');
+                return;
+            }
+
+            const submitBtn = event.target;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'שולח...';
+
+            try {
+                // Save to Supabase
+                const { error } = await db.from('lesson_feedback').insert({
+                    student_email: studentEmail,
+                    lesson_id: lessonId,
+                    lesson_title: lessonTitle,
+                    what_learned: learned || null,
+                    rating: rating || null,
+                    what_liked: liked || null
+                });
+
+                if (error) throw error;
+
+                // Show success message
+                document.getElementById(`success_${lessonId}`).style.display = 'block';
+                submitBtn.style.display = 'none';
+                
+                // Clear form
+                document.getElementById(`learned_${lessonId}`).value = '';
+                document.getElementById(`liked_${lessonId}`).value = '';
+                selectedRatings[lessonId] = null;
+
+                setTimeout(() => {
+                    document.getElementById(`success_${lessonId}`).style.display = 'none';
+                    submitBtn.style.display = 'block';
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '📤 שלח משוב';
+                }, 3000);
+
+            } catch (err) {
+                console.error(err);
+                alert('שגיאה בשליחת משוב: ' + err.message);
+                submitBtn.disabled = false;
+                submitBtn.textContent = '📤 שלח משוב';
+            }
+        }
+
+        /* === MODAL FEEDBACK FUNCTIONS === */
+        
+        let currentLessonId = '';
+        let currentLessonTitle = '';
+        let modalSelectedRating = 0;
+
+        // Add feedback buttons to all lessons (except intro)
+        window.addEventListener('DOMContentLoaded', function() {
+            const lessons = [
+                { id: '1', title: 'שיעור 1 - זהות המורה' },
+                { id: '2', title: 'שיעור 2 - קריאת הכיתה והתאמות' },
+                { id: '3', title: 'שיעור 3 - בניית שיעור משמעותי' },
+                { id: '4', title: 'שיעור 4 - שיווק עצמי ונוכחות ברשת' },
+                { id: '5', title: 'שיעור 5 - התנהלות מקצועית' }
+            ];
+
+            const lessonCards = document.querySelectorAll('.lesson-card');
+            
+            // Skip first card (intro) and add buttons to others
+            lessonCards.forEach((card, index) => {
+                if (index === 0) return; // Skip intro
+                
+                const lessonDesc = card.querySelector('.lesson-description');
+                const feedbackBtn = document.createElement('button');
+                feedbackBtn.className = 'feedback-button';
+                feedbackBtn.innerHTML = '💭 שתפי משוב על השיעור';
+                feedbackBtn.onclick = () => openFeedbackModal(lessons[index - 1].id, lessons[index - 1].title);
+                lessonDesc.appendChild(feedbackBtn);
+            });
+        });
+
+        function openFeedbackModal(lessonId, lessonTitle) {
+            currentLessonId = lessonId;
+            currentLessonTitle = lessonTitle;
+            modalSelectedRating = 0;
+            
+            // Reset form
+            document.getElementById('modal_learned').value = '';
+            document.getElementById('modal_liked').value = '';
+            document.getElementById('modal_success').style.display = 'none';
+            
+            // Reset rating buttons
+            document.querySelectorAll('#feedbackModal .rating-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Show modal
+            document.getElementById('feedbackModal').style.display = 'block';
+        }
+
+        function closeFeedbackModal() {
+            document.getElementById('feedbackModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('feedbackModal');
+            if (event.target == modal) {
+                closeFeedbackModal();
+            }
+        }
+
+        function selectModalRating(rating) {
+            modalSelectedRating = rating;
+            
+            // Visual feedback
+            document.querySelectorAll('#feedbackModal .rating-btn').forEach((btn, index) => {
+                if (index < rating) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+        }
+
+        async function submitModalFeedback() {
+            const learned = document.getElementById('modal_learned').value.trim();
+            const liked = document.getElementById('modal_liked').value.trim();
+
+            if (!learned && !modalSelectedRating && !liked) {
+                alert('אנא מלאי לפחות שדה אחד');
+                return;
+            }
+
+            // קריאה נכונה של האימייל מ-sessionStorage
+            const saved = sessionStorage.getItem('yogaUser');
+            if (!saved) {
+                alert('לא נמצא מייל - נסי להתנתק ולהתחבר שוב');
+                return;
+            }
+
+            const userData = JSON.parse(saved);
+            const email = userData.email;
+
+            try {
+                const { error } = await db.from('lesson_feedback').insert({
+                    student_email: email,
+                    lesson_id: currentLessonId,
+                    lesson_title: currentLessonTitle,
+                    what_learned: learned || null,
+                    rating: modalSelectedRating || null,
+                    what_liked: liked || null
+                });
+
+                if (error) throw error;
+
+                // Show success
+                document.getElementById('modal_success').style.display = 'block';
+                
+                // Close modal after 2 seconds
+                setTimeout(() => {
+                    closeFeedbackModal();
+                }, 2000);
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('שגיאה בשליחת המשוב. נסי שוב.');
+            }
+        }
+
+    </script>
+</body>
+</html>
