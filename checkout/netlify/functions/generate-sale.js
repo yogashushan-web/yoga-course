@@ -81,10 +81,11 @@ exports.handler = async (event) => {
         });
 
         // Save the sale_id from PayMe linked to the email
-        if (buyerEmail && result.sale_id) {
+        const saleId = result.payme_sale_id || result.sale_id;
+        if (buyerEmail && saleId) {
             await supabase
                 .from('pending_purchases')
-                .update({ sale_id: result.sale_id })
+                .update({ sale_id: saleId })
                 .eq('email', buyerEmail);
         }
 
