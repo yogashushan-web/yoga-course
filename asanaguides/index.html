@@ -73,14 +73,71 @@ const C = {
 const F = "'Heebo',sans-serif";
 // Chakra data
 const CHAKRAS = {
-  root:    { he:"מולאדהארה · שורש", en:"Muladhara · Root", color:"#C04040", symbol:"🔴" },
-  sacral:  { he:"סוואדהיסטאנה · סקראל", en:"Svadhisthana · Sacral", color:"#E06020", symbol:"🟠" },
-  solar:   { he:"מאניפורה · מקלעת השמש", en:"Manipura · Solar Plexus", color:"#D0A020", symbol:"🟡" },
-  heart:   { he:"אנאהאטה · לב", en:"Anahata · Heart", color:"#40A060", symbol:"🟢" },
-  throat:  { he:"וישודהה · גרון", en:"Vishuddha · Throat", color:"#4080C0", symbol:"🔵" },
-  third:   { he:"אג׳נא · עין שלישית", en:"Ajna · Third Eye", color:"#6040A0", symbol:"🟣" },
-  crown:   { he:"סהסראה · כתר", en:"Sahasrara · Crown", color:"#9060C0", symbol:"⚪" },
+  root: {
+    he:"מולאדהארה · שורש", en:"Muladhara · Root", color:"#C04040", symbol:"🔴",
+    location_he:"בסיס עמוד השדרה, רצפת האגן", location_en:"Base of spine, pelvic floor",
+    element_he:"אדמה", element_en:"Earth",
+    organs_he:"רגליים, עצמות, שרירי רצפת האגן, מעי גס, כליות, בלוטת יותרת הכליה", organs_en:"Legs, bones, pelvic floor muscles, colon, kidneys, adrenal glands",
+    meaning_he:"יציבות, ביטחון, שייכות, הישרדות. תחושת ״אני כאן, אני בטוחה״", meaning_en:"Stability, security, belonging, survival. The feeling of 'I am here, I am safe'",
+    blocked_he:"חרדה, חוסר ביטחון, פחד קיומי, תחושת חוסר יציבות, בעיות כלכליות חוזרות, ניתוק מהגוף", blocked_en:"Anxiety, insecurity, existential fear, instability, recurring financial issues, disconnection from body",
+    balance_he:"תנוחות עמידה מעוגנות, הליכה יחפה באדמה, תרגול נשימה עמוקה לבטן, אוכל מזין ומקרקע", balance_en:"Grounding standing poses, walking barefoot, deep belly breathing, nourishing earthy foods",
+  },
+  sacral: {
+    he:"סוואדהיסטאנה · סקראל", en:"Svadhisthana · Sacral", color:"#E06020", symbol:"🟠",
+    location_he:"מתחת לטבור, אזור האגן", location_en:"Below navel, pelvic area",
+    element_he:"מים", element_en:"Water",
+    organs_he:"איברי רבייה, שלפוחית, כליות, גב תחתון, ירכיים", organs_en:"Reproductive organs, bladder, kidneys, lower back, hips",
+    meaning_he:"יצירתיות, תשוקה, הנאה, זרימה רגשית. תחושת ״מותר לי להרגיש ולהתענג״", meaning_en:"Creativity, passion, pleasure, emotional flow. The feeling of 'I allow myself to feel and enjoy'",
+    blocked_he:"קשיחות רגשית, חוסר יצירתיות, אשמה סביב הנאה, בעיות פוריות, כאבי גב תחתון", blocked_en:"Emotional rigidity, lack of creativity, guilt around pleasure, fertility issues, lower back pain",
+    balance_he:"תנוחות פתיחת אגן, תנועה חופשית וריקוד, מגע עם מים, ביטוי רגשי חופשי", balance_en:"Hip-opening poses, free movement and dance, connection with water, free emotional expression",
+  },
+  solar: {
+    he:"מאניפורה · מקלעת השמש", en:"Manipura · Solar Plexus", color:"#D0A020", symbol:"🟡",
+    location_he:"מעל הטבור, אזור הבטן העליונה", location_en:"Above navel, upper abdomen",
+    element_he:"אש", element_en:"Fire",
+    organs_he:"מערכת עיכול, כבד, לבלב, קיבה, טחול", organs_en:"Digestive system, liver, pancreas, stomach, spleen",
+    meaning_he:"כוח אישי, ביטחון עצמי, רצון, משמעת. תחושת ״אני יכולה״", meaning_en:"Personal power, self-confidence, will, discipline. The feeling of 'I can'",
+    blocked_he:"חוסר ביטחון עצמי, קושי בקבלת החלטות, בעיות עיכול, צורך בשליטה או ויתור מוחלט", blocked_en:"Low self-esteem, difficulty making decisions, digestive issues, need for control or total surrender",
+    balance_he:"תנוחות ליבה, נשימת אש (קפלבאטי), חשיפה לשמש, הצבת גבולות בריאים", balance_en:"Core poses, Kapalabhati breath, sun exposure, setting healthy boundaries",
+  },
+  heart: {
+    he:"אנאהאטה · לב", en:"Anahata · Heart", color:"#40A060", symbol:"🟢",
+    location_he:"מרכז החזה", location_en:"Center of chest",
+    element_he:"אוויר", element_en:"Air",
+    organs_he:"לב, ריאות, בלוטת התימוס, זרועות, ידיים", organs_en:"Heart, lungs, thymus gland, arms, hands",
+    meaning_he:"אהבה, חמלה, קבלה, סליחה. תחושת ״אני אוהבת ונאהבת״", meaning_en:"Love, compassion, acceptance, forgiveness. The feeling of 'I love and am loved'",
+    blocked_he:"קושי בנתינה או קבלה, בדידות, קנאה, טינה, כאבי חזה, בעיות נשימה", blocked_en:"Difficulty giving or receiving, loneliness, jealousy, resentment, chest pain, breathing issues",
+    balance_he:"כיפופי אחורה ופתיחות חזה, פרנאיאמה, תרגול הכרת תודה, מגע ואהבה ללא תנאי", balance_en:"Backbends and chest openers, pranayama, gratitude practice, unconditional touch and love",
+  },
+  throat: {
+    he:"וישודהה · גרון", en:"Vishuddha · Throat", color:"#4080C0", symbol:"🔵",
+    location_he:"אזור הגרון", location_en:"Throat area",
+    element_he:"אתר / חלל", element_en:"Ether / Space",
+    organs_he:"גרון, בלוטת התריס, צוואר, לסת, פה, אוזניים", organs_en:"Throat, thyroid, neck, jaw, mouth, ears",
+    meaning_he:"ביטוי עצמי, אמת, תקשורת, הקשבה. תחושת ״אני מדברת את האמת שלי״", meaning_en:"Self-expression, truth, communication, listening. The feeling of 'I speak my truth'",
+    blocked_he:"קושי בביטוי עצמי, פחד מדיבור, כאבי גרון חוזרים, חוסר יכולת להקשיב", blocked_en:"Difficulty with self-expression, fear of speaking, recurring throat pain, inability to listen",
+    balance_he:"שירה, הנחיה מילולית, תנוחות צוואר, כתיבה חופשית, שתיקה מודעת", balance_en:"Singing, verbal cueing, neck poses, free writing, conscious silence",
+  },
+  third: {
+    he:"אג׳נא · עין שלישית", en:"Ajna · Third Eye", color:"#6040A0", symbol:"🟣",
+    location_he:"מרכז המצח, בין הגבות", location_en:"Center of forehead, between eyebrows",
+    element_he:"אור", element_en:"Light",
+    organs_he:"מוח, עיניים, בלוטת יותרת המוח (היפופיזה), מערכת עצבים", organs_en:"Brain, eyes, pituitary gland, nervous system",
+    meaning_he:"אינטואיציה, תובנה, דמיון, חוכמה פנימית. תחושת ״אני רואה מעבר למה שנראה״", meaning_en:"Intuition, insight, imagination, inner wisdom. The feeling of 'I see beyond what is visible'",
+    blocked_he:"חוסר חיבור לאינטואיציה, בלבול, כאבי ראש, חוסר יכולת לדמיין, ציניות", blocked_en:"Disconnection from intuition, confusion, headaches, inability to visualize, cynicism",
+    balance_he:"מדיטציה, תנוחות הפוכות, ויזואליזציה מודרכת, שהייה בחושך, צפייה בכוכבים", balance_en:"Meditation, inversions, guided visualization, time in darkness, stargazing",
+  },
+  crown: {
+    he:"סהסראה · כתר", en:"Sahasrara · Crown", color:"#9060C0", symbol:"⚪",
+    location_he:"קודקוד הראש", location_en:"Top of head",
+    element_he:"תודעה", element_en:"Consciousness",
+    organs_he:"מוח עליון, בלוטת האצטרובל (פינאלית), מערכת עצבים מרכזית", organs_en:"Upper brain, pineal gland, central nervous system",
+    meaning_he:"חיבור רוחני, אחדות, מודעות טהורה, התעלות. תחושת ״אני חלק ממשהו גדול יותר״", meaning_en:"Spiritual connection, unity, pure awareness, transcendence. The feeling of 'I am part of something greater'",
+    blocked_he:"ניתוק רוחני, תחושת חוסר משמעות, חיים על טייס אוטומטי, דיכאון קיומי", blocked_en:"Spiritual disconnection, meaninglessness, living on autopilot, existential depression",
+    balance_he:"מדיטציה, שקט, תנוחות הפוכות ועמידת ראש, תרגול הכרת תודה, חיבור לטבע", balance_en:"Meditation, silence, inversions and headstand, gratitude practice, connection with nature",
+  },
 };
+const CHAKRA_ORDER = ["root","sacral","solar","heart","throat","third","crown"];
 
 /* ── UI strings ── */
 const UI = {
@@ -626,6 +683,7 @@ function YogaShoshan() {
   const [selected, setSelected] = useState(allPoses[0]);
   const [tab, setTab] = useState("assist");
   const [showEthics, setShowEthics] = useState(false);
+  const [showChakras, setShowChakras] = useState(false);
   const [search, setSearch] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -704,6 +762,12 @@ function YogaShoshan() {
           ))}
         </div>
 
+        <button className="hide-mobile" onClick={() => setShowChakras(true)}
+          style={{ background:"transparent", border:`1.5px solid ${C.plum}50`, color:C.plum, borderRadius:"8px", padding:"6px 13px", fontFamily:F, fontSize:"12px", cursor:"pointer", transition:"all 0.2s", whiteSpace:"nowrap" }}
+          onMouseEnter={e => Object.assign(e.currentTarget.style, { background:C.plum, color:"#FFF" })}
+          onMouseLeave={e => Object.assign(e.currentTarget.style, { background:"transparent", color:C.plum })}>
+          {isHe ? "🌈 צ׳אקרות" : "🌈 Chakras"}
+        </button>
         <button className="hide-mobile" onClick={() => setShowEthics(true)}
           style={{ background:"transparent", border:`1.5px solid ${C.plum}50`, color:C.plum, borderRadius:"8px", padding:"6px 13px", fontFamily:F, fontSize:"12px", cursor:"pointer", transition:"all 0.2s", whiteSpace:"nowrap" }}
           onMouseEnter={e => Object.assign(e.currentTarget.style, { background:C.plum, color:"#FFF" })}
@@ -922,6 +986,58 @@ function YogaShoshan() {
               <p style={{ margin:0, fontSize:"13px", lineHeight:1.85, color:C.dark }}><strong>{isHe?"זכרי:":"Remember:"}</strong> {ui.ethicsFooter}</p>
             </div>
             <button onClick={() => setShowEthics(false)} style={{ width:"100%", padding:"11px", background:C.header, color:"white", border:"none", borderRadius:"9px", fontFamily:F, fontSize:"13px", fontWeight:"700", cursor:"pointer" }}>{ui.close}</button>
+          </div>
+        </div>
+      )}
+
+      {/* CHAKRA GUIDE MODAL */}
+      {showChakras && (
+        <div onClick={() => setShowChakras(false)} style={{ position:"fixed", inset:0, background:"rgba(15,22,15,0.88)", zIndex:100, display:"flex", alignItems:"center", justifyContent:"center", padding:"20px", backdropFilter:"blur(6px)" }}>
+          <div onClick={e => e.stopPropagation()} style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"750px", width:"100%", maxHeight:"88vh", overflowY:"auto", boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"16px" }}>
+              <div>
+                <h2 style={{ fontFamily:F, fontSize:"22px", fontWeight:"900", color:C.dark, margin:0 }}>{isHe ? "מדריך הצ׳אקרות" : "Chakra Guide"}</h2>
+                <div style={{ fontSize:"12px", color:C.muted, fontStyle:"italic", marginTop:"4px" }}>{isHe ? "שבעת מרכזי האנרגיה בגוף" : "The seven energy centers of the body"}</div>
+              </div>
+              <button onClick={() => setShowChakras(false)} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:"8px", width:32, height:32, cursor:"pointer", color:C.muted, fontSize:"16px", display:"flex", alignItems:"center", justifyContent:"center" }}>×</button>
+            </div>
+
+            <div style={{ display:"flex", flexDirection:"column", gap:"12px" }}>
+              {CHAKRA_ORDER.map((key, i) => {
+                const ch = CHAKRAS[key];
+                return (
+                  <div key={key} style={{ background:`${ch.color}08`, border:`1px solid ${ch.color}20`, borderRadius:"14px", overflow:"hidden" }}>
+                    <div style={{ background:`${ch.color}15`, padding:"14px 18px", display:"flex", alignItems:"center", gap:"12px" }}>
+                      <span style={{ fontSize:"24px" }}>{ch.symbol}</span>
+                      <div>
+                        <div style={{ fontWeight:"900", fontSize:"16px", color:ch.color }}>{isHe ? ch.he : ch.en}</div>
+                        <div style={{ fontSize:"11px", color:C.muted }}>{isHe ? ch.en : ch.he} · {isHe ? ch.element_he : ch.element_en} · {isHe ? ch.location_he : ch.location_en}</div>
+                      </div>
+                    </div>
+                    <div style={{ padding:"14px 18px", display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(200px, 1fr))", gap:"10px" }}>
+                      <div>
+                        <div style={{ fontSize:"10px", fontWeight:"700", color:ch.color, textTransform:"uppercase", letterSpacing:"1px", marginBottom:"4px" }}>{isHe ? "משמעות" : "Meaning"}</div>
+                        <p style={{ margin:0, fontSize:"12px", lineHeight:1.7, color:C.dark }}>{isHe ? ch.meaning_he : ch.meaning_en}</p>
+                      </div>
+                      <div>
+                        <div style={{ fontSize:"10px", fontWeight:"700", color:ch.color, textTransform:"uppercase", letterSpacing:"1px", marginBottom:"4px" }}>{isHe ? "איברים קשורים" : "Related Organs"}</div>
+                        <p style={{ margin:0, fontSize:"12px", lineHeight:1.7, color:C.dark }}>{isHe ? ch.organs_he : ch.organs_en}</p>
+                      </div>
+                      <div>
+                        <div style={{ fontSize:"10px", fontWeight:"700", color:C.warn, textTransform:"uppercase", letterSpacing:"1px", marginBottom:"4px" }}>{isHe ? "כשחסומה" : "When Blocked"}</div>
+                        <p style={{ margin:0, fontSize:"12px", lineHeight:1.7, color:"#6A4A4A" }}>{isHe ? ch.blocked_he : ch.blocked_en}</p>
+                      </div>
+                      <div>
+                        <div style={{ fontSize:"10px", fontWeight:"700", color:C.accent, textTransform:"uppercase", letterSpacing:"1px", marginBottom:"4px" }}>{isHe ? "איך לאזן" : "How to Balance"}</div>
+                        <p style={{ margin:0, fontSize:"12px", lineHeight:1.7, color:C.dark }}>{isHe ? ch.balance_he : ch.balance_en}</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <button onClick={() => setShowChakras(false)} style={{ width:"100%", padding:"11px", marginTop:"16px", background:C.dark, color:"white", border:"none", borderRadius:"9px", fontFamily:F, fontSize:"13px", fontWeight:"700", cursor:"pointer" }}>{ui.close}</button>
           </div>
         </div>
       )}
