@@ -1438,7 +1438,7 @@ function YogaShoshan() {
 
       {/* ETHICS MODAL */}
       {(showEthics || view==="ethics") && (
-        <div onClick={() => { setShowEthics(false); if(view==="ethics") setView("guide"); }} className="modal-backdrop-mobile" style={{ position:"fixed", inset:0, background:"rgba(15,22,15,0.88)", zIndex:100, display:"flex", alignItems:"center", justifyContent:"center", padding:"20px", backdropFilter:"blur(6px)" }}>
+        <div style={{ flex:1, overflowY:"auto", padding:"20px 20px 40px", background:C.bg }}>
           <div onClick={e => e.stopPropagation()} className="modal-content-mobile" style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"680px", width:"100%", maxHeight:"88vh", overflowY:"auto", border:`2px solid ${C.gold}35`, boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"4px" }}>
               <div>
@@ -1467,7 +1467,7 @@ function YogaShoshan() {
               <span>🌿</span>
               <p style={{ margin:0, fontSize:"13px", lineHeight:1.85, color:C.dark }}><strong>{isHe?"זכרי:":"Remember:"}</strong> {ui.ethicsFooter}</p>
             </div>
-            <button onClick={() => { setShowEthics(false); if(view==="ethics") setView("guide"); }} style={{ width:"100%", padding:"11px", background:C.header, color:"white", border:"none", borderRadius:"9px", fontFamily:F, fontSize:"13px", fontWeight:"700", cursor:"pointer" }}>{ui.close}</button>
+            
           </div>
         </div>
       )}
@@ -1665,7 +1665,7 @@ function YogaShoshan() {
 
       {/* CHAKRA GUIDE MODAL */}
       {(showChakras || view==="chakras") && (
-        <div onClick={() => { setShowChakras(false); if(view==="chakras") setView("guide"); }} className="modal-backdrop-mobile" style={{ position:"fixed", inset:0, background:"rgba(15,22,15,0.88)", zIndex:100, display:"flex", alignItems:"center", justifyContent:"center", padding:"20px", backdropFilter:"blur(6px)" }}>
+        <div style={{ flex:1, overflowY:"auto", padding:"20px 20px 40px", background:C.bg }}>
           <div onClick={e => e.stopPropagation()} className="modal-content-mobile" style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"750px", width:"100%", maxHeight:"88vh", overflowY:"auto", boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"16px" }}>
               <div>
@@ -1710,14 +1710,14 @@ function YogaShoshan() {
               })}
             </div>
 
-            <button onClick={() => { setShowChakras(false); if(view==="chakras") setView("guide"); }} style={{ width:"100%", padding:"11px", marginTop:"16px", background:C.dark, color:"white", border:"none", borderRadius:"9px", fontFamily:F, fontSize:"13px", fontWeight:"700", cursor:"pointer" }}>{ui.close}</button>
+            
           </div>
         </div>
       )}
 
       {/* PRANAYAMA GUIDE MODAL */}
       {(showPranayama || view==="pranayama") && (
-        <div onClick={() => { setShowPranayama(false); if(view==="pranayama") setView("guide"); }} className="modal-backdrop-mobile" style={{ position:"fixed", inset:0, background:"rgba(15,22,15,0.88)", zIndex:100, display:"flex", alignItems:"center", justifyContent:"center", padding:"20px", backdropFilter:"blur(6px)" }}>
+        <div style={{ flex:1, overflowY:"auto", padding:"20px 20px 40px", background:C.bg }}>
           <div onClick={e => e.stopPropagation()} className="modal-content-mobile" style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"800px", width:"100%", maxHeight:"88vh", overflowY:"auto", boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"16px" }}>
               <div>
@@ -1771,14 +1771,14 @@ function YogaShoshan() {
 
       {/* ANATOMY REFERENCE MODAL */}
       {(showAnatomy || view==="anatomy") && (
-        <div onClick={() => { setShowAnatomy(false); if(view==="anatomy") setView("guide"); }} style={{ position:"fixed", inset:0, background:"rgba(15,22,15,0.88)", zIndex:100, display:"flex", alignItems:"center", justifyContent:"center", padding:"20px", backdropFilter:"blur(6px)" }}>
+        <div style={{ flex:1, overflowY:"auto", padding:"20px 20px 40px", background:C.bg }}>
           <div onClick={e => e.stopPropagation()} style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"800px", width:"100%", maxHeight:"88vh", overflowY:"auto", boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"16px" }}>
               <div>
                 <h2 style={{ fontFamily:F, fontSize:"22px", fontWeight:"900", color:C.dark, margin:0 }}>{isHe ? "🦴 מדריך אנטומיה בסיסי" : "🦴 Basic Anatomy Reference"}</h2>
                 <div style={{ fontSize:"12px", color:C.muted, fontStyle:"italic", marginTop:"4px" }}>{isHe ? "מה שכל מורת יוגה צריכה לדעת על הגוף" : "What every yoga teacher needs to know about the body"}</div>
               </div>
-              <button onClick={() => { setShowAnatomy(false); if(view==="anatomy") setView("guide"); }} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:"8px", width:32, height:32, cursor:"pointer", color:C.muted, fontSize:"16px", display:"flex", alignItems:"center", justifyContent:"center" }}>×</button>
+              
             </div>
 
             <div style={{ background:`${C.accent}10`, border:`1px solid ${C.accent}25`, borderRadius:"10px", padding:"12px 16px", marginBottom:"16px", fontSize:"12px", lineHeight:1.7, color:C.dark }}>
