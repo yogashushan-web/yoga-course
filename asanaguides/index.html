@@ -1161,7 +1161,7 @@ function YogaShoshan() {
       {view === "builder" && (
         <div className="builder-layout-mobile" style={{ display:"flex", flex:1, minHeight:0, overflow:"hidden" }}>
           {/* POSE LIBRARY - Side panel on desktop, collapsible top panel on mobile */}
-          <div className="builder-library-mobile" style={{ width:"240px", background:C.sidebar, overflowY:"auto", flexShrink:0, borderLeft:isHe?`1px solid ${C.border}`:"none", borderRight:!isHe?`1px solid ${C.border}`:"none", padding:"12px" }}>
+          <div className="builder-library-mobile" style={{ width:"240px", background:C.sidebar, flexShrink:0, borderLeft:isHe?`1px solid ${C.border}`:"none", borderRight:!isHe?`1px solid ${C.border}`:"none", padding:"12px", position:"sticky", top:"90px", alignSelf:"flex-start", maxHeight:"calc(100vh - 100px)", overflowY:"auto" }}>
             {/* Mobile: collapsible toggle */}
             <style>{`@media (max-width:768px) { .library-toggle-btn { display: flex !important; } .library-content { display: ${libraryOpen ? 'block' : 'none'} !important; } } @media (min-width:769px) { .library-toggle-btn { display: none !important; } .library-content { display: block !important; } }`}</style>
             <button onClick={() => setLibraryOpen(!libraryOpen)}
