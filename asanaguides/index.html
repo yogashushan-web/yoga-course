@@ -933,6 +933,101 @@ const SANKALPAS = [
     ]},
 ];
 
+/* ── INJURIES & MODIFICATIONS (Iyengar-inspired) ── */
+const INJURIES = [
+  { id:"lower-back", color:"#C04040",
+    he:"כאבי גב תחתון", en:"Lower Back Pain",
+    prevalence_he:"הפציעה הנפוצה ביותר ביוגה. מגיעה בדרך כלל מכיפוף קדימה לא נכון — מהמותניים במקום מהאגן.",
+    prevalence_en:"The most common yoga injury. Usually comes from incorrect forward folding — from the waist instead of the hips.",
+    causes_he:["כיפוף קדימה מהמותניים במקום מהאגן","חוסר הפעלת ליבה בתנוחות","כיפופי אחורה ללא אורך בעמוד השדרה","ישיבה ממושכת מחוץ למזרן שמחלישה את הגב"],
+    causes_en:["Forward folding from waist instead of hip hinge","Lack of core engagement in poses","Backbends without spinal length","Prolonged sitting off the mat that weakens the back"],
+    iyengar_he:["השתמש בחגורה בכיפולים קדימה — לשמור על עמוד שדרה ארוך","בלוקים מתחת לידיים באוטאנאסנה ובטריקונאסנה","שמיכה מקופלת מתחת לאגן בישיבה — ליצור נטייה קדימה טבעית","כיסא לתמיכה בכיפולים קדימה — הידיים על משענת הכיסא","בכיפופי אחורה: דגש על אורך לפני עומק — ״האריך לפני שמתכופף״"],
+    iyengar_en:["Use a strap in forward folds — keep the spine long","Blocks under hands in Uttanasana and Trikonasana","Folded blanket under pelvis in seated poses — creates natural forward tilt","Chair support in forward folds — hands on chair back","In backbends: emphasize length before depth — 'lengthen before you bend'"],
+    avoid_he:["כיפולים קדימה עמוקים בלי הכנה","סיבובים חדים בלי ליבה מופעלת","בדרגון שקיעת אגן — כמו צ׳אטורנגה בלי כוח ליבה"],
+    avoid_en:["Deep forward folds without preparation","Sharp twists without core engagement","Hip sagging poses — like Chaturanga without core strength"],
+    signs_he:"כאב חד בגב תחתון, קושי להתיישר אחרי כיפוף, כאב שמקרין לרגליים (עצב סיאטי).",
+    signs_en:"Sharp lower back pain, difficulty straightening after folding, pain radiating to legs (sciatica).",
+  },
+  { id:"knees", color:"#E06020",
+    he:"פציעות ברכיים", en:"Knee Injuries",
+    prevalence_he:"שכיחות מאוד, במיוחד בתנוחות לוחם, לוטוס, ובתנוחות ישיבה עם רגליים מוצלבות.",
+    prevalence_en:"Very common, especially in Warrior poses, Lotus, and cross-legged seated poses.",
+    causes_he:["ברך שיורדת פנימה בלוחם — עוקבת לכיוון הלא נכון","כפייה לישיבה בלוטוס לפני שהאגן פתוח מספיק","ברך לא מיושרת מעל הקרסול בכיפוף","היפר-אקסטנשן (נעילת ברכיים) בתנוחות עמידה ישרות"],
+    causes_en:["Knee collapsing inward in Warrior — tracking incorrectly","Forcing Lotus before hips are open enough","Knee not aligned over ankle in bends","Hyperextension (locking knees) in straight-leg standing poses"],
+    iyengar_he:["מגבת מגולגלת מאחורי הברך בתנוחות ישיבה — שומרת על מרחב במפרק","בלוק בין הירכיים בתנוחות לוחם — מלמד את הברך לעקוב החוצה","שמיכה מתחת לישבן בישיבה מוצלבת — מפחיתה מתח על הברכיים","חגורה סביב הירכיים בבדהה קונאסנה — תמיכה בלי כפייה","תמיד לשמור על כיפוף קל (מיקרו-בנד) ולא לנעול ברכיים"],
+    iyengar_en:["Rolled towel behind the knee in seated poses — maintains joint space","Block between thighs in Warrior — teaches knee to track outward","Blanket under seat in cross-legged sitting — reduces knee stress","Strap around thighs in Baddha Konasana — support without force","Always maintain slight bend (micro-bend), never lock knees"],
+    avoid_he:["לוטוס מלא אם האגן לא פתוח — התחל בחצי לוטוס או סוכאסנה","תנוחות עם ברך מכופפת מעבר ל-90 מעלות","דחיפת ברכיים כלפי מטה בבדהה קונאסנה"],
+    avoid_en:["Full Lotus if hips aren't open — start with Half Lotus or Sukhasana","Poses with knee bent beyond 90 degrees","Pushing knees down in Baddha Konasana"],
+    signs_he:"כאב חד בצד הפנימי או החיצוני של הברך, נפיחות, תחושת ״נעילה״ או חוסר יציבות.",
+    signs_en:"Sharp pain on inner or outer knee, swelling, feeling of 'locking' or instability.",
+  },
+  { id:"wrists", color:"#4080C0",
+    he:"כאבי פרקי כף היד", en:"Wrist Pain",
+    prevalence_he:"שכיחה מאוד בוינאסה בגלל נשיאת משקל חוזרת על הידיים — פלאנק, צ׳אטורנגה, כלב פונה למטה.",
+    prevalence_en:"Very common in vinyasa due to repeated weight-bearing on hands — Plank, Chaturanga, Downward Dog.",
+    causes_he:["משקל גוף רב על בסיס כף היד — במקום פריסה שווה על כל היד","חזרות רבות מדי של ויניאסה בלי מנוחה","תנוחות נשיאת משקל ללא הכנה — שרירי היד והאמה לא מוכנים","גמישות יתר בפרק — חוסר יציבות"],
+    causes_en:["Body weight heavy on heel of hand — instead of spread across entire hand","Too many vinyasa repetitions without rest","Weight-bearing poses without preparation — hand and forearm muscles not ready","Hypermobility in wrist — lack of stability"],
+    iyengar_he:["בלוקים מתחת לבסיס כף היד — מקטינים את זווית הכיפוף","אימון פריסת אצבעות: ״הנח כוח שווה דרך כל אצבע וכל קשר״","אמות על המחצלת במקום כפות ידיים — כלב דולפין במקום כלב רגיל","חימום פרקי כפות ידיים לפני תרגול — סיבובים עדינים","הפחתת מספר ויניאסות — איכות על פני כמות"],
+    iyengar_en:["Blocks under heel of hand — reduce the wrist angle","Finger spreading practice: 'Equal weight through every finger and knuckle'","Forearms on mat instead of palms — Dolphin instead of regular Down Dog","Warm up wrists before practice — gentle rotations","Reduce number of vinyasas — quality over quantity"],
+    avoid_he:["ויניאסה מלאה כל פעם — הצע אפשרות לדלג","קפיצות ידיים (כמו בתנוחות זרועות) בלי חימום","הנחת כל המשקל על בסיס כף היד"],
+    avoid_en:["Full vinyasa every time — offer option to skip","Hand jumps (as in arm balances) without warm-up","Placing all weight on the heel of the hand"],
+    signs_he:"כאב בבסיס כף היד, עקצוצים באצבעות, כאב שמחמיר בנשיאת משקל.",
+    signs_en:"Pain at base of hand, tingling in fingers, pain worsening with weight-bearing.",
+  },
+  { id:"shoulders", color:"#6040A0",
+    he:"פציעות כתף ושרוול מסובב", en:"Shoulder & Rotator Cuff",
+    prevalence_he:"נפוצות במיוחד בצ׳אטורנגה לא נכונה, בתנוחות ידיים מעל הראש, ובביינדים מאולצים.",
+    prevalence_en:"Especially common in incorrect Chaturanga, overhead arm poses, and forced binds.",
+    causes_he:["צ׳אטורנגה עם כתפיים שיורדות מתחת למרפקים — עומס יתר על השרוול המסובב","ביינדים כפויים — לפני שהגוף מוכן","הרמת ידיים מעל הראש בלי הורדת כתפיים קודם","חזרות רבות מדי בלי מנוחה"],
+    causes_en:["Chaturanga with shoulders dropping below elbows — overloads rotator cuff","Forced binds — before the body is ready","Lifting arms overhead without first dropping shoulders","Too many repetitions without rest"],
+    iyengar_he:["חגורה בין הידיים בכלב פונה למטה — שומרת על רוחב כתפיים","בלוקים מתחת לידיים בצ׳אטורנגה — מגבילים עומק הירידה","חגורה בביינדים — מאפשרת את התנועה בלי כפייה","ברכיים על הרצפה בצ׳אטורנגה — מפחיתות עומס על הכתפיים","עמידה ליד קיר לתנוחות ידיים — הכתף לומדת את היישור הנכון"],
+    iyengar_en:["Strap between hands in Down Dog — maintains shoulder width","Blocks under hands in Chaturanga — limit depth of descent","Strap in binds — allows movement without force","Knees on floor in Chaturanga — reduces shoulder load","Standing at wall for arm poses — shoulder learns correct alignment"],
+    avoid_he:["צ׳אטורנגה אם יש כאב כתף — הצע ברכיים למטה או דילוג","ביינדים מאולצים — אם אצבעות לא מגיעות, השתמש בחגורה","תנוחות עם ידיים מאחורי הגב אם הכתפיים נוקשות"],
+    avoid_en:["Chaturanga if there's shoulder pain — offer knees down or skip","Forced binds — if fingers don't reach, use a strap","Hands-behind-back poses if shoulders are stiff"],
+    signs_he:"כאב בחלק הקדמי של הכתף, קושי להרים את היד הצדה, כאב שמקרין לזרוע, ״קליק״ בכתף.",
+    signs_en:"Pain in front of shoulder, difficulty lifting arm to the side, pain radiating to arm, 'clicking' in shoulder.",
+  },
+  { id:"hamstrings", color:"#4A8A6D",
+    he:"קרע או מתיחת יתר בשרירי ירך אחוריים", en:"Hamstring Strain",
+    prevalence_he:"שכיחה מאוד, במיוחד בכיפולים קדימה אגרסיביים ובספגט (הנומנאסנה).",
+    prevalence_en:"Very common, especially in aggressive forward folds and splits (Hanumanasana).",
+    causes_he:["כיפולים קדימה עם ברכיים נעולות — כל העומס על ה-hamstrings","״דחיפה״ לעומק בלי חימום מספיק","מתיחה בליסטית (קפיצית) במקום סטטית","התעלמות מכאב ״משיכה״ שמסמן מתיחת יתר"],
+    causes_en:["Forward folds with locked knees — all load on hamstrings","'Pushing' deeper without enough warm-up","Ballistic (bouncing) stretching instead of static","Ignoring 'pulling' pain that signals overstretching"],
+    iyengar_he:["כפוף ברכיים בכל כיפול קדימה — תמיד אפשרות","חגורה סביב כפות הרגליים בפאשצ׳ימוטאנאסנה — מאפשרת אורך בלי מתיחת יתר","בלוקים מתחת לידיים בכל תנוחה שהידיים לא מגיעות לרצפה","שמיכה מתחת לאגן בכיפולים קדימה בישיבה — מטה את האגן קדימה","עבודה עם סופטה פאדאנגוסטאסנה (בשכיבה) — כוח הכבידה עוזר בלי עומס"],
+    iyengar_en:["Bend knees in every forward fold — always an option","Strap around feet in Paschimottanasana — allows length without overstretching","Blocks under hands in any pose where hands don't reach the floor","Blanket under pelvis in seated forward folds — tilts pelvis forward","Work with Supta Padangusthasana (supine) — gravity helps without load"],
+    avoid_he:["מתיחות עמוקות בלי חימום של לפחות 10 דקות","ספגט (הנומנאסנה) ללא הכנה מתאימה","כיפוף קדימה עם ברכיים נעולות ומשקל קדימה"],
+    avoid_en:["Deep stretches without at least 10 minutes warm-up","Splits (Hanumanasana) without proper preparation","Forward fold with locked knees and forward-heavy weight"],
+    signs_he:"כאב חד בגב הירך (לרוב ליד עצם הישיבה), קושי ללכת למחרת, שטח רגיש למגע.",
+    signs_en:"Sharp pain in back of thigh (usually near sit bone), difficulty walking next day, area tender to touch.",
+  },
+  { id:"neck", color:"#8B6914",
+    he:"כאבי צוואר", en:"Neck Pain & Strain",
+    prevalence_he:"שכיחה בעיקר בתנוחות הפוכות (כתפיים, עמידת ראש), בשוואסנה עם ראש לא נתמך, ובכיפופי אחורה.",
+    prevalence_en:"Common mainly in inversions (shoulder stand, headstand), unsupported Savasana, and backbends.",
+    causes_he:["סיבוב ראש בתנוחת כתפיים — לחץ על חוליות צוואריות","עמידת ראש עם משקל על הצוואר במקום על האמות","כיפוף ראש אחורה בכיפופי אחורה — במקום הארכה","מתח מצטבר מישיבה מול מחשב"],
+    causes_en:["Turning head in Shoulder Stand — pressure on cervical vertebrae","Headstand with weight on neck instead of forearms","Dropping head back in backbends — instead of lengthening","Accumulated tension from sitting at a computer"],
+    iyengar_he:["שמיכות מקופלות מתחת לכתפיים בסרוואנגאסנה — הראש נמוך יותר מהכתפיים, ומפחית לחץ על הצוואר","קיר כתמיכה בתנוחות הפוכות — מאפשר ללמוד יישור בלי סיכון","כרית קטנה מתחת לראש בשוואסנה — שומרת על עקומה טבעית","הנחיה ברורה: ״לעולם לא לסובב את הראש בתנוחת כתפיים״","בכיפופי אחורה: הנחה ״האריך את עורף הצוואר״ במקום ״הרם ראש״"],
+    iyengar_en:["Folded blankets under shoulders in Sarvangasana — head lower than shoulders, reduces neck pressure","Wall support in inversions — learn alignment without risk","Small pillow under head in Savasana — maintains natural curve","Clear instruction: 'Never turn the head in Shoulder Stand'","In backbends: cue 'lengthen the back of the neck' instead of 'lift the head'"],
+    avoid_he:["סרוואנגאסנה והלאסנה ללא שמיכות — לעולם לא","עמידת ראש ללא פיקוח אישי","סיבובי ראש מהירים בכל תנוחה","כפיית הראש אחורה בכיפופי אחורה"],
+    avoid_en:["Sarvangasana and Halasana without blankets — never","Headstand without personal supervision","Quick head rotations in any pose","Forcing the head back in backbends"],
+    signs_he:"כאב בעורף, קושי לסובב ראש, כאב ראש שמתחיל מהצוואר, עקצוצים בזרועות.",
+    signs_en:"Back-of-neck pain, difficulty turning head, headache originating from neck, tingling in arms.",
+  },
+  { id:"si-joint", color:"#5B7D6E",
+    he:"מפרק סקרואיליאק (SI)", en:"SI Joint Dysfunction",
+    prevalence_he:"פציעה ״שקטה״ — לא תמיד מזוהה. שכיחה במיוחד בתלמידים גמישים מטבעם שעושים סיבובים ופתיחות אגן עמוקות.",
+    prevalence_en:"A 'quiet' injury — not always identified. Especially common in naturally flexible students doing deep twists and hip openers.",
+    causes_he:["סיבובים עמוקים מהאגן בלי יציבות ליבה","פתיחות אגן אסימטריות חוזרות (יונה, ספגט)","גמישות יתר בלי כוח מייצב","היריון — הורמון רלקסין מרפה את הרצועות"],
+    causes_en:["Deep twists from the pelvis without core stability","Repeated asymmetric hip openers (Pigeon, Splits)","Hypermobility without stabilizing strength","Pregnancy — relaxin hormone loosens ligaments"],
+    iyengar_he:["בלוק בין הירכיים בתנוחות סגורות — מייצב את האגן","חגורה סביב האגן בתנוחות פתוחות — מעניקה תמיכה חיצונית","סיבובים מהחזה ולא מהאגן — ״סובב מהחלק העליון, האגן נשאר יציב״","חיזוק ליבה לפני עבודה על גמישות — ״כוח לפני אורך״","שמיכה מתחת לישבן ביונה — מקטינה אסימטריה"],
+    iyengar_en:["Block between thighs in closed poses — stabilizes pelvis","Strap around pelvis in open poses — provides external support","Twists from chest not pelvis — 'Rotate from upper body, pelvis stays stable'","Core strengthening before flexibility work — 'Strength before length'","Blanket under seat in Pigeon — reduces asymmetry"],
+    avoid_he:["סיבובים עמוקים עם רגליים מוצלבות","הנומנאסנה (ספגט) ללא הכנה ובלוקים","תנוחות אסימטריות חוזרות בלי איזון"],
+    avoid_en:["Deep twists with crossed legs","Hanumanasana (splits) without preparation and blocks","Repeated asymmetric poses without balancing"],
+    signs_he:"כאב חד בצד אחד של הגב התחתון (ליד ה-dimple), כאב שמחמיר בעמידה על רגל אחת, קושי להתהפך במיטה.",
+    signs_en:"Sharp pain on one side of lower back (near the dimple), pain worsening when standing on one leg, difficulty turning in bed.",
+  },
+];
+
 /* ── YOGA SUTRAS OF PATANJALI ── */
 const SUTRAS = [
   { chapter:1, verse:2, sanskrit:"yogaś citta-vṛtti-nirodhaḥ",
@@ -1042,6 +1137,8 @@ function YogaShoshan() {
   const [showAnatomy, setShowAnatomy] = useState(false);
   const [showSutras, setShowSutras] = useState(false);
   const [expandedSutra, setExpandedSutra] = useState(null);
+  const [showInjuries, setShowInjuries] = useState(false);
+  const [expandedInjury, setExpandedInjury] = useState(null);
   const [showSequencer, setShowSequencer] = useState(false);
   const [search, setSearch] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -1103,6 +1200,7 @@ function YogaShoshan() {
           { id:"anatomy", licn:"bone", he:"אנטומיה", en:"Anatomy" },
           { id:"ethics", licn:"heart-handshake", he:"אתיקת מגע", en:"Touch Ethics" },
           { id:"sutras", licn:"scroll-text", he:"יוגה סוטרה", en:"Yoga Sutras" },
+          { id:"injuries", licn:"shield-plus", he:"פציעות והתאמות", en:"Injuries & Modifications" },
         ];
         return (<>
       <header style={{ background:C.paper, padding:"8px 16px", display:"flex", alignItems:"center", gap:"10px", borderBottom:`1px solid ${C.border}`, position:"sticky", top:0, zIndex:50 }}>
@@ -1146,7 +1244,7 @@ function YogaShoshan() {
       <nav style={{ background:C.paper, borderBottom:`1px solid ${C.border}`, padding:"0", display:"flex", overflowX:"auto", position:"sticky", top:"52px", zIndex:49, WebkitOverflowScrolling:"touch", scrollbarWidth:"none" }}>
         <div style={{ display:"flex", margin:"0 auto", maxWidth:"700px", width:"100%" }}>
         {navItems.map(n => (
-          <button key={n.id} onClick={() => { setView(n.id); setShowChakras(n.id==="chakras"); setShowPranayama(n.id==="pranayama"); setShowAnatomy(n.id==="anatomy"); setShowEthics(n.id==="ethics"); setShowSutras(n.id==="sutras"); }}
+          <button key={n.id} onClick={() => { setView(n.id); setShowChakras(n.id==="chakras"); setShowPranayama(n.id==="pranayama"); setShowAnatomy(n.id==="anatomy"); setShowEthics(n.id==="ethics"); setShowSutras(n.id==="sutras"); setShowInjuries(n.id==="injuries"); }}
             style={{ flex:1, padding:"12px 8px", border:"none", background:view===n.id?`${C.dark}08`:"transparent", cursor:"pointer", fontFamily:F, fontSize:"11px", fontWeight:view===n.id?"700":"400", color:view===n.id?C.dark:C.muted, borderBottom:view===n.id?`2.5px solid ${C.dark}`:"2.5px solid transparent", display:"flex", flexDirection:"column", alignItems:"center", gap:"3px", whiteSpace:"nowrap", transition:"all 0.15s" }}>
             {LI(n.licn, 16)}
             <span>{isHe ? n.he : n.en}</span>
@@ -1949,6 +2047,74 @@ function YogaShoshan() {
                             </div>
                           ))}
                         </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* INJURIES & MODIFICATIONS VIEW */}
+      {(showInjuries || view==="injuries") && (
+        <div className="page-enter" style={{ flex:1, overflowY:"auto", padding:"30px 20px 60px", background:C.bg }}>
+          <div style={{ maxWidth:"680px", margin:"0 auto", direction:dir }}>
+            <div style={{ marginBottom:"24px" }}>
+              <h2 style={{ fontFamily:F, fontSize:"22px", fontWeight:"900", color:C.dark, margin:"0 0 6px" }}>{isHe ? "פציעות נפוצות והתאמות" : "Common Injuries & Modifications"}</h2>
+              <p style={{ fontSize:"13px", color:C.muted, lineHeight:1.6, margin:"0 0 12px" }}>{isHe ? "מדריך מעשי למורים — איך לזהות, למנוע ולהתאים את התרגול. בהשראת גישת איינגר לשימוש בעזרים." : "Practical teacher guide — how to identify, prevent, and modify practice. Inspired by the Iyengar approach to props."}</p>
+              <div style={{ background:`${C.warn}08`, border:`1px solid ${C.warn}20`, borderRadius:"10px", padding:"10px 14px", fontSize:"12px", lineHeight:1.6, color:C.dark }}>
+                {isHe ? "חשוב לזכור — אתה לא רופא. אם תלמיד/ה מדווח על כאב חד, חוזר, או מקרין — הפנה אותו לאיש מקצוע. התפקיד שלך הוא להתאים את התרגול, לא לאבחן." : "Remember — you are not a doctor. If a student reports sharp, recurring, or radiating pain — refer them to a professional. Your role is to modify practice, not diagnose."}
+              </div>
+            </div>
+            <div style={{ display:"flex", flexDirection:"column", gap:"10px" }}>
+              {INJURIES.map((inj, i) => {
+                const isOpen = expandedInjury === i;
+                return (
+                <div key={inj.id} style={{ background:C.paper, borderRadius:"12px", border:`1px solid ${isOpen ? inj.color+"40" : C.border}`, overflow:"hidden", transition:"all 0.2s" }}>
+                  <button onClick={() => setExpandedInjury(isOpen ? null : i)}
+                    style={{ width:"100%", padding:"14px 18px", border:"none", background:"transparent", cursor:"pointer", fontFamily:F, textAlign:isHe?"right":"left", display:"flex", alignItems:"center", gap:"12px" }}>
+                    <div style={{ width:8, height:8, borderRadius:"50%", background:inj.color, flexShrink:0 }}/>
+                    <span style={{ fontWeight:"700", fontSize:"14px", color:C.dark, flex:1 }}>{isHe ? inj.he : inj.en}</span>
+                    <span style={{ fontSize:"14px", color:C.muted, transform:isOpen?"rotate(180deg)":"none", transition:"transform 0.2s" }}>▾</span>
+                  </button>
+
+                  {isOpen && (
+                    <div style={{ padding:"0 18px 18px", borderTop:`1px solid ${C.border}` }}>
+                      <p style={{ fontSize:"13px", lineHeight:1.7, color:C.dark, margin:"14px 0", fontStyle:"italic" }}>{isHe ? inj.prevalence_he : inj.prevalence_en}</p>
+
+                      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"12px", marginBottom:"14px" }}>
+                        <div>
+                          <div style={{ fontSize:"10px", fontWeight:"700", color:C.warn, textTransform:"uppercase", letterSpacing:"1px", marginBottom:"6px" }}>{isHe ? "גורמים" : "Causes"}</div>
+                          <ul style={{ margin:0, paddingRight:isHe?"16px":"0", paddingLeft:isHe?"0":"16px", fontSize:"12px", lineHeight:1.7, color:C.dark }}>
+                            {(isHe ? inj.causes_he : inj.causes_en).map((c,j) => <li key={j} style={{marginBottom:"3px"}}>{c}</li>)}
+                          </ul>
+                        </div>
+                        <div>
+                          <div style={{ fontSize:"10px", fontWeight:"700", color:C.warn, textTransform:"uppercase", letterSpacing:"1px", marginBottom:"6px" }}>{isHe ? "סימנים" : "Signs"}</div>
+                          <p style={{ margin:0, fontSize:"12px", lineHeight:1.7, color:C.dark }}>{isHe ? inj.signs_he : inj.signs_en}</p>
+                        </div>
+                      </div>
+
+                      <div style={{ marginBottom:"14px" }}>
+                        <div style={{ fontSize:"10px", fontWeight:"700", color:inj.color, textTransform:"uppercase", letterSpacing:"1px", marginBottom:"8px" }}>{isHe ? "התאמות בסגנון איינגר — שימוש בעזרים" : "Iyengar-Style Modifications — Using Props"}</div>
+                        <div style={{ display:"flex", flexDirection:"column", gap:"6px" }}>
+                          {(isHe ? inj.iyengar_he : inj.iyengar_en).map((mod,j) => (
+                            <div key={j} style={{ display:"flex", gap:"8px", alignItems:"flex-start", padding:"8px 12px", background:C.sidebar, borderRadius:"8px" }}>
+                              <span style={{ fontSize:"10px", fontWeight:"700", color:inj.color, marginTop:"2px" }}>{j+1}</span>
+                              <span style={{ fontSize:"12px", lineHeight:1.6, color:C.dark }}>{mod}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <div style={{ fontSize:"10px", fontWeight:"700", color:"#C04040", textTransform:"uppercase", letterSpacing:"1px", marginBottom:"6px" }}>{isHe ? "מה להימנע ממנו" : "What to Avoid"}</div>
+                        <ul style={{ margin:0, paddingRight:isHe?"16px":"0", paddingLeft:isHe?"0":"16px", fontSize:"12px", lineHeight:1.7, color:"#6A4A4A" }}>
+                          {(isHe ? inj.avoid_he : inj.avoid_en).map((a,j) => <li key={j} style={{marginBottom:"3px"}}>{a}</li>)}
+                        </ul>
                       </div>
                     </div>
                   )}
