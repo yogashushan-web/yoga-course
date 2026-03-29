@@ -933,6 +933,100 @@ const SANKALPAS = [
     ]},
 ];
 
+/* ── YOGA SUTRAS OF PATANJALI ── */
+const SUTRAS = [
+  { chapter:1, verse:2, sanskrit:"yogaś citta-vṛtti-nirodhaḥ",
+    he:"יוגה היא עצירת תנודות התודעה.",
+    en:"Yoga is the cessation of the fluctuations of the mind.",
+    theme_he:"מהות היוגה", theme_en:"Essence of Yoga",
+    teaching_he:"הסוטרה הזו היא הלב של כל התרגול. היוגה לא מתחילה ונגמרת על המזרן — היא מתחילה ברגע שאתה מפסיק להיסחף אחרי כל מחשבה שעולה. בשיעור, אפשר להתחיל עם שקט של כמה דקות ולבקש מהתלמידים לשים לב כמה מחשבות עוברות להם, בלי לרדוף אחריהן. התנוחות הן רק כלי — המטרה היא השקט שבין המחשבות.",
+    teaching_en:"This sutra is the heart of all practice. Yoga doesn't start and end on the mat — it begins the moment you stop chasing every thought that arises. In class, start with a few minutes of stillness and ask students to notice thoughts passing without pursuing them. The poses are just a tool — the goal is the silence between thoughts.",
+    class_ideas_he:["שיעור מיינדפולנס — תנוחות איטיות עם דגש על שקט פנימי","פתיחה עם 5 דקות ישיבה שקטה ומעקב אחרי המחשבות","סגירה עם שוואסנה ארוכה (10 דקות) וסריקת גוף"],
+    class_ideas_en:["Mindfulness class — slow poses emphasizing inner stillness","Open with 5 minutes of quiet sitting and thought observation","Close with long Savasana (10 min) and body scan"],
+    color:"#1F3D34" },
+  { chapter:1, verse:14, sanskrit:"sa tu dīrgha-kāla-nairantarya-satkāra-āsevitaḥ dṛḍha-bhūmiḥ",
+    he:"התרגול הופך ליציב כשהוא נעשה לאורך זמן, ברציפות, ובמסירות.",
+    en:"Practice becomes firmly grounded when done for a long time, without break, and with devotion.",
+    theme_he:"עקביות ומסירות", theme_en:"Consistency & Devotion",
+    teaching_he:"אין קיצורי דרך. התרגול לא צריך להיות מושלם — הוא צריך להיות עקבי. גם חמש דקות כל יום שוות יותר משיעור אחד ארוך בשבוע. כמורה, הסוטרה הזו מזכירה לנו שהמסע של התלמידים (ושלנו) הוא ארוך, ושהתוצאות מגיעות לא מעוצמת התרגול אלא מהנוכחות המתמשכת שלו.",
+    teaching_en:"There are no shortcuts. Practice doesn't need to be perfect — it needs to be consistent. Five minutes daily is worth more than one long class per week. As teachers, this sutra reminds us that the journey is long, and results come not from intensity but from sustained presence.",
+    class_ideas_he:["שיעור ״חזרה לבסיס״ — תנוחות פשוטות שחוזרים עליהן לעומק","דגש על נשימה אחידה לאורך כל השיעור","שיחה קצרה על הערך של תרגול קבוע, גם כשקשה"],
+    class_ideas_en:["'Back to basics' class — simple poses explored deeply","Emphasis on steady breath throughout the entire class","Brief discussion on the value of regular practice, even when hard"],
+    color:"#5B7D6E" },
+  { chapter:1, verse:33, sanskrit:"maitrī-karuṇā-muditā-upekṣāṇāṃ sukha-duḥkha-puṇya-apuṇya-viṣayāṇāṃ bhāvanātaḥ citta-prasādanam",
+    he:"על ידי טיפוח ידידות כלפי השמחים, חמלה כלפי הסובלים, הנאה מהטובים, ואדישות כלפי הרעים — התודעה מתבהרת.",
+    en:"By cultivating friendliness toward the happy, compassion toward the suffering, joy toward the virtuous, and equanimity toward the non-virtuous — the mind becomes clear.",
+    theme_he:"ארבע המידות", theme_en:"The Four Locks & Keys",
+    teaching_he:"זו מפת דרכים ליחסים בריאים — עם אחרים ועם עצמנו. במקום קנאה באושר של אחרים, תרגל ידידות. במקום להתעלם מסבל, תרגל חמלה. במקום להשוות את עצמך למי שמצליח, תרגל שמחה אמיתית בהצלחתם. ובמקום להתרגז ממי שפוגע — תרגל שחרור. בשיעור, אפשר לבנות רצף שלם סביב ארבע המידות האלה.",
+    teaching_en:"This is a roadmap for healthy relationships — with others and ourselves. Instead of jealousy toward others' happiness, practice friendliness. Instead of ignoring suffering, practice compassion. Instead of comparing yourself to the successful, practice genuine joy. And instead of anger toward those who harm — practice release. You can build an entire class sequence around these four qualities.",
+    class_ideas_he:["שיעור עם ארבעה חלקים — כל חלק מוקדש למידה אחרת","פתיחת לב (כיפופי אחורה) לחמלה, כיפולים קדימה לשחרור","מדיטציית מטא (אהבה חסרת תנאי) בסגירה"],
+    class_ideas_en:["Four-part class — each section dedicated to one quality","Heart openers (backbends) for compassion, forward folds for release","Metta (loving-kindness) meditation in closing"],
+    color:"#40A060" },
+  { chapter:2, verse:3, sanskrit:"avidyā-asmitā-rāga-dveṣa-abhiniveśāḥ kleśāḥ",
+    he:"חמש הקלשות (מקורות הסבל) הן: אי-ידיעה, אגו, היקשרות, דחייה, ופחד מוות.",
+    en:"The five kleshas (causes of suffering) are: ignorance, ego, attachment, aversion, and fear of death.",
+    theme_he:"מקורות הסבל", theme_en:"Sources of Suffering",
+    teaching_he:"הקלשות הן הדפוסים שחוזרים על עצמם בחיים שלנו ועל המזרן. אי-ידיעה היא לא חוסר מידע — זו אשליה שאנחנו נפרדים. האגו הוא הזיהוי עם ה״אני״ הקטן. ההיקשרות היא לרדוף אחרי מה שנעים, והדחייה היא לברוח ממה שלא. בשיעור, אפשר לעבוד עם תנוחות שמאתגרות ולשים לב לתגובה האוטומטית — האם אני בורח מהאי-נוחות? נאחז בתנוחה שמצליחה לי?",
+    teaching_en:"The kleshas are the patterns that repeat in our lives and on the mat. Ignorance isn't lack of information — it's the illusion of separation. Ego is identification with the small 'I'. Attachment is chasing pleasure, aversion is fleeing discomfort. In class, work with challenging poses and notice the automatic reaction — am I running from discomfort? Clinging to a pose that I'm good at?",
+    class_ideas_he:["שיעור עם תנוחות מאתגרות — עם דגש על תצפית פנימית","עבודה עם קשת רגשות: מה עולה כשהתנוחה קשה? כשהיא קלה?","סגירה עם רפלקציה שקטה — ״איפה הרגשתי היקשרות? דחייה?״"],
+    class_ideas_en:["Class with challenging poses — emphasis on inner observation","Working with emotional range: what arises when it's hard? Easy?","Close with quiet reflection — 'Where did I feel attachment? Aversion?'"],
+    color:"#C04040" },
+  { chapter:2, verse:29, sanskrit:"yama-niyama-āsana-prāṇāyāma-pratyāhāra-dhāraṇā-dhyāna-samādhayaḥ aṣṭāv aṅgāni",
+    he:"שמונת האיברים הם: יאמה, ניאמה, אסאנה, פרנאיאמה, פרטיאהארה, דהארנה, דהיאנה, סמאדהי.",
+    en:"The eight limbs are: yama, niyama, asana, pranayama, pratyahara, dharana, dhyana, samadhi.",
+    theme_he:"שמונת האיברים", theme_en:"The Eight Limbs",
+    teaching_he:"רוב האנשים מכירים רק את האיבר השלישי — אסאנה (תנוחות). אבל פטנג׳לי שם את התנוחות במקום השלישי לא בכדי. לפני שמתרגלים בגוף, צריך יסודות מוסריים (יאמה וניאמה). ואחרי התנוחות מגיעים הנשימה, נסיגת החושים, ריכוז, מדיטציה, והתאחדות. בשיעור, אפשר להקדיש כל שיעור לאיבר אחר ולהראות שהמסע רחב הרבה יותר מהגוף.",
+    teaching_en:"Most people know only the third limb — asana (poses). But Patanjali placed poses third for a reason. Before physical practice come moral foundations (yama and niyama). After poses come breath, sense withdrawal, concentration, meditation, and union. In class, dedicate each session to a different limb, showing that the journey extends far beyond the body.",
+    class_ideas_he:["סדרת 8 שיעורים — כל שיעור מוקדש לאיבר אחד","שיעור שמשלב את כל השמונה: מוסר → תנוחות → נשימה → מדיטציה","דיון קצר בפתיחה על האיבר המרכזי של השיעור"],
+    class_ideas_en:["8-class series — each dedicated to one limb","Single class integrating all eight: ethics → poses → breath → meditation","Brief opening discussion about the class's central limb"],
+    color:"#6040A0" },
+  { chapter:2, verse:33, sanskrit:"vitarka-bādhane pratipakṣa-bhāvanam",
+    he:"כאשר מחשבות שליליות מפריעות — יש לטפח את ההפך.",
+    en:"When disturbed by negative thoughts — cultivate the opposite.",
+    theme_he:"פרטיפקשה", theme_en:"Pratipaksha Bhavanam",
+    teaching_he:"הטכניקה הזו פשוטה ועוצמתית: כשעולה מחשבה של כעס — תרגל סבלנות. כשיש פחד — תרגל אומץ. כשיש קנאה — תרגל שמחה באחר. זה לא להדחיק רגשות, אלא לתת להם מרחב ובמקביל לטפח את מה שמאזן אותם. בשיעור, אפשר לבקש מהתלמידים לבחור מילה אחת שהם רוצים לטפח ולחזור אליה בכל תנוחה.",
+    teaching_en:"This technique is simple yet powerful: when anger arises — practice patience. When there's fear — practice courage. When jealousy — practice joy for others. This isn't suppressing emotions, but giving them space while cultivating what balances them. In class, ask students to choose one quality they want to cultivate and return to it in every pose.",
+    class_ideas_he:["כל תלמיד בוחר מילה אחת לתרגול (״סבלנות״, ״אומץ״, ״שחרור״)","תנוחות שמאתגרות עם חזרה למילה בכל שאיפה","שוואסנה עם ויזואליזציה של המילה שנבחרה"],
+    class_ideas_en:["Each student chooses one word for practice ('patience', 'courage', 'release')","Challenging poses with returning to the word on each inhale","Savasana with visualization of the chosen quality"],
+    color:"#8B6914" },
+  { chapter:2, verse:42, sanskrit:"santoṣād anuttamaḥ sukha-lābhaḥ",
+    he:"מתוך שביעות רצון מגיע אושר שאין למעלה ממנו.",
+    en:"From contentment comes supreme happiness.",
+    theme_he:"סנטושה — שמחה במה שיש", theme_en:"Santosha — Contentment",
+    teaching_he:"סנטושה לא אומרת ״אל תשתפר״ — היא אומרת ״תפסיק לרגע לרדוף ותסתכל על מה שכבר יש לך.״ על המזרן, זה אומר לא להשוות את עצמך לתלמיד לידך, לא להתאמץ להגיע לתנוחה שהגוף לא מוכן אליה. האושר הכי גדול לא מגיע ממה שאנחנו משיגים, אלא מהיכולת לנוח במה שכבר קיים.",
+    teaching_en:"Santosha doesn't mean 'don't improve' — it means 'stop chasing for a moment and look at what you already have.' On the mat, this means not comparing yourself to the student next to you, not straining toward a pose the body isn't ready for. The greatest happiness comes not from achievement, but from the ability to rest in what already is.",
+    class_ideas_he:["שיעור ״מספיק״ — תנוחות פשוטות עם החזקה ארוכה ונשימה עמוקה","ללא תנוחות מתקדמות — רק בסיס, עם תשומת לב מלאה","סגירה עם רפלקציה: ״מה כבר יש לי שאני יכול להיות אסיר תודה עליו?״"],
+    class_ideas_en:["'Enough' class — simple poses with long holds and deep breathing","No advanced poses — only foundations, with full attention","Close with reflection: 'What do I already have that I can be grateful for?'"],
+    color:"#D0A020" },
+  { chapter:2, verse:46, sanskrit:"sthira-sukham āsanam",
+    he:"האסאנה צריכה להיות יציבה ונוחה.",
+    en:"The posture should be steady and comfortable.",
+    theme_he:"יציבות ונוחות", theme_en:"Steadiness & Ease",
+    teaching_he:"זו כנראה הסוטרה הכי רלוונטית להוראת אסאנות. פטנג׳לי לא אמר שהתנוחה צריכה להיות מושלמת, יפה, או מרשימה — הוא אמר שהיא צריכה להיות יציבה (סתירה) ונוחה (סוקהם). כל תנוחה שגורמת לכאב או מתח מוגזם — היא לא יוגה לפי ההגדרה הזו. כמורה, זה המצפן שלך: האם התלמיד יציב? האם הוא נושם בנוחות?",
+    teaching_en:"This is perhaps the most relevant sutra for teaching asana. Patanjali didn't say the pose should be perfect, beautiful, or impressive — he said it should be steady (sthira) and comfortable (sukham). Any pose causing pain or excessive strain is not yoga by this definition. As a teacher, this is your compass: Is the student steady? Are they breathing comfortably?",
+    class_ideas_he:["שיעור שבו כל תנוחה נבדקת: ״אתה יציב? נוח?״","עבודה עם התאמות — למצוא את הגרסה שבה יש גם חוזק וגם רוגע","דגש על נשימה כמדד ליציבות ונוחות — אם הנשימה חופשית, הכל בסדר"],
+    class_ideas_en:["Class where every pose is checked: 'Are you steady? Comfortable?'","Working with modifications — finding the version with both strength and ease","Breath as the measure of steadiness and ease — if breath flows freely, all is well"],
+    color:"#4A8A6D" },
+  { chapter:2, verse:47, sanskrit:"prayatna-śaithilya-ananta-samāpattibhyām",
+    he:"על ידי שחרור המאמץ ומיזוג עם האינסוף — התנוחה מושלמת.",
+    en:"By releasing effort and merging with the infinite — the posture is perfected.",
+    theme_he:"שחרור המאמץ", theme_en:"Releasing Effort",
+    teaching_he:"זו ההמשך הישיר של הסוטרה הקודמת. אחרי שמצאת את היציבות והנוחות, השלב הבא הוא לשחרר את המאמץ המיותר. לא להפסיק לעבוד — אלא לעשות בדיוק את מה שצריך, ולא יותר. כמורה, אפשר לבקש מהתלמידים: ״תבדוק איפה אתה מתאמץ בלי סיבה — הלסת? הכתפיים? המצח? שחרר את מה שלא חייב להיות מכווץ.״",
+    teaching_en:"This is the direct continuation of the previous sutra. After finding steadiness and ease, the next step is releasing unnecessary effort. Not stopping work — but doing exactly what's needed, nothing more. As a teacher, ask students: 'Check where you're straining without reason — the jaw? Shoulders? Forehead? Release what doesn't need to be tense.'",
+    class_ideas_he:["שיעור ״פחות זה יותר״ — לעשות 70% מהמאמץ המקסימלי","סריקת גוף בכל תנוחה: ״איפה אתה מחזיק מתח מיותר?״","עבודה עם נשיפות ארוכות כדי לשחרר מתח בלתי מודע"],
+    class_ideas_en:["'Less is more' class — working at 70% of maximum effort","Body scan in every pose: 'Where are you holding unnecessary tension?'","Long exhales to release unconscious tension"],
+    color:"#5B7D6E" },
+  { chapter:1, verse:12, sanskrit:"abhyāsa-vairāgyābhyāṃ tan-nirodhaḥ",
+    he:"עצירת תנודות התודעה מושגת דרך תרגול מתמיד ואי-היקשרות.",
+    en:"The cessation of mental fluctuations is achieved through persistent practice and non-attachment.",
+    theme_he:"תרגול ושחרור", theme_en:"Practice & Non-Attachment",
+    teaching_he:"שני הכוחות שמניעים את הצמיחה: אבהיאסה (תרגול) וויראגיה (שחרור). תרגול בלי שחרור הופך לאובססיה. שחרור בלי תרגול הופך לעצלנות. הם חייבים לבוא יחד — כמו שתי כנפיים של ציפור. בשיעור, אפשר לעבוד קשה בווינאסה ואז לשחרר לגמרי בשוואסנה, ולהראות שהשניים משלימים זה את זה.",
+    teaching_en:"Two forces drive growth: abhyasa (practice) and vairagya (release). Practice without release becomes obsession. Release without practice becomes laziness. They must come together — like two wings of a bird. In class, work intensely through vinyasa then completely surrender in Savasana, showing how the two complement each other.",
+    class_ideas_he:["חצי שיעור דינמי וחצי שיעור שחרור — איזון מושלם","תנוחות מאתגרות עם הנחיה: ״עשה את המקסימום, ואז שחרר את הציפייה לתוצאה״","סגירה עם שאלה: ״מה אתה מוכן לשחרר היום?״"],
+    class_ideas_en:["Half dynamic, half release — perfect balance","Challenging poses with guidance: 'Give your maximum, then release expectation of results'","Close with: 'What are you willing to release today?'"],
+    color:"#E06020" },
+];
+
 const levelColor = { "בסיס":C.accent, "מתחילות":C.teacher, "בינוניים":C.gold, "מתקדמים":C.warn, "Foundation":C.accent, "Beginner":C.teacher, "Intermediate":C.gold, "Advanced":C.warn };
 
 // PoseImage component removed
@@ -946,6 +1040,8 @@ function YogaShoshan() {
   const [showChakras, setShowChakras] = useState(false);
   const [showPranayama, setShowPranayama] = useState(false);
   const [showAnatomy, setShowAnatomy] = useState(false);
+  const [showSutras, setShowSutras] = useState(false);
+  const [expandedSutra, setExpandedSutra] = useState(null);
   const [showSequencer, setShowSequencer] = useState(false);
   const [search, setSearch] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -1006,6 +1102,7 @@ function YogaShoshan() {
           { id:"pranayama", licn:"wind", he:"פרנאיאמה", en:"Pranayama" },
           { id:"anatomy", licn:"bone", he:"אנטומיה", en:"Anatomy" },
           { id:"ethics", licn:"heart-handshake", he:"אתיקת מגע", en:"Touch Ethics" },
+          { id:"sutras", licn:"scroll-text", he:"יוגה סוטרה", en:"Yoga Sutras" },
         ];
         return (<>
       <header style={{ background:C.paper, padding:"8px 16px", display:"flex", alignItems:"center", gap:"10px", borderBottom:`1px solid ${C.border}`, position:"sticky", top:0, zIndex:50 }}>
@@ -1049,7 +1146,7 @@ function YogaShoshan() {
       <nav style={{ background:C.paper, borderBottom:`1px solid ${C.border}`, padding:"0", display:"flex", overflowX:"auto", position:"sticky", top:"52px", zIndex:49, WebkitOverflowScrolling:"touch", scrollbarWidth:"none" }}>
         <div style={{ display:"flex", margin:"0 auto", maxWidth:"700px", width:"100%" }}>
         {navItems.map(n => (
-          <button key={n.id} onClick={() => { setView(n.id); setShowChakras(n.id==="chakras"); setShowPranayama(n.id==="pranayama"); setShowAnatomy(n.id==="anatomy"); setShowEthics(n.id==="ethics"); }}
+          <button key={n.id} onClick={() => { setView(n.id); setShowChakras(n.id==="chakras"); setShowPranayama(n.id==="pranayama"); setShowAnatomy(n.id==="anatomy"); setShowEthics(n.id==="ethics"); setShowSutras(n.id==="sutras"); }}
             style={{ flex:1, padding:"12px 8px", border:"none", background:view===n.id?`${C.dark}08`:"transparent", cursor:"pointer", fontFamily:F, fontSize:"11px", fontWeight:view===n.id?"700":"400", color:view===n.id?C.dark:C.muted, borderBottom:view===n.id?`2.5px solid ${C.dark}`:"2.5px solid transparent", display:"flex", flexDirection:"column", alignItems:"center", gap:"3px", whiteSpace:"nowrap", transition:"all 0.15s" }}>
             {LI(n.licn, 16)}
             <span>{isHe ? n.he : n.en}</span>
@@ -1804,6 +1901,61 @@ function YogaShoshan() {
             </div>
 
             
+          </div>
+        </div>
+      )}
+
+      {/* YOGA SUTRAS VIEW */}
+      {(showSutras || view==="sutras") && (
+        <div className="page-enter" style={{ flex:1, overflowY:"auto", padding:"30px 20px 60px", background:C.bg }}>
+          <div style={{ maxWidth:"680px", margin:"0 auto", direction:dir }}>
+            <div style={{ marginBottom:"24px" }}>
+              <h2 style={{ fontFamily:F, fontSize:"22px", fontWeight:"900", color:C.dark, margin:"0 0 6px" }}>{isHe ? "יוגה סוטרה של פטנג׳לי" : "Yoga Sutras of Patanjali"}</h2>
+              <p style={{ fontSize:"13px", color:C.muted, lineHeight:1.6, margin:0 }}>{isHe ? "פסוקים נבחרים שאפשר לבנות סביבם שיעור שלם — עם הסבר, רעיונות להוראה, ותרגום לסנסקריט." : "Selected verses you can build an entire class around — with explanation, teaching ideas, and Sanskrit."}</p>
+            </div>
+            <div style={{ display:"flex", flexDirection:"column", gap:"10px" }}>
+              {SUTRAS.map((s, i) => {
+                const isOpen = expandedSutra === i;
+                return (
+                <div key={i} style={{ background:C.paper, borderRadius:"12px", border:`1px solid ${isOpen ? s.color+"40" : C.border}`, overflow:"hidden", transition:"all 0.2s" }}>
+                  <button onClick={() => setExpandedSutra(isOpen ? null : i)}
+                    style={{ width:"100%", padding:"14px 18px", border:"none", background:"transparent", cursor:"pointer", fontFamily:F, textAlign:isHe?"right":"left", display:"flex", flexDirection:"column", gap:"6px" }}>
+                    <div style={{ display:"flex", alignItems:"center", gap:"10px", width:"100%" }}>
+                      <span style={{ fontSize:"10px", fontWeight:"700", color:s.color, background:`${s.color}12`, padding:"3px 8px", borderRadius:"10px", whiteSpace:"nowrap" }}>{s.chapter}.{s.verse}</span>
+                      <span style={{ fontWeight:"700", fontSize:"13px", color:C.dark, flex:1 }}>{isHe ? s.theme_he : s.theme_en}</span>
+                      <span style={{ fontSize:"14px", color:C.muted, transform:isOpen?"rotate(180deg)":"none", transition:"transform 0.2s" }}>▾</span>
+                    </div>
+                    <div style={{ fontSize:"12px", color:C.muted, fontStyle:"italic", lineHeight:1.5 }}>{isHe ? s.he : s.en}</div>
+                  </button>
+
+                  {isOpen && (
+                    <div style={{ padding:"0 18px 18px", borderTop:`1px solid ${C.border}` }}>
+                      <div style={{ background:`${s.color}08`, borderRadius:"8px", padding:"10px 14px", margin:"14px 0", direction:"ltr", textAlign:"center" }}>
+                        <div style={{ fontSize:"14px", color:s.color, fontStyle:"italic", lineHeight:1.8, fontWeight:"500" }}>{s.sanskrit}</div>
+                      </div>
+
+                      <div style={{ marginBottom:"16px" }}>
+                        <div style={{ fontSize:"10px", fontWeight:"700", color:s.color, textTransform:"uppercase", letterSpacing:"1px", marginBottom:"6px" }}>{isHe ? "הוראה ורקע" : "Teaching & Background"}</div>
+                        <p style={{ margin:0, fontSize:"13px", lineHeight:1.85, color:C.dark }}>{isHe ? s.teaching_he : s.teaching_en}</p>
+                      </div>
+
+                      <div>
+                        <div style={{ fontSize:"10px", fontWeight:"700", color:C.accent, textTransform:"uppercase", letterSpacing:"1px", marginBottom:"8px" }}>{isHe ? "רעיונות לשיעור" : "Class Ideas"}</div>
+                        <div style={{ display:"flex", flexDirection:"column", gap:"6px" }}>
+                          {(isHe ? s.class_ideas_he : s.class_ideas_en).map((idea, j) => (
+                            <div key={j} style={{ display:"flex", gap:"8px", alignItems:"flex-start", padding:"8px 12px", background:C.sidebar, borderRadius:"8px" }}>
+                              <span style={{ fontSize:"10px", fontWeight:"700", color:s.color, marginTop:"2px" }}>{j+1}</span>
+                              <span style={{ fontSize:"12px", lineHeight:1.6, color:C.dark }}>{idea}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       )}
