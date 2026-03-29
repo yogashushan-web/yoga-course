@@ -1439,11 +1439,10 @@ function YogaShoshan() {
       {/* ETHICS MODAL */}
       {(showEthics || view==="ethics") && (
         <div className="page-enter" style={{ flex:1, overflowY:"auto", padding:"30px 20px 60px", background:C.bg }}>
-          <div onClick={e => e.stopPropagation()} className="modal-content-mobile" style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"680px", width:"100%", maxHeight:"88vh", overflowY:"auto", border:`2px solid ${C.gold}35`, boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
-            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"4px" }}>
+          <div style={{ maxWidth:"680px", margin:"0 auto", direction:dir }}>
+            <div style={{ marginBottom:"16px" }}>
               <div>
-                <div style={{ fontFamily:F, fontSize:"8px", letterSpacing:"4px", color:C.gold, textTransform:"uppercase", marginBottom:"5px" }}>יוגה שושן</div>
-                <h2 style={{ fontFamily:F, fontSize:"20px", fontWeight:"900", color:C.dark, margin:0 }}>{ui.ethicsTitle}</h2>
+                <h2 style={{ fontFamily:F, fontSize:"22px", fontWeight:"900", color:C.dark, margin:0 }}>{ui.ethicsTitle}</h2>
                 <div style={{ fontSize:"12px", color:C.muted, fontStyle:"italic", marginTop:"2px" }}>{ui.ethicsSubtitle}</div>
               </div>
               <button onClick={() => { setShowEthics(false); if(view==="ethics") setView("guide"); }} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:"8px", width:44, height:44, cursor:"pointer", color:C.muted, fontSize:"18px", display:"flex", alignItems:"center", justifyContent:"center" }}>×</button>
@@ -1647,8 +1646,8 @@ function YogaShoshan() {
       {/* CHAKRA GUIDE MODAL */}
       {(showChakras || view==="chakras") && (
         <div className="page-enter" style={{ flex:1, overflowY:"auto", padding:"30px 20px 60px", background:C.bg }}>
-          <div onClick={e => e.stopPropagation()} className="modal-content-mobile" style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"750px", width:"100%", maxHeight:"88vh", overflowY:"auto", boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
-            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"16px" }}>
+          <div style={{ maxWidth:"680px", margin:"0 auto", direction:dir }}>
+            <div style={{ marginBottom:"16px" }}>
               <div>
                 <h2 style={{ fontFamily:F, fontSize:"22px", fontWeight:"900", color:C.dark, margin:0 }}>{isHe ? "מדריך הצ׳אקרות" : "Chakra Guide"}</h2>
                 <div style={{ fontSize:"12px", color:C.muted, fontStyle:"italic", marginTop:"4px" }}>{isHe ? "שבעת מרכזי האנרגיה בגוף" : "The seven energy centers of the body"}</div>
