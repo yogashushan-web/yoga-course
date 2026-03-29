@@ -674,6 +674,75 @@ const poseGroups = [
 const allPoses = poseGroups
   .flatMap(g => g.poses.map(p => ({ ...p, group_he:g.he, group_en:g.en, groupColor:g.color })))
   .sort((a, b) => a.en.name.localeCompare(b.en.name, "en"));
+/* ── Sankalpa Inspirations ── */
+const SANKALPAS = [
+  // יאמות — Yamas
+  { cat_he:"יאמות", cat_en:"Yamas",
+    items:[
+      { he:"אהימסה — לא-אלימות. איך אני יכולה להיות עדינה יותר עם עצמי ועם אחרים היום?", en:"Ahimsa — Non-violence. How can I be gentler with myself and others today?" },
+      { he:"סאטיה — אמת. מהי האמת שאני צריכה להגיד לעצמי?", en:"Satya — Truth. What truth do I need to tell myself?" },
+      { he:"אסטייה — לא-גנבה. אני מפסיקה לגנוב מעצמי זמן, אנרגיה ושקט.", en:"Asteya — Non-stealing. I stop stealing time, energy, and peace from myself." },
+      { he:"בראהמצ׳אריה — ניהול אנרגיה. לאן אני מפנה את האנרגיה שלי היום?", en:"Brahmacharya — Energy management. Where am I directing my energy today?" },
+      { he:"אפאריגראהה — אי-אחיזה. מה אני יכולה לשחרר כדי ליצור מקום לחדש?", en:"Aparigraha — Non-attachment. What can I release to make space for the new?" },
+    ]},
+  // ניאמות — Niyamas
+  { cat_he:"ניאמות", cat_en:"Niyamas",
+    items:[
+      { he:"שאוצ׳ה — טוהר. ניקיון מחשבות, מילים ומעשים.", en:"Saucha — Purity. Cleanliness of thoughts, words, and actions." },
+      { he:"סנטושה — שמחה בהווה. אני מספיקה, יש לי מספיק, אני עושה מספיק.", en:"Santosha — Contentment. I am enough, I have enough, I do enough." },
+      { he:"טאפאס — משמעת פנימית. האש הפנימית שמניעה אותי לצמוח.", en:"Tapas — Inner discipline. The inner fire that drives me to grow." },
+      { he:"סוואדהיאיה — לימוד עצמי. להסתכל פנימה בלי לשפוט.", en:"Svadhyaya — Self-study. Looking inward without judgment." },
+      { he:"אישווארה פרניד׳אנה — מסירות. לסמוך על התהליך ולשחרר שליטה.", en:"Ishvara Pranidhana — Surrender. Trusting the process and releasing control." },
+    ]},
+  // בודהיזם — Buddhism
+  { cat_he:"בודהיזם", cat_en:"Buddhism",
+    items:[
+      { he:"כל מה שמתעורר — עובר. נשימה אחת בכל פעם.", en:"Whatever arises — passes. One breath at a time." },
+      { he:"הסבל נוצר מהיאחזות. תרגול השחרור מתחיל על המזרן.", en:"Suffering comes from clinging. The practice of letting go starts on the mat." },
+      { he:"היי מנורה לעצמך. האור שאת מחפשת כבר בפנים.", en:"Be a lamp unto yourself. The light you seek is already within." },
+      { he:"אין דרך לאושר — האושר הוא הדרך.", en:"There is no path to happiness — happiness is the path." },
+      { he:"בכל רגע נולדים מחדש. כל נשימה היא התחלה.", en:"In every moment we are reborn. Every breath is a beginning." },
+    ]},
+  // מיינדפולנס — Mindfulness
+  { cat_he:"מיינדפולנס", cat_en:"Mindfulness",
+    items:[
+      { he:"חזרי לגוף. חזרי לנשימה. חזרי להווה.", en:"Come back to the body. Come back to the breath. Come back to now." },
+      { he:"הגוף הוא הבית. הנשימה היא המפתח.", en:"The body is the home. The breath is the key." },
+      { he:"שימי לב למה שכבר כאן — לא למה שחסר.", en:"Notice what is already here — not what is missing." },
+      { he:"הגוף לא שוקר — הוא מרגיש. הקשיבי.", en:"The body doesn't lie — it feels. Listen." },
+      { he:"אין תנוחה מושלמת. יש רק תשומת לב מושלמת.", en:"There is no perfect pose. There is only perfect attention." },
+    ]},
+  // אקהרט טולה — Eckhart Tolle
+  { cat_he:"אקהרט טולה", cat_en:"Eckhart Tolle",
+    items:[
+      { he:"הרגע הזה הוא כל מה שיש. הרגע הזה הוא החיים שלך.", en:"This moment is all there is. This moment is your life." },
+      { he:"את לא המחשבות שלך. את המרחב שבו הן מתעוררות.", en:"You are not your thoughts. You are the space in which they arise." },
+      { he:"כשאת כאן לגמרי, מי שאת באמת מתחיל לזרוח.", en:"When you are fully here, who you truly are begins to shine." },
+      { he:"שקט הוא לא היעדר רעש. שקט הוא נוכחות עמוקה.", en:"Stillness is not the absence of noise. Stillness is deep presence." },
+      { he:"קבלי את הרגע הזה כאילו בחרת בו.", en:"Accept this moment as if you had chosen it." },
+    ]},
+  // צ׳אקרות — Chakras
+  { cat_he:"צ׳אקרות", cat_en:"Chakras",
+    items:[
+      { he:"אני מעוגנת באדמה ובטוחה. (מולאדהארה)", en:"I am grounded and safe. (Muladhara)" },
+      { he:"אני מרשה לעצמי לזרום ולהרגיש. (סוואדהיסטאנה)", en:"I allow myself to flow and feel. (Svadhisthana)" },
+      { he:"אני חזקה, אני יכולה, אני ראויה. (מאניפורה)", en:"I am strong, I am capable, I am worthy. (Manipura)" },
+      { he:"הלב שלי פתוח לתת ולקבל אהבה. (אנאהאטה)", en:"My heart is open to give and receive love. (Anahata)" },
+      { he:"אני מדברת את האמת שלי בעדינות ובבירור. (וישודהה)", en:"I speak my truth gently and clearly. (Vishuddha)" },
+      { he:"אני סומכת על האינטואיציה שלי. (אג׳נא)", en:"I trust my intuition. (Ajna)" },
+      { he:"אני מחוברת למשהו גדול ממני. (סהסראה)", en:"I am connected to something greater than myself. (Sahasrara)" },
+    ]},
+  // שיעורים מנטליים — Mental Lessons
+  { cat_he:"שיעורים מנטליים", cat_en:"Mental Lessons",
+    items:[
+      { he:"מה שאני עושה על המזרן — אני עושה בחיים. הדפוסים זהים.", en:"What I do on the mat — I do in life. The patterns are the same." },
+      { he:"נוחות אמיתית נמצאת מעבר לגבול הנוחות.", en:"True comfort lives beyond the comfort zone." },
+      { he:"להיכשל בתנוחה זה לא להיכשל. זה ללמוד.", en:"Failing a pose is not failing. It is learning." },
+      { he:"הגוף שלך מספר סיפור. הקשיבי לו לפני שתנסי לשנות אותו.", en:"Your body tells a story. Listen before you try to change it." },
+      { he:"לפעמים ההתקדמות האמיתית היא לעצור.", en:"Sometimes the real progress is to stop." },
+    ]},
+];
+
 const levelColor = { "בסיס":C.accent, "מתחילות":C.teacher, "בינוניות":C.gold, "מתקדמות":C.warn, "Foundation":C.accent, "Beginner":C.teacher, "Intermediate":C.gold, "Advanced":C.warn };
 
 // PoseImage component removed
@@ -688,6 +757,7 @@ function YogaShoshan() {
   const [search, setSearch] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sequence, setSequence] = useState({
+    sankalpa: { text:"", category:"" },
     meditation: { notes:"", duration:"5" },
     warmup: { poses:[], notes:"" },
     sunSalutations: { count:"4", notes:"" },
@@ -1038,6 +1108,44 @@ function YogaShoshan() {
               <button onClick={() => setShowSequencer(false)} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:"8px", width:32, height:32, cursor:"pointer", color:C.muted, fontSize:"16px", display:"flex", alignItems:"center", justifyContent:"center" }}>×</button>
             </div>
 
+            {/* SANKALPA SECTION */}
+            <div style={{ background:`linear-gradient(135deg, #F4EFE6, #EFF5F0)`, borderRadius:"14px", overflow:"hidden", marginBottom:"12px", border:`1px solid ${C.border}` }}>
+              <div style={{ padding:"14px 18px", borderBottom:`1px solid ${C.border}`, display:"flex", alignItems:"center", gap:"10px" }}>
+                <span style={{ fontSize:"20px" }}>🕉</span>
+                <span style={{ fontWeight:"700", fontSize:"15px", color:C.dark }}>{isHe ? "סנקלפה — כוונת השיעור" : "Sankalpa — Class Intention"}</span>
+              </div>
+              <div style={{ padding:"12px 18px" }}>
+                <textarea value={sequence.sankalpa.text}
+                  onChange={e => setSequence(prev => ({...prev, sankalpa:{...prev.sankalpa, text:e.target.value}}))}
+                  placeholder={isHe ? "כתבי כוונה חופשית, או בחרי השראה מלמטה..." : "Write a free intention, or pick inspiration below..."}
+                  style={{ width:"100%", padding:"10px 14px", borderRadius:"10px", border:`1px solid ${C.border}`, fontFamily:F, fontSize:"13px", color:C.dark, minHeight:"50px", resize:"vertical", direction:isHe?"rtl":"ltr", lineHeight:1.7, background:"white" }}/>
+
+                <div style={{ marginTop:"10px" }}>
+                  <div style={{ fontSize:"11px", fontWeight:"600", color:C.muted, marginBottom:"8px" }}>{isHe ? "השראות לפי נושא:" : "Inspiration by theme:"}</div>
+                  <div style={{ display:"flex", flexWrap:"wrap", gap:"4px", marginBottom:"8px" }}>
+                    {SANKALPAS.map(cat => (
+                      <button key={cat.cat_en} onClick={() => setSequence(prev => ({...prev, sankalpa:{...prev.sankalpa, category: prev.sankalpa.category===cat.cat_en ? "" : cat.cat_en}}))}
+                        style={{ padding:"4px 10px", borderRadius:"20px", border:`1px solid ${sequence.sankalpa.category===cat.cat_en ? C.dark : C.border}`, background:sequence.sankalpa.category===cat.cat_en ? C.dark : "transparent", color:sequence.sankalpa.category===cat.cat_en ? "#FFF" : C.dark, fontFamily:F, fontSize:"11px", cursor:"pointer", fontWeight:"600" }}>
+                        {isHe ? cat.cat_he : cat.cat_en}
+                      </button>
+                    ))}
+                  </div>
+                  {sequence.sankalpa.category && (
+                    <div style={{ display:"flex", flexDirection:"column", gap:"4px", maxHeight:"200px", overflowY:"auto" }}>
+                      {SANKALPAS.find(c => c.cat_en === sequence.sankalpa.category)?.items.map((item, i) => (
+                        <button key={i} onClick={() => setSequence(prev => ({...prev, sankalpa:{...prev.sankalpa, text: isHe ? item.he : item.en}}))}
+                          style={{ textAlign:isHe?"right":"left", padding:"8px 12px", borderRadius:"8px", border:`1px solid ${C.border}`, background:C.paper, cursor:"pointer", fontFamily:F, fontSize:"12px", color:C.dark, lineHeight:1.6 }}
+                          onMouseEnter={e => e.currentTarget.style.background=`${C.dark}08`}
+                          onMouseLeave={e => e.currentTarget.style.background=C.paper}>
+                          {isHe ? item.he : item.en}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
             <div style={{ display:"flex", flexDirection:"column", gap:"12px" }}>
               {sections.map(sec => (
                 <div key={sec.key} style={{ background:C.sidebar, borderRadius:"14px", overflow:"hidden" }}>
@@ -1117,6 +1225,7 @@ function YogaShoshan() {
             {/* Print button */}
             <button onClick={() => {
               const w = window.open('','_blank');
+              const sankalpaPrint = sequence.sankalpa.text ? `<div style="margin-bottom:16px;padding:16px;border-radius:8px;background:linear-gradient(135deg,#F4EFE6,#EFF5F0);border:1px solid #D8E0DA"><div style="font-weight:700;font-size:15px;margin-bottom:8px">🕉 ${isHe?'סנקלפה':'Sankalpa'}</div><div style="font-size:14px;line-height:1.8;font-style:italic;color:#1F3D34">"${sequence.sankalpa.text}"</div></div>` : '';
               const secs = sections.map(s => {
                 let content = '';
                 if (s.type === 'duration') content = `${sequence[s.key].duration} ${isHe?'דקות':'min'}`;
@@ -1125,7 +1234,7 @@ function YogaShoshan() {
                 const notes = sequence[s.key].notes ? `<div style="color:#7A8A80;font-size:12px;margin-top:4px">${sequence[s.key].notes}</div>` : '';
                 return `<div style="margin-bottom:16px;padding:12px;border:1px solid #D8E0DA;border-radius:8px"><div style="font-weight:700;font-size:15px;margin-bottom:6px">${s.icon} ${isHe?s.he:s.en}</div><div style="font-size:13px">${content||'—'}</div>${notes}</div>`;
               }).join('');
-              w.document.write(`<html dir="${dir}"><head><link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap" rel="stylesheet"><style>body{font-family:'Heebo',sans-serif;padding:30px;max-width:600px;margin:auto}</style></head><body><h1 style="font-size:22px;color:#1F3D34">${isHe?'רצף שיעור':'Class Sequence'}</h1><p style="color:#7A8A80;font-size:12px;margin-bottom:20px">יוגה שושן · ${new Date().toLocaleDateString(isHe?'he':'en')}</p>${secs}</body></html>`);
+              w.document.write(`<html dir="${dir}"><head><link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap" rel="stylesheet"><style>body{font-family:'Heebo',sans-serif;padding:30px;max-width:600px;margin:auto}</style></head><body><h1 style="font-size:22px;color:#1F3D34">${isHe?'רצף שיעור':'Class Sequence'}</h1><p style="color:#7A8A80;font-size:12px;margin-bottom:20px">יוגה שושן · ${new Date().toLocaleDateString(isHe?'he':'en')}</p>${sankalpaPrint}${secs}</body></html>`);
               w.document.close();
               w.print();
             }} style={{ width:"100%", padding:"11px", marginTop:"16px", background:C.dark, color:"white", border:"none", borderRadius:"9px", fontFamily:F, fontSize:"13px", fontWeight:"700", cursor:"pointer" }}>
