@@ -684,8 +684,19 @@ function YogaShoshan() {
   const [tab, setTab] = useState("assist");
   const [showEthics, setShowEthics] = useState(false);
   const [showChakras, setShowChakras] = useState(false);
+  const [showSequencer, setShowSequencer] = useState(false);
   const [search, setSearch] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sequence, setSequence] = useState({
+    meditation: { notes:"", duration:"5" },
+    warmup: { poses:[], notes:"" },
+    sunSalutations: { count:"4", notes:"" },
+    flow: { poses:[], notes:"" },
+    seated: { poses:[], notes:"" },
+    closing: { poses:[], notes:"" },
+  });
+  const [seqAddingTo, setSeqAddingTo] = useState(null);
+  const [seqSearch, setSeqSearch] = useState("");
 
   const [headerSearch, setHeaderSearch] = useState("");
   const handlePrint = () => window.print();
@@ -762,6 +773,12 @@ function YogaShoshan() {
           ))}
         </div>
 
+        <button onClick={() => setShowSequencer(true)}
+          style={{ background:"transparent", border:`1.5px solid ${C.plum}50`, color:C.plum, borderRadius:"8px", padding:"6px 13px", fontFamily:F, fontSize:"12px", cursor:"pointer", transition:"all 0.2s", whiteSpace:"nowrap" }}
+          onMouseEnter={e => Object.assign(e.currentTarget.style, { background:C.plum, color:"#FFF" })}
+          onMouseLeave={e => Object.assign(e.currentTarget.style, { background:"transparent", color:C.plum })}>
+          {isHe ? "🗓 בניית שיעור" : "🗓 Build Class"}
+        </button>
         <button className="hide-mobile" onClick={() => setShowChakras(true)}
           style={{ background:"transparent", border:`1.5px solid ${C.plum}50`, color:C.plum, borderRadius:"8px", padding:"6px 13px", fontFamily:F, fontSize:"12px", cursor:"pointer", transition:"all 0.2s", whiteSpace:"nowrap" }}
           onMouseEnter={e => Object.assign(e.currentTarget.style, { background:C.plum, color:"#FFF" })}
@@ -989,6 +1006,137 @@ function YogaShoshan() {
           </div>
         </div>
       )}
+
+      {/* SEQUENCE BUILDER MODAL */}
+      {showSequencer && (() => {
+        const sections = [
+          { key:"meditation", icon:"🧘", he:"מדיטציה", en:"Meditation", type:"duration" },
+          { key:"warmup", icon:"🔥", he:"חימום", en:"Warmup", type:"poses" },
+          { key:"sunSalutations", icon:"☀️", he:"ברכות שמש", en:"Sun Salutations", type:"count" },
+          { key:"flow", icon:"🌊", he:"פלואו", en:"Flow", type:"poses" },
+          { key:"seated", icon:"🪷", he:"תנוחות ישיבה", en:"Seated Poses", type:"poses" },
+          { key:"closing", icon:"🌙", he:"רצף סיום", en:"Closing Sequence", type:"poses" },
+        ];
+        const addPose = (sectionKey, pose) => {
+          setSequence(prev => ({ ...prev, [sectionKey]: { ...prev[sectionKey], poses: [...(prev[sectionKey].poses||[]), pose] } }));
+          setSeqSearch("");
+          setSeqAddingTo(null);
+        };
+        const removePose = (sectionKey, idx) => {
+          setSequence(prev => ({ ...prev, [sectionKey]: { ...prev[sectionKey], poses: prev[sectionKey].poses.filter((_,i) => i!==idx) } }));
+        };
+        const totalPoses = sections.reduce((sum,s) => sum + (sequence[s.key].poses?.length || 0), 0);
+
+        return (
+        <div onClick={() => setShowSequencer(false)} style={{ position:"fixed", inset:0, background:"rgba(15,22,15,0.88)", zIndex:100, display:"flex", alignItems:"center", justifyContent:"center", padding:"20px", backdropFilter:"blur(6px)" }}>
+          <div onClick={e => e.stopPropagation()} style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"750px", width:"100%", maxHeight:"88vh", overflowY:"auto", boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"16px" }}>
+              <div>
+                <h2 style={{ fontFamily:F, fontSize:"22px", fontWeight:"900", color:C.dark, margin:0 }}>{isHe ? "בניית רצף שיעור" : "Build Class Sequence"}</h2>
+                <div style={{ fontSize:"12px", color:C.muted, fontStyle:"italic", marginTop:"4px" }}>{isHe ? `מבנה ויניאסה · ${totalPoses} תנוחות` : `Vinyasa Structure · ${totalPoses} poses`}</div>
+              </div>
+              <button onClick={() => setShowSequencer(false)} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:"8px", width:32, height:32, cursor:"pointer", color:C.muted, fontSize:"16px", display:"flex", alignItems:"center", justifyContent:"center" }}>×</button>
+            </div>
+
+            <div style={{ display:"flex", flexDirection:"column", gap:"12px" }}>
+              {sections.map(sec => (
+                <div key={sec.key} style={{ background:C.sidebar, borderRadius:"14px", overflow:"hidden" }}>
+                  <div style={{ padding:"12px 18px", borderBottom:`1px solid ${C.border}`, display:"flex", alignItems:"center", gap:"10px" }}>
+                    <span style={{ fontSize:"20px" }}>{sec.icon}</span>
+                    <span style={{ fontWeight:"700", fontSize:"15px", color:C.dark }}>{isHe ? sec.he : sec.en}</span>
+                    <div style={{ flex:1 }}/>
+                    {sec.type === "duration" && (
+                      <div style={{ display:"flex", alignItems:"center", gap:"6px" }}>
+                        <input value={sequence[sec.key].duration} onChange={e => setSequence(prev => ({...prev,[sec.key]:{...prev[sec.key],duration:e.target.value}}))}
+                          style={{ width:"40px", padding:"4px 8px", borderRadius:"6px", border:`1px solid ${C.border}`, fontFamily:F, fontSize:"12px", textAlign:"center" }}/>
+                        <span style={{ fontSize:"11px", color:C.muted }}>{isHe?"דקות":"min"}</span>
+                      </div>
+                    )}
+                    {sec.type === "count" && (
+                      <div style={{ display:"flex", alignItems:"center", gap:"6px" }}>
+                        <input value={sequence[sec.key].count} onChange={e => setSequence(prev => ({...prev,[sec.key]:{...prev[sec.key],count:e.target.value}}))}
+                          style={{ width:"40px", padding:"4px 8px", borderRadius:"6px", border:`1px solid ${C.border}`, fontFamily:F, fontSize:"12px", textAlign:"center" }}/>
+                        <span style={{ fontSize:"11px", color:C.muted }}>{isHe?"סבבים":"rounds"}</span>
+                      </div>
+                    )}
+                    {sec.type === "poses" && (
+                      <button onClick={() => setSeqAddingTo(seqAddingTo===sec.key ? null : sec.key)}
+                        style={{ background:seqAddingTo===sec.key?C.dark:"transparent", color:seqAddingTo===sec.key?"#FFF":C.dark, border:`1px solid ${C.dark}40`, borderRadius:"6px", padding:"4px 10px", fontFamily:F, fontSize:"11px", cursor:"pointer", fontWeight:"600" }}>
+                        {seqAddingTo===sec.key ? (isHe?"סגור":"Close") : (isHe?"+ הוסיפי":"+ Add")}
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Pose list */}
+                  {sec.type === "poses" && sequence[sec.key].poses && sequence[sec.key].poses.length > 0 && (
+                    <div style={{ padding:"8px 18px", display:"flex", flexWrap:"wrap", gap:"6px" }}>
+                      {sequence[sec.key].poses.map((p, i) => (
+                        <div key={i} style={{ display:"flex", alignItems:"center", gap:"4px", background:C.paper, border:`1px solid ${C.border}`, borderRadius:"8px", padding:"4px 10px", fontSize:"12px", color:C.dark }}>
+                          <span style={{ fontWeight:"600" }}>{i+1}.</span>
+                          <span>{poseName(p)}</span>
+                          <button onClick={() => removePose(sec.key, i)} style={{ background:"none", border:"none", color:C.warn, cursor:"pointer", fontSize:"14px", padding:"0 2px", lineHeight:1 }}>×</button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Add pose search */}
+                  {seqAddingTo === sec.key && (
+                    <div style={{ padding:"8px 18px 12px", borderTop:`1px solid ${C.border}` }}>
+                      <input value={seqSearch} onChange={e => setSeqSearch(e.target.value)} autoFocus
+                        placeholder={isHe?"חפשי תנוחה...":"Search pose..."}
+                        style={{ width:"100%", padding:"8px 12px", borderRadius:"8px", border:`1px solid ${C.border}`, fontFamily:F, fontSize:"12px", marginBottom:"6px", direction:isHe?"rtl":"ltr" }}/>
+                      <div style={{ maxHeight:"180px", overflowY:"auto" }}>
+                        {allPoses.filter(p => {
+                          if (!seqSearch.trim()) return true;
+                          const q = seqSearch.toLowerCase();
+                          return p.he.name.includes(q) || p.en.name.toLowerCase().includes(q) || p.sanskrit.toLowerCase().includes(q);
+                        }).map(p => (
+                          <button key={p.id} onClick={() => addPose(sec.key, p)}
+                            style={{ width:"100%", textAlign:isHe?"right":"left", padding:"6px 10px", border:"none", background:"transparent", cursor:"pointer", fontFamily:F, fontSize:"12px", borderRadius:"4px" }}
+                            onMouseEnter={e => e.currentTarget.style.background=`${C.dark}08`}
+                            onMouseLeave={e => e.currentTarget.style.background="transparent"}>
+                            <span style={{ fontWeight:"600", color:C.dark }}>{poseName(p)}</span>
+                            <span style={{ color:C.muted, marginRight:isHe?"8px":"0", marginLeft:isHe?"0":"8px", fontSize:"10px" }}>{p.sanskrit}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Notes */}
+                  <div style={{ padding:"6px 18px 10px" }}>
+                    <input value={sequence[sec.key].notes} onChange={e => setSequence(prev => ({...prev,[sec.key]:{...prev[sec.key],notes:e.target.value}}))}
+                      placeholder={isHe?"הערות...":"Notes..."}
+                      style={{ width:"100%", padding:"6px 10px", borderRadius:"6px", border:`1px solid ${C.border}`, fontFamily:F, fontSize:"11px", color:C.muted, background:"transparent", direction:isHe?"rtl":"ltr" }}/>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Print button */}
+            <button onClick={() => {
+              const w = window.open('','_blank');
+              const secs = sections.map(s => {
+                let content = '';
+                if (s.type === 'duration') content = `${sequence[s.key].duration} ${isHe?'דקות':'min'}`;
+                if (s.type === 'count') content = `${sequence[s.key].count} ${isHe?'סבבים':'rounds'}`;
+                if (s.type === 'poses') content = (sequence[s.key].poses||[]).map((p,i) => `${i+1}. ${poseName(p)} (${p.sanskrit})`).join('<br>');
+                const notes = sequence[s.key].notes ? `<div style="color:#7A8A80;font-size:12px;margin-top:4px">${sequence[s.key].notes}</div>` : '';
+                return `<div style="margin-bottom:16px;padding:12px;border:1px solid #D8E0DA;border-radius:8px"><div style="font-weight:700;font-size:15px;margin-bottom:6px">${s.icon} ${isHe?s.he:s.en}</div><div style="font-size:13px">${content||'—'}</div>${notes}</div>`;
+              }).join('');
+              w.document.write(`<html dir="${dir}"><head><link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap" rel="stylesheet"><style>body{font-family:'Heebo',sans-serif;padding:30px;max-width:600px;margin:auto}</style></head><body><h1 style="font-size:22px;color:#1F3D34">${isHe?'רצף שיעור':'Class Sequence'}</h1><p style="color:#7A8A80;font-size:12px;margin-bottom:20px">יוגה שושן · ${new Date().toLocaleDateString(isHe?'he':'en')}</p>${secs}</body></html>`);
+              w.document.close();
+              w.print();
+            }} style={{ width:"100%", padding:"11px", marginTop:"16px", background:C.dark, color:"white", border:"none", borderRadius:"9px", fontFamily:F, fontSize:"13px", fontWeight:"700", cursor:"pointer" }}>
+              {isHe ? "🖨️ הדפסת רצף" : "🖨️ Print Sequence"}
+            </button>
+
+            <button onClick={() => setShowSequencer(false)} style={{ width:"100%", padding:"11px", marginTop:"8px", background:"transparent", color:C.muted, border:`1px solid ${C.border}`, borderRadius:"9px", fontFamily:F, fontSize:"13px", fontWeight:"600", cursor:"pointer" }}>{ui.close}</button>
+          </div>
+        </div>
+        );
+      })()}
 
       {/* CHAKRA GUIDE MODAL */}
       {showChakras && (
