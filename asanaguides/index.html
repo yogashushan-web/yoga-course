@@ -9,7 +9,7 @@
 <div id="root"></div>
 
 <link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css"/>
-<style>.lucide { font-family: 'lucide'; font-style: normal; display: inline-block; vertical-align: middle; }</style>
+<style>[class^="icon-"],[class*=" icon-"]{font-family:'lucide'!important;font-style:normal;display:inline-block;vertical-align:middle;-webkit-font-smoothing:antialiased}</style>
 <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -107,7 +107,7 @@ const C = {
 };
 
 const F = "'Heebo',sans-serif";
-const LI = (name, size=16) => React.createElement("i", { className:`lucide lucide-${name}`, style:{fontSize:`${size}px`, lineHeight:1} });
+const LI = (name, size=16) => React.createElement("i", { className:`icon-${name}`, style:{fontSize:`${size}px`, lineHeight:1, fontStyle:"normal"} });
 // Chakra data
 const CHAKRAS = {
   root: {
