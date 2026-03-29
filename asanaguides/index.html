@@ -8,6 +8,8 @@
 <body>
 <div id="root"></div>
 
+<link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css"/>
+<style>.lucide { font-family: 'lucide'; font-style: normal; display: inline-block; vertical-align: middle; }</style>
 <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -105,6 +107,7 @@ const C = {
 };
 
 const F = "'Heebo',sans-serif";
+const LI = (name, size=16) => React.createElement("i", { className:`lucide lucide-${name}`, style:{fontSize:`${size}px`, lineHeight:1} });
 // Chakra data
 const CHAKRAS = {
   root: {
@@ -190,7 +193,7 @@ const UI = {
   he: {
     subtitle: "מדריך מורה · יוגה",
     poses: "תנוחות",
-    ethicsBtn: "🙏 אתיקת מגע",
+    ethicsBtn_icon: "heart-handshake", ethicsBtn: "אתיקת מגע",
     ethicsTitle: "אתיקת ליווי ידני",
     ethicsSubtitle: "Hands-On Touch Ethics",
     ethicsIntro: "ליווי ידני הוא מתנה — לא מובן מאליו. עקרונות אלה מגנים עלייך ועל תלמידותייך, ובונים תרבות כיתה של ביטחון עמוק.",
@@ -202,18 +205,18 @@ const UI = {
     beforeTouch: "לפני שנוגעים:",
     beforeTouchBody: "צרי קשר עין, בקשי רשות. תארי מה עומדת לעשות. רק עם אישור ברור.",
     tabs: [
-      { id:"assist",        label:"ליווי ידני",    icon:"✋" },
-      { id:"cueing",        label:"הנחיה מילולית", icon:"🗣" },
-      { id:"alignment",     label:"יישור",          icon:"📐" },
-      { id:"modifications", label:"התאמות",         icon:"🔧" },
-      { id:"watchFor",      label:"שימי לב",       icon:"👁" },
+      { id:"assist",        label:"ליווי ידני",    icon:"hand" },
+      { id:"cueing",        label:"הנחיה מילולית", icon:"mic" },
+      { id:"alignment",     label:"יישור",          icon:"ruler" },
+      { id:"modifications", label:"התאמות",         icon:"settings" },
+      { id:"watchFor",      label:"שימי לב",       icon:"eye" },
     ],
     dir: "rtl",
   },
   en: {
     subtitle: "Teacher Guide · Yoga",
     poses: "poses",
-    ethicsBtn: "🙏 Touch Ethics",
+    ethicsBtn_icon: "heart-handshake", ethicsBtn: "Touch Ethics",
     ethicsTitle: "Hands-On Touch Ethics",
     ethicsSubtitle: "עקרונות ליווי ידני",
     ethicsIntro: "Hands-on assists are a gift — not a given. These principles protect both you and your students, and build a classroom culture of deep safety and trust.",
@@ -225,11 +228,11 @@ const UI = {
     beforeTouch: "Before touching:",
     beforeTouchBody: "Make eye contact, ask permission. Describe what you're about to do. Only proceed with clear consent.",
     tabs: [
-      { id:"assist",        label:"Hands-On Assist",  icon:"✋" },
-      { id:"cueing",        label:"Verbal Cueing",     icon:"🗣" },
-      { id:"alignment",     label:"Alignment",         icon:"📐" },
-      { id:"modifications", label:"Modifications",     icon:"🔧" },
-      { id:"watchFor",      label:"Watch For",         icon:"👁" },
+      { id:"assist",        label:"Hands-On Assist",  icon:"hand" },
+      { id:"cueing",        label:"Verbal Cueing",     icon:"mic" },
+      { id:"alignment",     label:"Alignment",         icon:"ruler" },
+      { id:"modifications", label:"Modifications",     icon:"settings" },
+      { id:"watchFor",      label:"Watch For",         icon:"eye" },
     ],
     dir: "ltr",
   },
@@ -994,7 +997,7 @@ function YogaShoshan() {
       <header style={{ background:`linear-gradient(135deg, ${C.header} 0%, #EFF5F0 100%)`, padding:"0 20px", display:"flex", alignItems:"center", flexWrap:"wrap", minHeight:"58px", gap:"8px 14px", borderBottom:`1px solid ${C.border}`, position:"sticky", top:0, zIndex:50, boxShadow:"0 2px 16px rgba(31,61,52,0.1)" }}>
         <button onClick={() => setSidebarOpen(!sidebarOpen)} className="tap-target"
           style={{ background:sidebarOpen ? C.plum : "transparent", border:`1.5px solid ${C.plum}50`, color:sidebarOpen ? "#FFF" : C.plum, borderRadius:"8px", padding:"8px 12px", fontFamily:F, fontSize:"16px", cursor:"pointer", transition:"all 0.2s", flexShrink:0, lineHeight:1, minWidth:"44px", minHeight:"44px", display:"flex", alignItems:"center", justifyContent:"center" }}>
-          ☰
+          {LI("menu", 18)}
         </button>
         <div>
           <div style={{ fontFamily:"'Cinzel',Georgia,serif", fontSize:"17px", color:C.plum, letterSpacing:"3px", lineHeight:1 }}>יוגה שושן</div>
@@ -1034,38 +1037,38 @@ function YogaShoshan() {
 
         <button onClick={() => setView(view === "builder" ? "guide" : "builder")} className="tap-target"
           style={{ background:view==="builder" ? C.plum : "transparent", border:`1.5px solid ${C.plum}50`, color:view==="builder" ? "#FFF" : C.plum, borderRadius:"8px", padding:"8px 14px", fontFamily:F, fontSize:"13px", cursor:"pointer", transition:"all 0.2s", whiteSpace:"nowrap", minHeight:"44px" }}>
-          {view === "builder" ? (isHe ? "📖 חזרה למדריך" : "📖 Back to Guide") : (isHe ? "🗓 בניית שיעור" : "🗓 Build Class")}
+          {view === "builder" ? React.createElement("span",{},LI("book-open",14)," ",isHe?"חזרה למדריך":"Back to Guide") : React.createElement("span",{},LI("calendar",14)," ",isHe?"בניית שיעור":"Build Class")}
         </button>
         <button className="hide-mobile" onClick={() => setShowChakras(true)}
           style={{ background:"transparent", border:`1.5px solid ${C.plum}50`, color:C.plum, borderRadius:"8px", padding:"6px 13px", fontFamily:F, fontSize:"12px", cursor:"pointer", transition:"all 0.2s", whiteSpace:"nowrap" }}
           onMouseEnter={e => Object.assign(e.currentTarget.style, { background:C.plum, color:"#FFF" })}
           onMouseLeave={e => Object.assign(e.currentTarget.style, { background:"transparent", color:C.plum })}>
-          {isHe ? "🌈 צ׳אקרות" : "🌈 Chakras"}
+          {React.createElement("span",{},LI("rainbow",14)," ",isHe?"צ׳אקרות":"Chakras")}
         </button>
         <button className="hide-mobile" onClick={() => setShowPranayama(true)}
           style={{ background:"transparent", border:`1.5px solid ${C.plum}50`, color:C.plum, borderRadius:"8px", padding:"6px 13px", fontFamily:F, fontSize:"12px", cursor:"pointer", transition:"all 0.2s", whiteSpace:"nowrap" }}
           onMouseEnter={e => Object.assign(e.currentTarget.style, { background:C.plum, color:"#FFF" })}
           onMouseLeave={e => Object.assign(e.currentTarget.style, { background:"transparent", color:C.plum })}>
-          {isHe ? "🌬 פרנאיאמה" : "🌬 Pranayama"}
+          {React.createElement("span",{},LI("wind",14)," ",isHe?"פרנאיאמה":"Pranayama")}
         </button>
         <button className="hide-mobile" onClick={() => setShowAnatomy(true)}
           style={{ background:"transparent", border:`1.5px solid ${C.plum}50`, color:C.plum, borderRadius:"8px", padding:"6px 13px", fontFamily:F, fontSize:"12px", cursor:"pointer", transition:"all 0.2s", whiteSpace:"nowrap" }}
           onMouseEnter={e => Object.assign(e.currentTarget.style, { background:C.plum, color:"#FFF" })}
           onMouseLeave={e => Object.assign(e.currentTarget.style, { background:"transparent", color:C.plum })}>
-          {isHe ? "🦴 אנטומיה" : "🦴 Anatomy"}
+          {React.createElement("span",{},LI("bone",14)," ",isHe?"אנטומיה":"Anatomy")}
         </button>
         <button className="hide-mobile" onClick={() => setShowEthics(true)}
           style={{ background:"transparent", border:`1.5px solid ${C.plum}50`, color:C.plum, borderRadius:"8px", padding:"6px 13px", fontFamily:F, fontSize:"12px", cursor:"pointer", transition:"all 0.2s", whiteSpace:"nowrap" }}
           onMouseEnter={e => Object.assign(e.currentTarget.style, { background:C.plum, color:"#FFF" })}
           onMouseLeave={e => Object.assign(e.currentTarget.style, { background:"transparent", color:C.plum })}>
-          {ui.ethicsBtn}
+          {React.createElement("span",{},LI(ui.ethicsBtn_icon,14)," ",ui.ethicsBtn)}
         </button>
         <button className="hide-mobile" onClick={handlePrint} className="no-print"
           title={isHe ? "הדפסה / שמירה כ-PDF" : "Print / Save as PDF"}
           style={{ background:"transparent", border:`1.5px solid ${C.muted}50`, color:C.muted, borderRadius:"8px", padding:"6px 11px", fontFamily:F, fontSize:"14px", cursor:"pointer", transition:"all 0.2s", flexShrink:0 }}
           onMouseEnter={e => Object.assign(e.currentTarget.style, { background:C.muted, color:"#FFF" })}
           onMouseLeave={e => Object.assign(e.currentTarget.style, { background:"transparent", color:C.muted })}>
-          🖨️
+          {LI("printer", 16)}
         </button>
       </header>
 
@@ -1172,12 +1175,12 @@ function YogaShoshan() {
 
               {/* CLASS SECTIONS */}
               {[
-                { key:"meditation", icon:"🧘", he:"מדיטציה", en:"Meditation", type:"duration" },
-                { key:"warmup", icon:"🔥", he:"חימום", en:"Warmup", type:"poses" },
-                { key:"sunSalutations", icon:"☀️", he:"ברכות שמש", en:"Sun Salutations", type:"count" },
-                { key:"flow", icon:"🌊", he:"פלואו", en:"Flow", type:"poses" },
-                { key:"seated", icon:"🪷", he:"תנוחות ישיבה", en:"Seated Poses", type:"poses" },
-                { key:"closing", icon:"🌙", he:"רצף סיום", en:"Closing Sequence", type:"poses" },
+                { key:"meditation", licn:"brain", he:"מדיטציה", en:"Meditation", type:"duration" },
+                { key:"warmup", licn:"flame", he:"חימום", en:"Warmup", type:"poses" },
+                { key:"sunSalutations", licn:"sun", he:"ברכות שמש", en:"Sun Salutations", type:"count" },
+                { key:"flow", licn:"waves", he:"פלואו", en:"Flow", type:"poses" },
+                { key:"seated", licn:"armchair", he:"תנוחות ישיבה", en:"Seated Poses", type:"poses" },
+                { key:"closing", licn:"moon", he:"רצף סיום", en:"Closing Sequence", type:"poses" },
               ].map(sec => (
                 <div key={sec.key}
                   onDragOver={e => { if (sec.type==="poses") { e.preventDefault(); setDragOver(sec.key); } }}
@@ -1193,7 +1196,7 @@ function YogaShoshan() {
                   style={{ background:dragOver===sec.key ? `${C.accent}15` : C.paper, borderRadius:"12px", marginBottom:"10px", border:`1.5px ${dragOver===sec.key?"dashed":"solid"} ${dragOver===sec.key?C.accent:C.border}`, transition:"all 0.15s" }}>
 
                   <div style={{ padding:"10px 16px", display:"flex", alignItems:"center", gap:"8px", borderBottom:(sequence[sec.key].poses?.length || sec.type!=="poses") ? `1px solid ${C.border}` : "none" }}>
-                    <span style={{ fontSize:"17px" }}>{sec.icon}</span>
+                    <span>{LI(sec.licn, 18)}</span>
                     <span style={{ fontWeight:"700", fontSize:"13px", color:C.dark, flex:1 }}>{isHe ? sec.he : sec.en}</span>
                     {sec.type === "duration" && (
                       <div style={{ display:"flex", alignItems:"center", gap:"4px" }}>
@@ -1388,7 +1391,7 @@ function YogaShoshan() {
                 {ui.tabs.map(t => (
                   <button key={t.id} onClick={() => setTab(t.id)} className="tab-btn-mobile tap-target"
                     style={{ padding:"10px 13px 12px", border:"none", background:"transparent", cursor:"pointer", fontFamily:F, fontSize:"12px", color:tab===t.id?C.dark:C.dusty, borderBottom:tab===t.id?`2.5px solid ${selected.groupColor}`:"2.5px solid transparent", marginBottom:"-1px", fontWeight:tab===t.id?"700":"500", transition:"all 0.15s", whiteSpace:"nowrap", display:"flex", gap:"4px", alignItems:"center", minHeight:"44px" }}>
-                    <span>{t.icon}</span><span>{t.label}</span>
+                    <span>{LI(t.icon, 14)}</span><span>{t.label}</span>
                   </button>
                 ))}
               </div>
@@ -1581,7 +1584,7 @@ function YogaShoshan() {
               {sections.map(sec => (
                 <div key={sec.key} style={{ background:C.sidebar, borderRadius:"14px", overflow:"hidden" }}>
                   <div style={{ padding:"12px 18px", borderBottom:`1px solid ${C.border}`, display:"flex", alignItems:"center", gap:"10px" }}>
-                    <span style={{ fontSize:"20px" }}>{sec.icon}</span>
+                    <span>{LI(sec.licn, 20)}</span>
                     <span style={{ fontWeight:"700", fontSize:"15px", color:C.dark }}>{isHe ? sec.he : sec.en}</span>
                     <div style={{ flex:1 }}/>
                     {sec.type === "duration" && (
