@@ -1724,13 +1724,13 @@ function YogaShoshan() {
       {/* PRANAYAMA GUIDE MODAL */}
       {(showPranayama || view==="pranayama") && (
         <div className="page-enter" style={{ flex:1, overflowY:"auto", padding:"30px 20px 60px", background:C.bg }}>
-          <div onClick={e => e.stopPropagation()} className="modal-content-mobile" style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"800px", width:"100%", maxHeight:"88vh", overflowY:"auto", boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
+          <div style={{ maxWidth:"680px", margin:"0 auto", direction:dir }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"16px" }}>
               <div>
-                <h2 style={{ fontFamily:F, fontSize:"22px", fontWeight:"900", color:C.dark, margin:0 }}>{isHe ? "🌬 מדריך פרנאיאמה" : "🌬 Pranayama Guide"}</h2>
+                <h2 style={{ fontFamily:F, fontSize:"22px", fontWeight:"900", color:C.dark, margin:0 }}>{isHe ? "מדריך פרנאיאמה" : "Pranayama Guide"}</h2>
                 <div style={{ fontSize:"12px", color:C.muted, fontStyle:"italic", marginTop:"4px" }}>{isHe ? "טכניקות נשימה לשיעור יוגה — הנשימה היא הגשר בין גוף לנפש" : "Breathing techniques for yoga class — the breath is the bridge between body and soul"}</div>
               </div>
-              <button onClick={() => { setShowPranayama(false); if(view==="pranayama") setView("guide"); }} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:"8px", width:44, height:44, cursor:"pointer", color:C.muted, fontSize:"18px", display:"flex", alignItems:"center", justifyContent:"center" }}>×</button>
+              
             </div>
             <div style={{ display:"flex", flexDirection:"column", gap:"14px" }}>
               {PRANAYAMA.map((pr, i) => (
@@ -1770,7 +1770,7 @@ function YogaShoshan() {
                 </div>
               ))}
             </div>
-            <button onClick={() => { setShowPranayama(false); if(view==="pranayama") setView("guide"); }} style={{ width:"100%", padding:"11px", marginTop:"16px", background:C.dark, color:"white", border:"none", borderRadius:"9px", fontFamily:F, fontSize:"13px", fontWeight:"700", cursor:"pointer" }}>{ui.close}</button>
+            
           </div>
         </div>
       )}
@@ -1778,10 +1778,10 @@ function YogaShoshan() {
       {/* ANATOMY REFERENCE MODAL */}
       {(showAnatomy || view==="anatomy") && (
         <div className="page-enter" style={{ flex:1, overflowY:"auto", padding:"30px 20px 60px", background:C.bg }}>
-          <div onClick={e => e.stopPropagation()} style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"800px", width:"100%", maxHeight:"88vh", overflowY:"auto", boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
+          <div style={{ maxWidth:"680px", margin:"0 auto", direction:dir }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"16px" }}>
               <div>
-                <h2 style={{ fontFamily:F, fontSize:"22px", fontWeight:"900", color:C.dark, margin:0 }}>{isHe ? "🦴 מדריך אנטומיה בסיסי" : "🦴 Basic Anatomy Reference"}</h2>
+                <h2 style={{ fontFamily:F, fontSize:"22px", fontWeight:"900", color:C.dark, margin:0 }}>{isHe ? "מדריך אנטומיה בסיסי" : "Basic Anatomy Reference"}</h2>
                 <div style={{ fontSize:"12px", color:C.muted, fontStyle:"italic", marginTop:"4px" }}>{isHe ? "מה שכל מורת יוגה צריכה לדעת על הגוף" : "What every yoga teacher needs to know about the body"}</div>
               </div>
               
@@ -1789,8 +1789,8 @@ function YogaShoshan() {
 
             <div style={{ background:`${C.accent}10`, border:`1px solid ${C.accent}25`, borderRadius:"10px", padding:"12px 16px", marginBottom:"16px", fontSize:"12px", lineHeight:1.7, color:C.dark }}>
               {isHe
-                ? "💡 מדריך זה נועד לתת לך כלים מעשיים להנחיה בטוחה. זה לא מחליף הכשרה רפואית — אם תלמידה מתלוננת על כאב חד או מתמשך, הפני אותה לאיש מקצוע."
-                : "💡 This guide gives you practical tools for safe cueing. It does not replace medical training — if a student reports sharp or persistent pain, refer them to a professional."}
+                ? "מדריך זה נועד לתת לך כלים מעשיים להנחיה בטוחה. זה לא מחליף הכשרה רפואית — אם תלמידה מתלוננת על כאב חד או מתמשך, הפני אותה לאיש מקצוע."
+                : "This guide gives you practical tools for safe cueing. It does not replace medical training — if a student reports sharp or persistent pain, refer them to a professional."}
             </div>
 
             <div style={{ display:"flex", flexDirection:"column", gap:"14px" }}>
@@ -1829,7 +1829,7 @@ function YogaShoshan() {
               ))}
             </div>
 
-            <button onClick={() => { setShowAnatomy(false); if(view==="anatomy") setView("guide"); }} style={{ width:"100%", padding:"11px", marginTop:"16px", background:C.dark, color:"white", border:"none", borderRadius:"9px", fontFamily:F, fontSize:"13px", fontWeight:"700", cursor:"pointer" }}>{ui.close}</button>
+            
           </div>
         </div>
       )}
