@@ -26,56 +26,101 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, var(--primary-light) 0%, #fff 100%);
+            background: linear-gradient(rgba(31, 61, 52, 0.55), rgba(21, 40, 31, 0.7)), url('yoga-outdoor-2.jpg');
+            background-size: cover;
+            background-position: center;
             padding: 20px;
         }
 
         .login-box {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
             padding: 50px 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            max-width: 450px;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+            max-width: 440px;
             width: 100%;
             text-align: center;
         }
 
-        .login-box h1 { font-size: 32px; font-weight: 900; color: var(--primary); margin-bottom: 10px; }
-        .login-box .subtitle { font-size: 16px; color: var(--text); margin-bottom: 30px; }
+        .login-logo {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), #2a5c4a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 25px rgba(31, 61, 52, 0.3);
+        }
+
+        .login-box h1 { font-size: 30px; font-weight: 900; color: var(--primary); margin-bottom: 8px; }
+        .login-box .subtitle { font-size: 15px; color: var(--text); margin-bottom: 28px; }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .input-group .input-icon {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+        }
 
         .input-field {
             width: 100%;
-            padding: 16px 22px;
-            border: 2px solid var(--primary-light);
-            border-radius: 50px;
+            padding: 16px 50px 16px 22px;
+            border: 2px solid #e8e4de;
+            border-radius: 14px;
             font-family: 'Heebo', sans-serif;
             font-size: 16px;
-            margin-bottom: 15px;
-            transition: border-color 0.3s ease;
+            transition: all 0.3s ease;
             text-align: right;
+            background: white;
         }
 
-        .input-field:focus { outline: none; border-color: var(--primary); }
+        .input-field:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(31, 61, 52, 0.1); }
 
         .password-wrapper {
-            display: flex;
-            gap: 4px;
-            align-items: center;
-            margin-bottom: 15px;
+            position: relative;
+            margin-bottom: 16px;
         }
 
-        .password-wrapper .input-field { margin-bottom: 0; flex: 1; }
+        .password-wrapper .input-field { margin-bottom: 0; width: 100%; padding-left: 50px; }
+
+        .password-wrapper .input-icon {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+        }
 
         .toggle-password {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
             background: none !important;
             border: none;
             cursor: pointer;
-            font-size: 20px;
-            opacity: 0.6;
+            font-size: 18px;
+            opacity: 0.5;
             padding: 0;
             outline: none;
             -webkit-appearance: none;
             appearance: none;
+            transition: opacity 0.2s;
         }
 
         .toggle-password:hover { opacity: 1; }
@@ -84,25 +129,52 @@
         .login-btn {
             width: 100%;
             padding: 16px;
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), #2a5c4a);
             color: white;
             border: none;
-            border-radius: 50px;
+            border-radius: 14px;
             font-family: 'Heebo', sans-serif;
             font-size: 18px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 10px;
+            margin-top: 8px;
+            box-shadow: 0 6px 20px rgba(31, 61, 52, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
-        .login-btn:hover { background: #15281f; transform: translateY(-2px); }
+        .login-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(31, 61, 52, 0.4); }
+
+        .login-divider {
+            height: 1px;
+            background: #e8e4de;
+            margin: 22px 0 18px;
+        }
+
+        .login-footer {
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        .login-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-footer a:hover { text-decoration: underline; }
 
         .error-msg {
             color: #e74c3c;
             margin-top: 15px;
-            font-size: 15px;
+            font-size: 14px;
             display: none;
+            background: #fdf0ef;
+            padding: 10px 16px;
+            border-radius: 10px;
         }
 
         .course-content { display: none; }
@@ -318,7 +390,8 @@
         @media (max-width: 768px) {
             .lesson-title { font-size: 22px; }
             .lesson-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .login-box { padding: 35px 25px; }
+            .login-box { padding: 35px 25px; margin: 0 10px; }
+            .login-box h1 { font-size: 26px; }
         }
         
         /* Feedback Button */
@@ -417,20 +490,38 @@
     <!-- Login Screen -->
     <div class="login-screen" id="loginScreen">
         <div class="login-box">
-            <h1>ברוכה הבאה!</h1>
-            <p class="subtitle">הזיני את המייל והסיסמה שקיבלת</p>
+            <div class="login-logo">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><circle cx="9" cy="9.5" r="0.5" fill="white"/><circle cx="15" cy="9.5" r="0.5" fill="white"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" opacity="0.3"/></svg>
+            </div>
+            <h1>התחלה מדויקת</h1>
+            <p class="subtitle">הזיני את המייל והסיסמה שקיבלת כדי להיכנס לקורס</p>
 
-            <input type="email" id="emailInput" class="input-field" placeholder="כתובת מייל" />
+            <div class="input-group">
+                <div class="input-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
+                </div>
+                <input type="email" id="emailInput" class="input-field" placeholder="כתובת מייל" />
+            </div>
 
             <div class="password-wrapper">
+                <div class="input-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </div>
                 <input type="password" id="passwordInput" class="input-field" placeholder="סיסמה" />
                 <button type="button" class="toggle-password" onclick="togglePassword()">
-                    <span id="eyeIcon">👁️</span>
+                    <svg id="eyeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                 </button>
             </div>
 
-            <button class="login-btn" onclick="checkLogin()">כניסה לקורס</button>
+            <button class="login-btn" onclick="checkLogin()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                כניסה לקורס
+            </button>
+
             <p class="error-msg" id="errorMsg">מייל או סיסמה שגויים, נסי שוב</p>
+
+            <div class="login-divider"></div>
+            <p class="login-footer">צריכה עזרה? <a href="https://wa.me/972502018743">כתבי לי בוואטסאפ</a></p>
         </div>
     </div>
 
@@ -766,10 +857,10 @@
             const icon = document.getElementById('eyeIcon');
             if (input.type === 'password') {
                 input.type = 'text';
-                icon.style.textDecoration = 'line-through';
+                icon.style.opacity = '1';
             } else {
                 input.type = 'password';
-                icon.style.textDecoration = 'none';
+                icon.style.opacity = '0.5';
             }
         }
 
