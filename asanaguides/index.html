@@ -27,10 +27,44 @@ const FONTS = `
 .fade { animation: fadeIn 0.3s ease both; }
 .slide { animation: slideIn 0.25s ease both; }
 .sidebar-btn-hover:hover { background: rgba(31,61,52,0.08) !important; }
-@media (max-width: 640px) {
-  header { padding: 0 10px !important; gap: 8px !important; height: 50px !important; }
-  header .logo-text { font-size: 14px !important; }
+/* ── Mobile: tablets and below ── */
+@media (max-width: 768px) {
+  header { padding: 8px 12px !important; gap: 8px !important; height: auto !important; min-height: 50px !important; flex-wrap: wrap !important; }
+  header .logo-text { font-size: 15px !important; }
   .hide-mobile { display: none !important; }
+  .sidebar-overlay-mobile { width: 100% !important; max-width: 100% !important; }
+  .builder-library-mobile { width: 100% !important; max-height: 250px !important; border-left: none !important; border-right: none !important; border-bottom: 1px solid #D8E0DA !important; }
+  .builder-layout-mobile { flex-direction: column !important; }
+  .modal-content-mobile { padding: 18px 16px !important; max-width: 100% !important; margin: 8px !important; }
+  .pose-header-area { padding: 12px 14px 0 !important; }
+  .content-area { padding: 14px 14px 24px !important; }
+  .footer-mobile { padding: 8px 14px !important; }
+}
+/* ── Mobile: small phones ── */
+@media (max-width: 480px) {
+  header { padding: 6px 8px !important; gap: 6px !important; }
+  header .logo-text { font-size: 13px !important; }
+  .hide-small { display: none !important; }
+  .sidebar-overlay-mobile { width: 100% !important; }
+  .builder-library-mobile { max-height: 200px !important; }
+  .pose-header-area { padding: 10px 10px 0 !important; }
+  .content-area { padding: 10px 10px 20px !important; }
+  .pose-title-mobile { font-size: 18px !important; }
+  .tab-btn-mobile { padding: 10px 10px 12px !important; font-size: 12px !important; min-height: 44px !important; }
+  .modal-content-mobile { padding: 14px 10px !important; }
+  .footer-mobile { flex-direction: column !important; gap: 4px !important; text-align: center !important; }
+}
+/* ── Touch-friendly tap targets ── */
+@media (pointer: coarse) {
+  button, [role="button"], .tap-target { min-height: 44px; min-width: 44px; }
+  .sidebar-btn-hover { min-height: 44px !important; padding: 10px 12px !important; }
+  .tab-btn-mobile { min-height: 44px !important; }
+  button { touch-action: manipulation; }
+}
+/* ── Modal padding on mobile ── */
+@media (max-width: 480px) {
+  .modal-backdrop-mobile { padding: 8px !important; }
+  .modal-content-mobile h2 { font-size: 18px !important; }
 }
 @media print {
   header, footer, aside, .no-print { display: none !important; }
@@ -138,6 +172,18 @@ const CHAKRAS = {
   },
 };
 const CHAKRA_ORDER = ["root","sacral","solar","heart","throat","third","crown"];
+const PRANAYAMA=[{id:"ujjayi",symbol:"🌊",color:"#4A8A6D",sanskrit:"Ujjayi",he_name:"אוג׳איי · נשימת האוקיינוס",en_name:"Ujjayi · Ocean Breath",steps_he:["שבי בישיבה נוחה, עמוד שדרה ארוך וזקוף","עצמי את העיניים בעדינות והרגישי את הנשימה הטבעית","שאפי דרך האף — דמייני שיפוע רך של אוויר דרך גרון פתוח","בנשיפה, כווצי קלות את שרירי הגרון כאילו את מאדה מראה","נשמעת תהודה רכה — כמו גלים שוטפים חוף","שמרי על קצב אחיד — שאיפה ונשיפה באורך שווה","המשיכי 5–15 דקות, או לאורך כל התרגול"],steps_en:["Sit comfortably with a tall, upright spine","Gently close your eyes and notice your natural breath","Inhale through the nose — imagine a soft stream of air through an open throat","On the exhale, slightly constrict the back of the throat as if fogging a mirror","A soft, oceanic sound should emerge — like waves washing ashore","Maintain an even rhythm — equal length inhale and exhale","Continue for 5–15 minutes, or throughout your entire practice"],benefits_he:"מרגיעה את מערכת העצבים, מחממת את הגוף מבפנים, מעמיקה ריכוז ונוכחות. מסייעת לשמור על קצב נשימה יציב לאורך ויניאסה.",benefits_en:"Calms the nervous system, warms the body internally, deepens focus and presence. Helps maintain steady breath rhythm throughout vinyasa.",contra_he:"אין התוויות נגד משמעותיות. יש להימנע מלחץ מוגזם בגרון — המגע צריך להיות עדין ורך.",contra_en:"No significant contraindications. Avoid excessive throat tension — the constriction should be gentle and soft.",when_he:"נשימת הבסיס לאורך כל תרגול ויניאסה. מושלמת לפתיחה, לליווי תנועה, ולשוואסאנה.",when_en:"The foundational breath throughout vinyasa practice. Perfect for opening, movement accompaniment, and Savasana.",duration_he:"5–15 דקות, או לאורך כל השיעור",duration_en:"5–15 minutes, or throughout the entire class"},{id:"kapalabhati",symbol:"🔥",color:"#D0A020",sanskrit:"Kapalabhati",he_name:"קפלבאטי · הארת הגולגולת",en_name:"Kapalabhati · Skull Shining Breath",steps_he:["שבי בישיבה נוחה, ידיים על הברכיים, עמוד שדרה זקוף","שאפי שאיפה עמוקה ורגועה דרך האף","נשפי בחדות וקצרות דרך האף — הבטן נכנסת פנימה בנשיפה","השאיפה מגיעה לבד, פסיבית — הבטן משתחררת","התחילי בקצב איטי — נשיפה בכל שנייה בערך","עשי 20–30 סבבים, ואז שאיפה עמוקה, עצירה קצרה, ונשיפה איטית","חזרי על 2–3 סטים עם הפסקה ביניהם"],steps_en:["Sit comfortably, hands on knees, spine upright","Take a deep, relaxed inhale through the nose","Exhale sharply and briefly through the nose — belly draws inward on exhale","The inhale happens naturally, passively — the belly releases","Start at a slow pace — about one exhale per second","Do 20–30 rounds, then a deep inhale, brief retention, and slow exhale","Repeat for 2–3 sets with pauses between them"],benefits_he:"מעורר ומחדש אנרגיה, מנקה את דרכי הנשימה, מחזק שרירי בטן, מעלה חום פנימי. מסייע בריכוז ובהירות מנטלית.",benefits_en:"Energizes and revitalizes, clears respiratory passages, strengthens abdominal muscles, builds internal heat. Aids concentration and mental clarity.",contra_he:"אין לתרגל בהיריון, לחץ דם גבוה, מחלות לב, אפילפסיה, בעיות בטן חריפות, או בזמן מחזור כבד. יש להפסיק מיד אם מרגישים סחרחורת.",contra_en:"Do not practice during pregnancy, with high blood pressure, heart conditions, epilepsy, acute abdominal issues, or heavy menstruation. Stop immediately if dizzy.",when_he:"בתחילת השיעור, אחרי חימום ראשוני — ליצירת אנרגיה וחום. מצוין לפני תרגול ויניאסה דינמי.",when_en:"At the beginning of class after initial warm-up — to create energy and heat. Excellent before a dynamic vinyasa practice.",duration_he:"3–5 דקות (כולל הפסקות)",duration_en:"3–5 minutes (including pauses)"},{id:"nadi_shodhana",symbol:"☯",color:"#6040A0",sanskrit:"Nadi Shodhana",he_name:"נאדי שודהאנה · נשימת נחירים לסירוגין",en_name:"Nadi Shodhana · Alternate Nostril Breathing",steps_he:["שבי בישיבה נוחה, יד שמאל על הברך","הביאי את יד ימין לפנים — אגודל ליד נחיר ימין, קמיצה ליד נחיר שמאל","סגרי את נחיר ימין באגודל, שאפי דרך נחיר שמאל (4 ספירות)","סגרי את שני הנחיריים, עצרי בעדינות (4 ספירות)","שחררי את נחיר ימין, נשפי דרכו (4 ספירות)","שאפי דרך נחיר ימין (4 ספירות)","סגרי, עצרי (4 ספירות), שחררי שמאל, נשפי דרך שמאל (4 ספירות)","זהו סבב אחד שלם. המשיכי 5–10 סבבים"],steps_en:["Sit comfortably, left hand on your knee","Bring your right hand to your face — thumb beside right nostril, ring finger beside left","Close the right nostril with thumb, inhale through left (4 counts)","Close both nostrils, gently retain (4 counts)","Release the right nostril, exhale through it (4 counts)","Inhale through the right nostril (4 counts)","Close, retain (4 counts), release left, exhale through left (4 counts)","This is one complete round. Continue for 5–10 rounds"],benefits_he:"מאזנת בין ההמיספרות של המוח, מרגיעה את מערכת העצבים, מפחיתה חרדה ולחץ, מקדמת בהירות מנטלית ושקט פנימי עמוק.",benefits_en:"Balances brain hemispheres, calms the nervous system, reduces anxiety and stress, promotes mental clarity and deep inner quiet.",contra_he:"אין לעצור את הנשימה אם יש לחץ דם גבוה — ניתן לתרגל בלי עצירה. בזמן הצטננות חמורה, עדיף להמתין עד שהנחיריים פתוחים.",contra_en:"Do not retain breath with high blood pressure — practice without retention. During severe cold or congestion, wait until nostrils are clear.",when_he:"מושלמת לפתיחת שיעור כשהכוונה היא איזון ורוגע, או לסיום לפני שוואסאנה. נפלאה גם בשיעורי ערב.",when_en:"Perfect for opening a class focused on balance and calm, or before Savasana. Also wonderful for evening classes.",duration_he:"5–10 דקות",duration_en:"5–10 minutes"},{id:"bhramari",symbol:"🐝",color:"#4080C0",sanskrit:"Bhramari",he_name:"בהרמרי · נשימת הדבורה",en_name:"Bhramari · Bee Breath",steps_he:["שבי בישיבה נוחה, עצמי עיניים בעדינות","הניחי את האגודלות על תנוכי האוזניים (שנקי), שאר האצבעות על הפנים","שאפי שאיפה עמוקה ומלאה דרך האף","בנשיפה, צרי צליל זמזום רך — כמו דבורה עדינה","הרגישי את התהודה בפנים, במצח, בחזה","המשיכי 7–10 סבבים","בסיום, שחררי את הידיים ושבי בשקט כמה רגעים"],steps_en:["Sit comfortably, gently close your eyes","Place your thumbs on the ear flaps (tragus), remaining fingers across your face","Take a deep, full inhale through the nose","On exhale, create a soft humming sound — like a gentle bee","Feel the vibration resonate in your face, forehead, and chest","Continue for 7–10 rounds","When finished, release your hands and sit quietly for a few moments"],benefits_he:"מרגיעה עמוקה למערכת העצבים, מפחיתה מתח וכעס, מסייעת בשינה, מורידה לחץ דם. התהודה מרגיעה את המוח ומשרה שלווה.",benefits_en:"Deeply calms the nervous system, reduces tension and anger, aids sleep, lowers blood pressure. The vibration soothes the brain and induces peace.",contra_he:"אין לתרגל בשכיבה. יש להיזהר עם דלקת אוזניים. בהיריון — ניתן לתרגל בעדינות ובלי לחץ על האוזניים.",contra_en:"Do not practice lying down. Be careful with ear infections. During pregnancy — practice gently without pressing on the ears.",when_he:"מושלמת לסיום שיעור, לפני מדיטציה או שוואסאנה. מסייעת במיוחד בשיעורי ערב ושיעורים לניהול מתח.",when_en:"Perfect for class ending, before meditation or Savasana. Especially helpful in evening classes and stress-management sessions.",duration_he:"5–7 דקות",duration_en:"5–7 minutes"},{id:"sitali",symbol:"❄",color:"#5B9BD5",sanskrit:"Sitali",he_name:"סיטאלי · נשימה מקררת",en_name:"Sitali · Cooling Breath",steps_he:["שבי בישיבה נוחה, עמוד שדרה ארוך","גלגלי את הלשון לצורת שפופרת (אם זה לא מצליח — השתמשי בסיטכארי: שפתיים מעט פתוחות, לשון מאחורי שיניים)","שאפי דרך הלשון המגולגלת — הרגישי אוויר קריר","סגרי את הפה, נשפי לאט דרך האף","המשיכי 10–15 סבבים","שימי לב לתחושת הקרירות הנעימה שמתפשטת בגוף"],steps_en:["Sit comfortably with a tall spine","Curl the tongue into a tube shape (if unable — use Sitkari: lips slightly parted, tongue behind teeth)","Inhale through the curled tongue — feel the cool air","Close the mouth, exhale slowly through the nose","Continue for 10–15 rounds","Notice the pleasant cooling sensation spreading through the body"],benefits_he:"מקררת את הגוף, מורידה חום פנימי, מרגיעה את מערכת העיכול, מפחיתה כעס ותסכול, משיבה שלווה ואיזון.",benefits_en:"Cools the body, reduces internal heat, soothes the digestive system, reduces anger and frustration, restores calm and balance.",contra_he:"אין לתרגל בקור חיצוני עז, עם הצטננות או גודש באף, או עם לחץ דם נמוך מאוד. אסתמטיקים — בזהירות.",contra_en:"Do not practice in extreme cold, with a cold or nasal congestion, or with very low blood pressure. Asthmatics — use caution.",when_he:"מצוינת בשיעורי קיץ, אחרי תרגול דינמי עם חום, או כשהאנרגיה בכיתה חמה ועצבנית. נפלאה בין סטים אינטנסיביים.",when_en:"Excellent in summer classes, after a heated dynamic practice, or when class energy is hot and agitated. Wonderful between intense sets.",duration_he:"3–5 דקות",duration_en:"3–5 minutes"},{id:"sama_vritti",symbol:"⬜",color:"#5B7D6E",sanskrit:"Sama Vritti",he_name:"סאמה וריטי · נשימה מרובעת",en_name:"Sama Vritti · Box / Equal Breathing",steps_he:["שבי בישיבה נוחה או שכבי בשכיבת גב","שאפי דרך האף לספירה של 4","עצרי את הנשימה בעדינות לספירה של 4","נשפי דרך האף לספירה של 4","עצרי בריאות ריקות לספירה של 4","זהו סבב אחד. התחילי מ-4 ספירות — עם הזמן ניתן להעלות ל-6 או 8","המשיכי 8–12 סבבים"],steps_en:["Sit comfortably or lie on your back","Inhale through the nose for a count of 4","Hold the breath gently for a count of 4","Exhale through the nose for a count of 4","Hold on empty lungs for a count of 4","This is one round. Start with 4 counts — over time increase to 6 or 8","Continue for 8–12 rounds"],benefits_he:"מרגיעה את מערכת העצבים, מפחיתה חרדה, מאזנת בין הסימפטטית לפאראסימפטטית, משפרת ריכוז וקשב. פשוטה ונגישה לכולם.",benefits_en:"Calms the nervous system, reduces anxiety, balances sympathetic and parasympathetic systems, improves focus and attention. Simple and accessible to everyone.",contra_he:"אין לעצור נשימה עם לחץ דם גבוה — ניתן לתרגל בלי שלבי העצירה. בהיריון — נשימה ללא עצירות.",contra_en:"Do not retain breath with high blood pressure — practice without the retention phases. During pregnancy — breathe without retentions.",when_he:"מתאימה לכל שלב בשיעור — פתיחה, מעברים, או סגירה. מצוינת במיוחד לרגעי חרדה או מתח בכיתה.",when_en:"Suitable for any stage of class — opening, transitions, or closing. Especially excellent during moments of anxiety or tension.",duration_he:"3–10 דקות",duration_en:"3–10 minutes"},{id:"viloma",symbol:"🌬",color:"#8B6914",sanskrit:"Viloma",he_name:"וילומה · נשימה מופסקת",en_name:"Viloma · Interrupted Breathing",steps_he:["שבי בישיבה נוחה או שכבי על הגב","וילומה A — שאיפה מופסקת: שאפי שליש, עצרי 2 שניות, שאפי עוד שליש, עצרי, השלימי את השאיפה","נשפי ארוכה וזורמת דרך האף","וילומה B — נשיפה מופסקת: שאפי שאיפה מלאה","נשפי שליש, עצרי 2 שניות, עוד שליש, עצרי, השלימי את הנשיפה","ניתן לשלב A+B יחד — גם שאיפה וגם נשיפה מופסקות","התחילי עם 5 סבבים של כל גרסה"],steps_en:["Sit comfortably or lie on your back","Viloma A — interrupted inhale: inhale one-third, pause 2 seconds, inhale another third, pause, complete the inhale","Exhale long and flowing through the nose","Viloma B — interrupted exhale: take a full inhale","Exhale one-third, pause 2 seconds, another third, pause, complete the exhale","You can combine A+B — both interrupted inhale and exhale","Start with 5 rounds of each variation"],benefits_he:"בונה קיבולת ריאות, מחזקת שליטה בנשימה, מפתחת מודעות עדינה לתהליך הנשימה, מכינה את הגוף לפרנאיאמה מתקדמת.",benefits_en:"Builds lung capacity, strengthens breath control, develops subtle awareness of the breathing process, prepares the body for advanced pranayama.",contra_he:"אין לתרגל עם חרדת נשימה חמורה. יש להפסיק אם מרגישים סחרחורת. בהיריון — בלי עצירות ארוכות.",contra_en:"Do not practice with severe breathing anxiety. Stop if feeling dizzy. During pregnancy — avoid long retentions.",when_he:"בשלב הפרנאיאמה של השיעור (בדרך כלל אחרי אסאנות ולפני מדיטציה). מצוינת כגשר בין תרגול גופני לתרגול פנימי.",when_en:"During the pranayama phase of class (usually after asanas and before meditation). Excellent as a bridge between physical practice and inner work.",duration_he:"5–8 דקות",duration_en:"5–8 minutes"}];
+
+/* ── ANATOMY REFERENCE DATA ── */
+const ANATOMY = [
+  { id:"hamstrings", symbol:"🦵", color:"#8B4513", he:"שרירי ירך אחוריים", en:"Hamstrings", location_he:"חלק אחורי של הירך — משתרעים מעצמות הישיבה ועד מתחת לברך", location_en:"Back of the thigh — running from the sit bones down to just below the knee", function_he:"מאפשרים כפיפת ברך והארכת הירך לאחור. ביוגה — מעורבים בכל קיפול קדימה, ומשפיעים על יציבת האגן והגב התחתון", function_en:"Allow knee bending and hip extension. In yoga — involved in every forward fold, and deeply affect pelvis and lower back positioning", issues_he:"מתוחים אצל רוב האנשים (ישיבה ממושכת). כשהם קשיחים — האגן נוטה אחורה, הגב התחתון מתעגל בקיפולים קדימה, ויש לחץ על דיסקים", issues_en:"Tight in most people due to prolonged sitting. When tight — pelvis tilts back, lower back rounds in forward folds, creating disc pressure", protection_he:"תמיד הציעי כיפוף ברכיים בקיפולים קדימה. הדריכי קיפול מהאגן (לא מהמותניים). אין מה למהר — הגוף נפתח בזמנו. חגורה היא חברה טובה", protection_en:"Always offer bent knees in forward folds. Cue hip hinge (not waist rounding). No rush — the body opens in its own time. A strap is a wonderful friend", poses_he:"אוטאנאסנה, פאשצ׳ימוטאנאסנה, אדהו מוקהה שוואנאסנה, קרונצ׳אסנה", poses_en:"Uttanasana, Paschimottanasana, Adho Mukha Svanasana, Krounchasana" },
+  { id:"hip-flexors", symbol:"🏃", color:"#C06030", he:"כופפי ירך (אילאופסואס)", en:"Hip Flexors (Iliopsoas)", location_he:"עמוק בתוך הגוף — מחבר את עמוד השדרה המותני לחלק הפנימי של הירך. עובר דרך האגן", location_en:"Deep inside the body — connecting the lumbar spine to the inner thigh, passing through the pelvis", function_he:"מרים את הרגל קדימה ומעלה, מייצב את עמוד השדרה. ביוגה — פעיל בהרמות רגליים, כיפולים קדימה, ומתנוחות עמידה. שריר ה״לחימה או בריחה״ — מחזיק מתח רגשי", function_en:"Lifts the leg forward and up, stabilizes the spine. In yoga — active in leg lifts, forward folds, standing poses. The 'fight or flight' muscle — holds emotional tension", issues_he:"מתקצר מישיבה ממושכת. כשהוא קצר — גורם לקשת יתר בגב התחתון, כאבי גב, ומגביל כיפולים אחוריים. עלול לגרום לכאבי ירך קדמיים", issues_en:"Shortened by prolonged sitting. When short — causes excessive lower back arching, back pain, and limits backbends. Can cause anterior hip pain", protection_he:"שלבי תנוחות פתיחת ירך קדמית בכל שיעור. הדריכי הארכה עדינה ולא דחיפה. הזמיני נשימה עמוקה — שריר זה מגיב לנשימה", protection_en:"Include hip flexor lengthening in every class. Cue gentle lengthening, not pushing. Invite deep breathing — this muscle responds to breath", poses_he:"ווירבהדראסנה א׳, אנג׳נאסנה (לאנג׳ נמוך), אוסטראסנה, אורדהווה דנוראסנה", poses_en:"Virabhadrasana I, Anjaneyasana (Low Lunge), Ustrasana, Urdhva Dhanurasana" },
+  { id:"shoulders", symbol:"💪", color:"#4A6FA5", he:"כתפיים ושרוול מסובב", en:"Shoulders & Rotator Cuff", location_he:"מפרק הכתף — המפרק הניד ביותר בגוף. שרוול מסובב = ארבעה שרירים קטנים שעוטפים את ראש הכתף ושומרים עליו במקום", location_en:"The shoulder joint — the most mobile joint in the body. Rotator cuff = four small muscles wrapping the shoulder head, keeping it stable", function_he:"מאפשרים טווח תנועה רחב — הרמה, סיבוב, משיכה, דחיפה. ביוגה — נושאים משקל (צ׳אטורנגה, פלאנק), נפתחים (כיפולים אחוריים), מסתובבים (ביינדים)", function_en:"Allow wide range of motion — lifting, rotating, pulling, pushing. In yoga — bear weight (Chaturanga, Plank), open (backbends), rotate (binds)", issues_he:"כתפיים עגולות מעבודה מול מחשב. שרוול מסובב רגיש לפציעה מעומס יתר או תנועה חוזרת (במיוחד צ׳אטורנגה לא נכונה). כאבי כתף שכיחים מאוד", issues_en:"Rounded shoulders from desk work. Rotator cuff vulnerable to overuse injury or repetitive motion (especially poor Chaturanga). Shoulder pain extremely common", protection_he:"הדריכי עמוד שכמה למטה ואחורה לפני כל נשיאת משקל. הציעי שינויים: ברכיים למטה בצ׳אטורנגה, חגורה בביינדים. לעולם לא לדחוף את הכתף מעבר לטווח הנוח", protection_en:"Cue shoulder blades down and back before any weight bearing. Offer modifications: knees down in Chaturanga, strap in binds. Never push shoulder past comfortable range", poses_he:"צ׳אטורנגה, אדהו מוקהה שוואנאסנה, גומוקהאסנה (ידיים), אורדהווה מוקהה שוואנאסנה", poses_en:"Chaturanga, Adho Mukha Svanasana, Gomukhasana (arms), Urdhva Mukha Svanasana" },
+  { id:"spine", symbol:"🧬", color:"#5B7D6E", he:"עמוד השדרה", en:"The Spine", location_he:"מבסיס הגולגולת ועד העצה — 33 חוליות: צווארי (7), חזי (12), מותני (5), עצה, עצם הזנב", location_en:"From skull base to tailbone — 33 vertebrae: cervical (7), thoracic (12), lumbar (5), sacrum, coccyx", function_he:"ביוגה — עמוד השדרה נע בארבעה כיוונים: כפיפה (קדימה), הארכה (אחורה), כפיפה צדית (לצד), וסיבוב. שיעור מאוזן מכיל את כל הארבעה. עמוד השדרה הבריא הוא עמוד שדרה שנע", function_en:"In yoga — the spine moves in four directions: flexion (forward), extension (back), lateral flexion (side), and rotation. A balanced class includes all four. A healthy spine is a moving spine", issues_he:"דיסקים — בעיקר מותניים וצוואריים — רגישים ללחץ חוזר. כיפולים קדימה עם גב מעוגל לוחצים דיסקים. כיפולים אחוריים עמוקים מבלי הכנה עלולים ללחוץ חוליות", issues_en:"Discs — especially lumbar and cervical — are vulnerable to repetitive pressure. Forward folds with a rounded back compress discs. Deep backbends without preparation can compress vertebrae", protection_he:"הדריכי תמיד אורך לפני כפיפה. חממי את עמוד השדרה הדרגתית — אל תקפצי לתנוחות עמוקות. שלבי את כל ארבעת הכיוונים. הקשיבי לכאב — כאב חד הוא אור אדום", protection_en:"Always cue length before bending. Warm the spine gradually — don't jump to deep poses. Include all four movement directions. Listen to pain — sharp pain is a red light", poses_he:"כל התנוחות! כפיפה: אוטאנאסנה. הארכה: אורדהווה מוקהה. צדית: טריקונאסנה. סיבוב: מאריצ׳אסנה", poses_en:"Every pose! Flexion: Uttanasana. Extension: Urdhva Mukha. Lateral: Trikonasana. Rotation: Marichyasana" },
+  { id:"core", symbol:"🔥", color:"#D0A020", he:"ליבה (Core)", en:"Core Muscles", location_he:"הליבה היא לא רק ״שישיה״ — היא מערכת שלמה: שריר הבטן הרוחבי (עמוק), ישר הבטן (שטחי), אלכסוניים, רצפת אגן, סרעפת, ושרירי גב תחתון", location_en:"The core is not just 'abs' — it's a complete system: transversus abdominis (deep), rectus abdominis (surface), obliques, pelvic floor, diaphragm, and lower back muscles", function_he:"מייצבת את עמוד השדרה, מעבירה כוח בין חלקים עליונים ותחתונים, מגנה על הגב. ביוגה — מקבילה לרעיון הבנדהות: מולה בנדהה (רצפת אגן) ואודיאנה בנדהה (בטן תחתונה) מפעילים את הליבה העמוקה", function_en:"Stabilizes the spine, transfers force between upper and lower body, protects the back. In yoga — parallels the bandha concept: Mula Bandha (pelvic floor) and Uddiyana Bandha (lower belly) engage the deep core", issues_he:"ליבה חלשה = גב תחתון חשוף ללחץ. הפעלת יתר של שרירים שטחיים (כיווץ בטן) בלי השרירים העמוקים = יציבות מדומה. אחרי לידה — דרוש שיקום מיוחד", issues_en:"Weak core = lower back exposed to stress. Over-activating surface muscles (crunching) without deep muscles = false stability. Post-partum — requires special rehabilitation", protection_he:"הדריכי הפעלת ליבה עמוקה: ״משכי טבור פנימה ומעלה בעדינות״ (לא כיווץ!). הציעי שינויים בתנוחות ליבה חזקות. אם תלמידה אחרי לידה — שאלי על דיאסטזיס", protection_en:"Cue deep core activation: 'gently draw navel in and up' (not crunching!). Offer modifications in strong core poses. If a student is postpartum — ask about diastasis recti", poses_he:"נאוואסנה, פלאנק, צ׳אטורנגה, אוטקאטאסנה, כל תנוחות האיזון", poses_en:"Navasana, Plank, Chaturanga, Utkatasana, all balance poses" },
+  { id:"knees", symbol:"🦿", color:"#C04040", he:"ברכיים", en:"Knees", location_he:"מפרק ציר בין הירך לשוק. מכיל רצועות צולבות (ACL/PCL), מניסקוסים, וכר שומני. יכול לכפוף ולהתיישר — אבל לא לסתובב בעומס", location_en:"A hinge joint between thigh and shin. Contains cruciate ligaments (ACL/PCL), menisci, and fat pad. Can bend and extend — but not designed to rotate under load", function_he:"ביוגה — הברך מקבלת עומס בתנוחות עמידה, כריעה, וישיבה. היא לא מיועדת ליצור תנועה — אלא לעקוב אחרי כף הרגל והירך. רוב פציעות הברכיים ביוגה הן מסיבוב לא רצוי", function_en:"In yoga — the knee bears load in standing, kneeling, and seated poses. It's not meant to create movement — but to follow the foot and hip. Most yoga knee injuries come from unwanted rotation", issues_he:"פציעות ברכיים שכיחות ביוגה: מניסקוס (מלוטוס, ויראסנה), רצועות (ווירבהדראסנה עם ברך נכנסת), כאב ריצפת ברך (כריעה ללא ריפוד)", issues_en:"Common yoga knee injuries: meniscus (from Lotus, Virasana), ligaments (Warrior with knee caving in), kneecap pain (kneeling without padding)", protection_he:"כלל הזהב: הברך עוקבת אחרי האצבע השנייה של כף הרגל. לעולם לא לדחוף ברכיים לרצפה (בדהא קונאסנה!). הציעי ריפוד לכריעה. אם כואב — זה אומר לעצור", protection_en:"Golden rule: the knee tracks over the second toe. Never push knees to the floor (Baddha Konasana!). Offer padding for kneeling. If it hurts — it means stop", poses_he:"ווירבהדראסנה א׳ וב׳, אוטקאטאסנה, בדהא קונאסנה, וורקשאסנה (כף רגל לא על הברך!)", poses_en:"Virabhadrasana I & II, Utkatasana, Baddha Konasana, Vrksasana (foot never on knee!)" },
+  { id:"wrists", symbol:"🤲", color:"#6040A0", he:"פרקי כפות הידיים", en:"Wrists", location_he:"מפרק מורכב שמחבר את האמה לכף היד. מכיל שמונה עצמות קטנות, גידים רבים, ועצב חציוני (תעלה קרפלית)", location_en:"A complex joint connecting forearm to hand. Contains eight small bones, many tendons, and the median nerve (carpal tunnel)", function_he:"ביוגה — נושאים משקל גוף מלא בתנוחות רבות: פלאנק, צ׳אטורנגה, אדהו מוקהה, עקיצת עקרב. רוב האנשים לא רגילים לשאת משקל על הידיים — וזה דורש בנייה הדרגתית", function_en:"In yoga — bear full body weight in many poses: Plank, Chaturanga, Adho Mukha, arm balances. Most people are not used to weight-bearing on hands — requires gradual building", issues_he:"כאב פרק כף יד שכיח מאוד בויניאסה. גורמים: משקל יתר על עקב כף היד, אצבעות לא פרושות, חזרות רבות ללא הכנה. תעלה קרפלית עלולה להתעורר", issues_en:"Wrist pain very common in Vinyasa. Causes: too much weight on heel of hand, fingers not spread, repetitions without preparation. Carpal tunnel can flare up", protection_he:"הדריכי פריסת אצבעות רחבה ולחיצה דרך כל קשרי האצבעות (לא רק עקב כף היד). הציעי אגרוף או אמות במקום כפות פתוחות. חממי פרקים לפני ויניאסה. אם כואב — שינוי מיידי", protection_en:"Cue wide finger spread and pressing through all knuckles (not just heel of hand). Offer fists or forearms instead of open palms. Warm up wrists before Vinyasa. If it hurts — modify immediately", poses_he:"צ׳אטורנגה, אדהו מוקהה שוואנאסנה, פלאנק, בקאסנה, כל איזוני ידיים", poses_en:"Chaturanga, Adho Mukha Svanasana, Plank, Bakasana, all arm balances" },
+];
 
 /* ── UI strings ── */
 const UI = {
@@ -669,11 +715,148 @@ const poseGroups = [
       watch_en:["Forearms converging — use block between hands","Hips behind the shoulder line","Jumping up — teach the controlled float"] },
 
   ]},
+
+  { he:"תנוחות בסיס וחימום", en:"Foundation & Warmup", color:"#6A8A4A", poses:[
+    { id:"balasana",
+      he:{ name:"בלאסנה (תנוחת ילד)", level:"בסיס" }, en:{ name:"Balasana (Child's Pose)", level:"Foundation" },
+      sanskrit:"Bālāsana", duration_he:"5–10 נשימות", duration_en:"5–10 breaths",
+      chakras:["root","third-eye"],
+      assist_he:["הנחי יד אחת על העצה — מגע מרגיע, בלי לחץ","ליווי עדין עם שתי ידיים על הגב העליון — עודדי שחרור","הנחי כר מתחת למצח אם לא מגיע לרצפה"],
+      assist_en:["Place one hand on sacrum — calming touch, no pressure","Gentle glide with both hands on upper back — encourage release","Place a cushion under forehead if it doesn't reach the floor"],
+      cueing_he:["ברכיים ברוחב המחצלת או ביחד — מה שנוח","מצח מונח על המחצלת","ידיים מושטות קדימה או לצד הגוף","נשמי לגב התחתון — הרגישי את הצלעות מתרחבות","שחררי כל מתח בכתפיים, בלסת, במצח"],
+      cueing_en:["Knees mat-width apart or together — whatever is comfortable","Forehead rests on the mat","Arms extended forward or alongside the body","Breathe into the lower back — feel the ribs expand","Release all tension in shoulders, jaw, forehead"],
+      alignment_he:["אגן שוקע לעבר העקבות","עמוד שדרה ארוך — לא מכווץ","כתפיים רחוקות מהאוזניים"],
+      alignment_en:["Hips sink toward heels","Spine long — not compressed","Shoulders away from ears"],
+      mods_he:["כרית או שמיכה בין ירכיים לעקבות","מצח על בלוק או אגרופים","ידיים לצד הגוף אם הכתפיים מתוחות"],
+      mods_en:["Blanket or bolster between thighs and heels","Forehead on block or stacked fists","Arms alongside body if shoulders are tight"],
+      watch_he:["אגן לא מגיע לעקבות — הציעי כרית","כאב בברכיים — הרחיבי ברכיים או הוסיפי ריפוד","מתח בצוואר — ודאי שהמצח נתמך"],
+      watch_en:["Hips not reaching heels — offer a cushion","Knee pain — widen knees or add padding","Neck tension — ensure forehead is supported"] },
+
+    { id:"marjaryasana-bitilasana",
+      he:{ name:"מארג׳ריאסנה-ביטילאסנה (חתול-פרה)", level:"בסיס" }, en:{ name:"Marjaryasana-Bitilasana (Cat-Cow)", level:"Foundation" },
+      sanskrit:"Mārjārīāsana-Bitilāsana", duration_he:"8–10 סבבים", duration_en:"8–10 rounds",
+      chakras:["sacral","heart","throat"],
+      assist_he:["הנחי יד אחת על הגב העליון ואחת על העצה — ליווי את גל התנועה","מגע עדין על עצמות השכמה — עודדי פתיחה בפרה","הנחי יד על הגב האמצעי — הזמיני עיגול בחתול"],
+      assist_en:["One hand on upper back, one on sacrum — guide the wave of movement","Gentle touch on shoulder blades — encourage opening in Cow","Hand on mid-back — invite rounding in Cat"],
+      cueing_he:["שאיפה — הורידי בטן, הרימי חזה ומבט (פרה)","נשיפה — עגלי גב, סנטר לחזה, טבור למעלה (חתול)","תני לנשימה להוביל את התנועה","הרגישי כל חוליה בעמוד השדרה","תנועה איטית ומודעת — אין מרוץ"],
+      cueing_en:["Inhale — drop belly, lift chest and gaze (Cow)","Exhale — round back, chin to chest, navel up (Cat)","Let the breath lead the movement","Feel each vertebra of the spine","Slow, mindful movement — no rush"],
+      alignment_he:["ידיים מתחת לכתפיים, ברכיים מתחת לאגן","פרקי כפות הידיים בקו עם הכתפיים","משקל שווה על ארבע הנקודות"],
+      alignment_en:["Hands under shoulders, knees under hips","Wrists in line with shoulders","Equal weight on all four points"],
+      mods_he:["אגרופים במקום כפות פתוחות לפרקים רגישים","כרית מתחת לברכיים","ישיבה על כיסא — תנועה בעמוד שדרה בלבד"],
+      mods_en:["Fists instead of open palms for sensitive wrists","Cushion under knees","Seated on chair — spinal movement only"],
+      watch_he:["מרפקים נעולים — עודדי כיפוף רך","תנועה רק בגב התחתון — הזמיני תנועה לכל עמוד השדרה","מהירות מופרזת — האטי את הקצב"],
+      watch_en:["Locked elbows — encourage soft bend","Movement only in lower back — invite whole-spine movement","Moving too fast — slow down the pace"] },
+
+    { id:"anjaneyasana",
+      he:{ name:"אנג׳נייאסנה (לאנג׳ נמוך)", level:"מתחילות" }, en:{ name:"Anjaneyasana (Low Lunge)", level:"Beginner" },
+      sanskrit:"Añjaneyāsana", duration_he:"5 נשימות לכל צד", duration_en:"5 breaths each side",
+      chakras:["root","sacral","heart"],
+      assist_he:["עמדי מאחורה: ידיים על עצמות האגן — עודדי יישור ושקיעה","הנחי יד על העצה — הזמיני אורך בעמוד השדרה","תמכי בידיים המורמות — ליווי עדין כלפי מעלה"],
+      assist_en:["Stand behind: hands on hip bones — encourage alignment and sinking","Hand on sacrum — invite spinal length","Support raised arms — gentle upward guidance"],
+      cueing_he:["ברך קדמית מעל הקרסול","ירך אחורית שוקעת לעבר הרצפה","הרימי ידיים לשמיים, כפות פונות פנימה","הרימי חזה, הורידי כתפיים","הרגישי מתיחה עדינה בירך הקדמית של הרגל האחורית"],
+      cueing_en:["Front knee over the ankle","Back thigh sinks toward the floor","Lift arms to the sky, palms face inward","Lift chest, drop shoulders","Feel a gentle stretch in the front hip of the back leg"],
+      alignment_he:["ברך קדמית ב-90 מעלות — לא מעבר לקרסול","אגן מרובע לקדמה","עמוד שדרה ארוך ואנכי"],
+      alignment_en:["Front knee at 90 degrees — not past the ankle","Hips squared to the front","Spine long and vertical"],
+      mods_he:["ידיים על הירך הקדמית במקום מורמות","שמיכה מתחת לברך האחורית","בלוקים משני הצדדים לתמיכה"],
+      mods_en:["Hands on front thigh instead of raised","Blanket under back knee","Blocks on both sides for support"],
+      watch_he:["ברך קדמית חורגת מעבר לקרסול — הדריכי אחורה","קשת יתר בגב תחתון — עודדי טיקול עצה","כאב בברך אחורית — הוסיפי ריפוד"],
+      watch_en:["Front knee past ankle — cue it back","Overarching lower back — encourage tailbone tuck","Back knee pain — add padding"] },
+
+    { id:"malasana",
+      he:{ name:"מאלאסנה (גרלנד / סקוואט עמוק)", level:"מתחילות" }, en:{ name:"Malasana (Garland Pose)", level:"Beginner" },
+      sanskrit:"Mālāsana", duration_he:"5–8 נשימות", duration_en:"5–8 breaths",
+      chakras:["root","sacral"],
+      assist_he:["עמדי מאחורה: ידיים על גב עליון — עודדי אורך כלפי מעלה","הנחי יד על העצה — הזמיני שקיעה ואורך","תמכי בכתפיים אם מתקשה באיזון"],
+      assist_en:["Stand behind: hands on upper back — encourage upward length","Hand on sacrum — invite sinking and length","Support shoulders if balance is challenging"],
+      cueing_he:["רגליים ברוחב המחצלת, אצבעות פונות החוצה","שקעי אגן למטה, מרפקים בין הברכיים","כפות ידיים מחוברות בנמסטה — מרפקים דוחפים ברכיים","הרימי חזה, האריכי עמוד שדרה","עקבות על הרצפה — אם לא, גלגלי שמיכה מתחת"],
+      cueing_en:["Feet mat-width apart, toes turn out","Sink hips down, elbows between knees","Palms together in Namaste — elbows press knees","Lift chest, lengthen spine","Heels on the floor — if not, roll a blanket underneath"],
+      alignment_he:["ברכיים עוקבות מעל אצבעות הרגליים","עמוד שדרה ארוך ומורם — לא מתמוטט קדימה","משקל שווה על כפות הרגליים"],
+      alignment_en:["Knees track over toes","Spine long and lifted — not collapsing forward","Equal weight across the feet"],
+      mods_he:["שמיכה מגולגלת מתחת לעקבות","ישיבה על בלוק","אחיזה במשהו יציב לאיזון"],
+      mods_en:["Rolled blanket under heels","Sit on a block","Hold onto something stable for balance"],
+      watch_he:["עקבות מורמות — הציעי שמיכה","ברכיים נכנסות פנימה — הדריכי החוצה","התמוטטות קדימה — עודדי הרמת חזה"],
+      watch_en:["Heels lifting — offer blanket support","Knees caving in — cue them outward","Collapsing forward — encourage chest lift"] },
+  ]},
+
+  { he:"תנוחות שכיבה", en:"Supine Poses", color:"#5A7A9A", poses:[
+    { id:"supta-padangusthasana",
+      he:{ name:"סופטה פדנגוסטהאסנה (שכיבה עם אחיזת בוהן)", level:"מתחילות" }, en:{ name:"Supta Padangusthasana (Reclining Hand-to-Toe)", level:"Beginner" },
+      sanskrit:"Supta Pādāṅguṣṭhāsana", duration_he:"5 נשימות לכל צד", duration_en:"5 breaths each side",
+      chakras:["root","sacral"],
+      assist_he:["הנחי יד על ירך הרגל התחתונה — עודדי עיגון","ליווי עדין של הרגל המורמת — תמכי בלי למשוך","הנחי חגורה סביב כף הרגל אם לא מגיעה"],
+      assist_en:["Hand on the lower leg thigh — encourage grounding","Gentle support of the raised leg — support without pulling","Offer a strap around the foot if hand doesn't reach"],
+      cueing_he:["שכבי על הגב, רגל אחת מושטת לרצפה","הרימי את הרגל השנייה — אחזי בבוהן או בחגורה","שמרי על הרגל התחתונה מעורבת ומעוגנת","כתפיים על הרצפה — אל תרימי כתף","נשמי לתוך המתיחה — תני לה להיפתח"],
+      cueing_en:["Lie on your back, one leg extended to the floor","Raise the other leg — hold big toe or use a strap","Keep the bottom leg engaged and grounded","Shoulders on the floor — don't lift the shoulder","Breathe into the stretch — let it open"],
+      alignment_he:["אגן ישר ומעוגן — לא מסתובב","רגל תחתונה פעילה, קרסול מכופף","כתפיים ועצה על הרצפה"],
+      alignment_en:["Pelvis level and grounded — not rotating","Bottom leg active, ankle flexed","Shoulders and sacrum on the floor"],
+      mods_he:["חגורה סביב כף הרגל","ברך כפופה ברגל המורמת","רגל תחתונה כפופה, כף רגל על הרצפה"],
+      mods_en:["Strap around the foot","Bent knee on the raised leg","Bottom leg bent, foot on the floor"],
+      watch_he:["אגן מתרומם מהרצפה — עודדי עיגון","כתף מתרוממת — הנמיכי אותה","דחיפת הרגל בכוח — הזמיני עדינות"],
+      watch_en:["Pelvis lifting off the floor — encourage grounding","Shoulder rising — lower it down","Forcing the leg — invite gentleness"] },
+
+    { id:"ananda-balasana",
+      he:{ name:"אננדה בלאסנה (תינוק שמח)", level:"מתחילות" }, en:{ name:"Ananda Balasana (Happy Baby)", level:"Beginner" },
+      sanskrit:"Ānanda Bālāsana", duration_he:"5–8 נשימות", duration_en:"5–8 breaths",
+      chakras:["root","sacral"],
+      assist_he:["הנחי ידיים על כפות הרגליים — ליווי עדין כלפי מטה","מגע מרגיע על ירכיים חיצוניות — עודדי שחרור","תמכי בעצה אם מתרוממת מהרצפה"],
+      assist_en:["Hands on soles of feet — gentle downward guidance","Calming touch on outer thighs — encourage release","Support sacrum if it lifts off the floor"],
+      cueing_he:["שכבי על הגב, כפפי ברכיים לחזה","אחזי בחלק החיצוני של כפות הרגליים","ברכיים לעבר בתי השחי","עצה כבדה על הרצפה","נדנדי עדינות מצד לצד — כמו תינוק שמח"],
+      cueing_en:["Lie on your back, bend knees to chest","Hold outer edges of the feet","Knees toward armpits","Sacrum heavy on the floor","Gently rock side to side — like a happy baby"],
+      alignment_he:["שוקיים אנכיות — ברכיים מעל הקרסוליים","עצה ועורף על הרצפה","כתפיים רחוקות מהאוזניים"],
+      alignment_en:["Shins vertical — knees above ankles","Sacrum and back of neck on the floor","Shoulders away from ears"],
+      mods_he:["אחזי מאחורי הברכיים במקום בכפות הרגליים","חגורה סביב כפות הרגליים","רגל אחת בכל פעם"],
+      mods_en:["Hold behind knees instead of feet","Strap around the feet","One leg at a time"],
+      watch_he:["עצה מתרוממת — עודדי כובד כלפי מטה","ראש מתרומם — הנחי כרית מתחת","מתח בכתפיים — הרפי אחיזה"],
+      watch_en:["Sacrum lifting — encourage heaviness downward","Head lifting — place a cushion underneath","Shoulder tension — soften the grip"] },
+
+    { id:"ardha-matsyendrasana",
+      he:{ name:"ארדהה מאצ׳יינדראסנה (סיבוב ישיבה)", level:"מתחילות" }, en:{ name:"Ardha Matsyendrasana (Seated Twist)", level:"Beginner" },
+      sanskrit:"Ardha Matsyendrāsana", duration_he:"5 נשימות לכל צד", duration_en:"5 breaths each side",
+      chakras:["sacral","solar","heart"],
+      assist_he:["הנחי יד על הכתף האחורית — ליווי עדין לעומק הסיבוב","יד על הברך — עודדי עיגון","מגע עדין על הגב העליון — הזמיני אורך לפני סיבוב"],
+      assist_en:["Hand on the back shoulder — gently guide deeper into the twist","Hand on knee — encourage grounding","Gentle touch on upper back — invite length before twist"],
+      cueing_he:["שבי ישר, רגל אחת מושטת, השנייה כפופה מעבר","שאפי — האריכי עמוד שדרה","נשפי — סובבי לעבר הברך הכפופה","מבט מעל הכתף האחורית","כל שאיפה — אורך, כל נשיפה — סיבוב עדין נוסף"],
+      cueing_en:["Sit tall, one leg extended, the other bent and crossed over","Inhale — lengthen the spine","Exhale — twist toward the bent knee","Gaze over the back shoulder","Each inhale — length, each exhale — gentle deeper twist"],
+      alignment_he:["שתי עצמות ישיבה מעוגנות בשווה","עמוד שדרה ארוך לפני הסיבוב — לעולם לא סובבים מגב מעוגל","כתפיים בגובה שווה"],
+      alignment_en:["Both sit bones equally grounded","Spine long before twisting — never twist from a rounded back","Shoulders at equal height"],
+      mods_he:["ישיבה על שמיכה מקופלת להרמת האגן","רגל תחתונה כפופה אם קשה להושיט","יד אחורית על הרצפה לתמיכה"],
+      mods_en:["Sit on a folded blanket to elevate the pelvis","Bottom leg bent if extending is difficult","Back hand on the floor for support"],
+      watch_he:["עיגול בגב — הדריכי אורך לפני סיבוב","כתף מתרוממת — עודדי הורדה","דחיפה לסיבוב עמוק מדי — הזמיני עדינות"],
+      watch_en:["Rounding the back — cue length before twisting","Shoulder rising — encourage it down","Forcing too deep — invite gentleness"] },
+  ]},
+
+  { he:"עמידה — תנוחות נוספות", en:"Standing — Additional Poses", color:"#4A7A5D", poses:[
+    { id:"virabhadrasana-iii",
+      he:{ name:"ווירבהדראסנה III (לוחם 3)", level:"בינוניות" }, en:{ name:"Virabhadrasana III (Warrior III)", level:"Intermediate" },
+      sanskrit:"Vīrabhadrāsana III", duration_he:"5 נשימות לכל צד", duration_en:"5 breaths each side",
+      chakras:["root","solar","third-eye"],
+      assist_he:["עמדי מלפנים: הציעי ידיים כתמיכה לאיזון","הנחי יד על האגן — עודדי יישור ואופקיות","ליווי עדין של הרגל האחורית — הזמיני הרמה"],
+      assist_en:["Stand in front: offer hands as balance support","Hand on hip — encourage leveling and alignment","Gentle guidance of the back leg — invite it to lift"],
+      cueing_he:["מלוחם א׳ — העתיקי משקל קדימה, הרימי רגל אחורית","גוף ורגל אחורית בקו אחד מקביל לרצפה","ידיים מושטות קדימה, לצד הגוף, או על האגן","מבט לרצפה — נקודת מיקוד יציבה","ליבה מעורבת, רגל עומדת חזקה"],
+      cueing_en:["From Warrior I — shift weight forward, lift back leg","Body and back leg in one line parallel to the floor","Arms extended forward, alongside body, or on hips","Gaze to the floor — stable focal point","Core engaged, standing leg strong"],
+      alignment_he:["אגן מרובע לרצפה — לא נפתח הצידה","רגל אחורית פעילה, קרסול מכופף","עמוד שדרה ארוך — מקודקוד ועד עקב אחורי"],
+      alignment_en:["Hips squared to the floor — not opening to the side","Back leg active, ankle flexed","Spine long — from crown to back heel"],
+      mods_he:["ידיים על בלוקים או על קיר","רגל אחורית מורמת רק חלקית","אחיזה בכיסא לאיזון"],
+      mods_en:["Hands on blocks or on a wall","Back leg only partially lifted","Hold onto a chair for balance"],
+      watch_he:["אגן נפתח הצידה — הדריכי ריבוע","ברך עומדת נעולה — עודדי כיפוף רך","רגל אחורית נופלת — הזמיני הפעלה"],
+      watch_en:["Hip opening to the side — cue squaring","Standing knee locked — encourage soft bend","Back leg dropping — invite engagement"] },
+  ]},
 ];
 
 const allPoses = poseGroups
   .flatMap(g => g.poses.map(p => ({ ...p, group_he:g.he, group_en:g.en, groupColor:g.color })))
+
   .sort((a, b) => a.en.name.localeCompare(b.en.name, "en"));
+const poseById = (id) => allPoses.find(p => p.id === id);
+const CLASS_TEMPLATES = [
+{ id:"morning-energize", icon:"🌅", he:{name:"שיעור בוקר מעורר",desc:"אנרגיה, התעוררות, מקלעת השמש"}, en:{name:"Energizing Morning Class",desc:"Energy, awakening, solar plexus focus"}, data:{ sankalpa:{text:"אני מתעוררת לאנרגיה חדשה, לכוח פנימי ולאור",category:""}, meditation:{notes:"",duration:"3"}, warmup:{poseIds:["marjaryasana-bitilasana","samasthiti","uttanasana","adho-mukha","utkatasana"],notes:""}, sunSalutations:{count:"5",notes:""}, flow:{poseIds:["anjaneyasana","vira1-b","vira2","trikonasana","ardha-chandrasana","utkatasana"],notes:""}, seated:{poseIds:["dandasana","paschimottanasana","ardha-matsyendrasana","janu-d"],notes:""}, closing:{poseIds:["setu-bandha","sarvangasana","savasana"],notes:""} } },
+{ id:"hip-opening", icon:"🦋", he:{name:"פתיחת אגן ומפשעות",desc:"פתיחת ירכיים, יונה, בדהה קונאסנה"}, en:{name:"Hip Opening Flow",desc:"Hip openers, pigeon, baddha konasana"}, data:{ sankalpa:{text:"אני משחררת מתח ישן ומזמינה זרימה חדשה",category:""}, meditation:{notes:"",duration:"5"}, warmup:{poseIds:["marjaryasana-bitilasana","adho-mukha","uttanasana","malasana"],notes:""}, sunSalutations:{count:"3",notes:""}, flow:{poseIds:["anjaneyasana","vira2","trikonasana","parighasana","eka-pada-kapotasana"],notes:""}, seated:{poseIds:["baddha-konasana","upavistha-konasana","janu-d","ardha-matsyendrasana","paschimottanasana"],notes:""}, closing:{poseIds:["supta-padangusthasana","ananda-balasana","setu-bandha","savasana"],notes:""} } },
+{ id:"core-stability", icon:"💪", he:{name:"חיזוק ליבה ויציבות",desc:"פלאנק, צ׳טורנגה, בקאסנה, איזון"}, en:{name:"Core & Stability",desc:"Plank, chaturanga, bakasana, balance poses"}, data:{ sankalpa:{text:"אני מוצאת יציבות בתוך התנועה, כוח בתוך הרוגע",category:""}, meditation:{notes:"",duration:"3"}, warmup:{poseIds:["marjaryasana-bitilasana","samasthiti","uttanasana","adho-mukha"],notes:""}, sunSalutations:{count:"5",notes:""}, flow:{poseIds:["chaturanga","vasisthasana","virabhadrasana-iii","bakasana","vira1-b","vira2","utkatasana"],notes:""}, seated:{poseIds:["dandasana","krounchasana","paschimottanasana"],notes:""}, closing:{poseIds:["setu-bandha","ananda-balasana","sarvangasana","savasana"],notes:""} } },
+{ id:"evening-calm", icon:"🌙", he:{name:"שיעור ערב מרגיע",desc:"עדין, קיפולים קדימה, ישיבה, שוואסנה ארוכה"}, en:{name:"Calming Evening Class",desc:"Gentle, forward folds, seated, long savasana"}, data:{ sankalpa:{text:"אני נותנת לעצמי רשות לנוח, להאט, ולשחרר",category:""}, meditation:{notes:"",duration:"8"}, warmup:{poseIds:["balasana","marjaryasana-bitilasana","adho-mukha"],notes:""}, sunSalutations:{count:"2",notes:""}, flow:{poseIds:["trikonasana","vira2","parighasana"],notes:""}, seated:{poseIds:["dandasana","paschimottanasana","janu-d","ardha-matsyendrasana","baddha-konasana","upavistha-konasana"],notes:""}, closing:{poseIds:["supta-padangusthasana","ananda-balasana","setu-bandha","savasana"],notes:""} } },
+{ id:"backbends-heart", icon:"💚", he:{name:"כיפופי אחורה ופתיחת חזה",desc:"אוסטרסנה, גשר, פתיחת לב"}, en:{name:"Backbends & Heart Opening",desc:"Ustrasana, chest openers, bridge"}, data:{ sankalpa:{text:"אני פותחת את הלב באומץ, מזמינה אהבה וחמלה",category:""}, meditation:{notes:"",duration:"5"}, warmup:{poseIds:["marjaryasana-bitilasana","samasthiti","uttanasana","urdhva-mukha","adho-mukha"],notes:""}, sunSalutations:{count:"4",notes:""}, flow:{poseIds:["anjaneyasana","vira1-b","vira2","trikonasana","ustrasana"],notes:""}, seated:{poseIds:["dandasana","paschimottanasana","ardha-matsyendrasana","baddha-konasana"],notes:""}, closing:{poseIds:["setu-bandha","ananda-balasana","sarvangasana","savasana"],notes:""} } },
+{ id:"balance-focus", icon:"🎯", he:{name:"שיווי משקל ומיקוד",desc:"עץ, לוחם III, ארדהה צ׳נדרסנה"}, en:{name:"Balance & Focus",desc:"Tree, warrior III, ardha chandrasana"}, data:{ sankalpa:{text:"אני מוצאת את המרכז שלי — יציבה, ממוקדת, שלמה",category:""}, meditation:{notes:"",duration:"5"}, warmup:{poseIds:["marjaryasana-bitilasana","samasthiti","uttanasana","adho-mukha","utkatasana"],notes:""}, sunSalutations:{count:"3",notes:""}, flow:{poseIds:["vrksasana","virabhadrasana-iii","vira1-b","ardha-chandrasana","vira2","trikonasana"],notes:""}, seated:{poseIds:["dandasana","janu-d","ardha-matsyendrasana","paschimottanasana","baddha-konasana"],notes:""}, closing:{poseIds:["supta-padangusthasana","sarvangasana","savasana"],notes:""} } },
+];
+const applyTemplate = (tpl) => { const rp = (ids) => (ids||[]).map(id => poseById(id)).filter(Boolean); return { sankalpa:{...tpl.sankalpa}, meditation:{notes:tpl.meditation.notes,duration:tpl.meditation.duration}, warmup:{poses:rp(tpl.warmup.poseIds),notes:tpl.warmup.notes}, sunSalutations:{count:tpl.sunSalutations.count,notes:tpl.sunSalutations.notes}, flow:{poses:rp(tpl.flow.poseIds),notes:tpl.flow.notes}, seated:{poses:rp(tpl.seated.poseIds),notes:tpl.seated.notes}, closing:{poses:rp(tpl.closing.poseIds),notes:tpl.closing.notes} }; };
 /* ── Sankalpa Inspirations ── */
 const SANKALPAS = [
   // יאמות — Yamas
@@ -754,6 +937,8 @@ function YogaShoshan() {
   const [tab, setTab] = useState("assist");
   const [showEthics, setShowEthics] = useState(false);
   const [showChakras, setShowChakras] = useState(false);
+  const [showPranayama, setShowPranayama] = useState(false);
+  const [showAnatomy, setShowAnatomy] = useState(false);
   const [showSequencer, setShowSequencer] = useState(false);
   const [search, setSearch] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -770,6 +955,7 @@ function YogaShoshan() {
   const [seqSearch, setSeqSearch] = useState("");
   const [dragPose, setDragPose] = useState(null);
   const [dragOver, setDragOver] = useState(null);
+  const [libraryOpen, setLibraryOpen] = useState(false);
 
   const [headerSearch, setHeaderSearch] = useState("");
   const handlePrint = () => window.print();
@@ -805,24 +991,24 @@ function YogaShoshan() {
       <style>{FONTS}</style>
 
       {/* HEADER */}
-      <header style={{ background:`linear-gradient(135deg, ${C.header} 0%, #EFF5F0 100%)`, padding:"0 20px", display:"flex", alignItems:"center", height:"58px", gap:"14px", borderBottom:`1px solid ${C.border}`, position:"sticky", top:0, zIndex:50, boxShadow:"0 2px 16px rgba(31,61,52,0.1)" }}>
-        <button onClick={() => setSidebarOpen(!sidebarOpen)}
-          style={{ background:sidebarOpen ? C.plum : "transparent", border:`1.5px solid ${C.plum}50`, color:sidebarOpen ? "#FFF" : C.plum, borderRadius:"8px", padding:"6px 11px", fontFamily:F, fontSize:"16px", cursor:"pointer", transition:"all 0.2s", flexShrink:0, lineHeight:1 }}>
+      <header style={{ background:`linear-gradient(135deg, ${C.header} 0%, #EFF5F0 100%)`, padding:"0 20px", display:"flex", alignItems:"center", flexWrap:"wrap", minHeight:"58px", gap:"8px 14px", borderBottom:`1px solid ${C.border}`, position:"sticky", top:0, zIndex:50, boxShadow:"0 2px 16px rgba(31,61,52,0.1)" }}>
+        <button onClick={() => setSidebarOpen(!sidebarOpen)} className="tap-target"
+          style={{ background:sidebarOpen ? C.plum : "transparent", border:`1.5px solid ${C.plum}50`, color:sidebarOpen ? "#FFF" : C.plum, borderRadius:"8px", padding:"8px 12px", fontFamily:F, fontSize:"16px", cursor:"pointer", transition:"all 0.2s", flexShrink:0, lineHeight:1, minWidth:"44px", minHeight:"44px", display:"flex", alignItems:"center", justifyContent:"center" }}>
           ☰
         </button>
         <div>
           <div style={{ fontFamily:"'Cinzel',Georgia,serif", fontSize:"17px", color:C.plum, letterSpacing:"3px", lineHeight:1 }}>יוגה שושן</div>
           <div style={{ fontSize:"9px", letterSpacing:"1.5px", color:C.terra, marginTop:"2px", textTransform:"uppercase" }}>{ui.subtitle}</div>
         </div>
-        <div style={{ flex:1, maxWidth:"200px", position:"relative" }}>
+        <div style={{ flex:1, minWidth:"80px", maxWidth:"200px", position:"relative" }}>
           <input value={headerSearch} onChange={e => setHeaderSearch(e.target.value)}
             placeholder={isHe?"חיפוש...":"Search..."}
-            style={{ width:"100%", padding:"6px 12px", borderRadius:"8px", border:`1px solid ${C.border}`, background:C.paper, fontFamily:F, fontSize:"12px", color:C.dark, outline:"none", direction:isHe?"rtl":"ltr" }}/>
+            style={{ width:"100%", padding:"8px 12px", borderRadius:"8px", border:`1px solid ${C.border}`, background:C.paper, fontFamily:F, fontSize:"13px", color:C.dark, outline:"none", direction:isHe?"rtl":"ltr", minHeight:"44px", boxSizing:"border-box" }}/>
           {headerSearch && (() => {
             const q = headerSearch.toLowerCase();
             const results = allPoses.filter(p => p.he.name.includes(q) || p.en.name.toLowerCase().includes(q) || p.sanskrit.toLowerCase().includes(q));
             return results.length > 0 ? (
-              <div style={{ position:"absolute", top:"100%", [isHe?"right":"left"]:0, width:"250px", background:C.paper, border:`1px solid ${C.border}`, borderRadius:"8px", boxShadow:"0 8px 24px rgba(0,0,0,0.12)", zIndex:99, maxHeight:"300px", overflowY:"auto", marginTop:"4px" }}>
+              <div style={{ position:"absolute", top:"100%", [isHe?"right":"left"]:0, width:"min(250px, 80vw)", background:C.paper, border:`1px solid ${C.border}`, borderRadius:"8px", boxShadow:"0 8px 24px rgba(0,0,0,0.12)", zIndex:99, maxHeight:"300px", overflowY:"auto", marginTop:"4px" }}>
                 {results.map(p => (
                   <button key={p.id} onClick={() => { setSelected(p); setHeaderSearch(""); setTab("assist"); }}
                     style={{ width:"100%", padding:"8px 12px", border:"none", background:"transparent", cursor:"pointer", fontFamily:F, fontSize:"12px", textAlign:isHe?"right":"left", display:"block" }}>
@@ -834,20 +1020,20 @@ function YogaShoshan() {
             ) : null;
           })()}
         </div>
-        <span className="no-print" style={{ fontSize:"11px", color:C.plum, background:`${C.plum}12`, padding:"3px 9px", borderRadius:"20px", border:`1px solid ${C.plum}25`, whiteSpace:"nowrap" }}>{currentIndex + 1}/{allPoses.length}</span>
+        <span className="no-print hide-small" style={{ fontSize:"11px", color:C.plum, background:`${C.plum}12`, padding:"3px 9px", borderRadius:"20px", border:`1px solid ${C.plum}25`, whiteSpace:"nowrap" }}>{currentIndex + 1}/{allPoses.length}</span>
 
         {/* Language toggle */}
         <div style={{ display:"flex", background:`${C.plum}10`, borderRadius:"8px", padding:"3px", border:`1px solid ${C.plum}25`, gap:"2px" }}>
           {["he","en"].map(l => (
-            <button key={l} onClick={() => setLang(l)}
-              style={{ padding:"5px 12px", borderRadius:"6px", border:"none", background:lang===l ? C.plum : "transparent", color:lang===l ? "#FFF" : C.plum, fontFamily:F, fontSize:"12px", fontWeight:lang===l?"700":"500", cursor:"pointer", transition:"all 0.2s", letterSpacing:"0.5px" }}>
+            <button key={l} onClick={() => setLang(l)} className="tap-target"
+              style={{ padding:"6px 14px", borderRadius:"6px", border:"none", background:lang===l ? C.plum : "transparent", color:lang===l ? "#FFF" : C.plum, fontFamily:F, fontSize:"13px", fontWeight:lang===l?"700":"500", cursor:"pointer", transition:"all 0.2s", letterSpacing:"0.5px", minHeight:"44px", minWidth:"44px" }}>
               {l === "he" ? "עב" : "EN"}
             </button>
           ))}
         </div>
 
-        <button onClick={() => setView(view === "builder" ? "guide" : "builder")}
-          style={{ background:view==="builder" ? C.plum : "transparent", border:`1.5px solid ${C.plum}50`, color:view==="builder" ? "#FFF" : C.plum, borderRadius:"8px", padding:"6px 13px", fontFamily:F, fontSize:"12px", cursor:"pointer", transition:"all 0.2s", whiteSpace:"nowrap" }}>
+        <button onClick={() => setView(view === "builder" ? "guide" : "builder")} className="tap-target"
+          style={{ background:view==="builder" ? C.plum : "transparent", border:`1.5px solid ${C.plum}50`, color:view==="builder" ? "#FFF" : C.plum, borderRadius:"8px", padding:"8px 14px", fontFamily:F, fontSize:"13px", cursor:"pointer", transition:"all 0.2s", whiteSpace:"nowrap", minHeight:"44px" }}>
           {view === "builder" ? (isHe ? "📖 חזרה למדריך" : "📖 Back to Guide") : (isHe ? "🗓 בניית שיעור" : "🗓 Build Class")}
         </button>
         <button className="hide-mobile" onClick={() => setShowChakras(true)}
@@ -855,6 +1041,18 @@ function YogaShoshan() {
           onMouseEnter={e => Object.assign(e.currentTarget.style, { background:C.plum, color:"#FFF" })}
           onMouseLeave={e => Object.assign(e.currentTarget.style, { background:"transparent", color:C.plum })}>
           {isHe ? "🌈 צ׳אקרות" : "🌈 Chakras"}
+        </button>
+        <button className="hide-mobile" onClick={() => setShowPranayama(true)}
+          style={{ background:"transparent", border:`1.5px solid ${C.plum}50`, color:C.plum, borderRadius:"8px", padding:"6px 13px", fontFamily:F, fontSize:"12px", cursor:"pointer", transition:"all 0.2s", whiteSpace:"nowrap" }}
+          onMouseEnter={e => Object.assign(e.currentTarget.style, { background:C.plum, color:"#FFF" })}
+          onMouseLeave={e => Object.assign(e.currentTarget.style, { background:"transparent", color:C.plum })}>
+          {isHe ? "🌬 פרנאיאמה" : "🌬 Pranayama"}
+        </button>
+        <button className="hide-mobile" onClick={() => setShowAnatomy(true)}
+          style={{ background:"transparent", border:`1.5px solid ${C.plum}50`, color:C.plum, borderRadius:"8px", padding:"6px 13px", fontFamily:F, fontSize:"12px", cursor:"pointer", transition:"all 0.2s", whiteSpace:"nowrap" }}
+          onMouseEnter={e => Object.assign(e.currentTarget.style, { background:C.plum, color:"#FFF" })}
+          onMouseLeave={e => Object.assign(e.currentTarget.style, { background:"transparent", color:C.plum })}>
+          {isHe ? "🦴 אנטומיה" : "🦴 Anatomy"}
         </button>
         <button className="hide-mobile" onClick={() => setShowEthics(true)}
           style={{ background:"transparent", border:`1.5px solid ${C.plum}50`, color:C.plum, borderRadius:"8px", padding:"6px 13px", fontFamily:F, fontSize:"12px", cursor:"pointer", transition:"all 0.2s", whiteSpace:"nowrap" }}
@@ -873,33 +1071,72 @@ function YogaShoshan() {
 
       {/* ====== BUILDER VIEW ====== */}
       {view === "builder" && (
-        <div style={{ display:"flex", flex:1, minHeight:0, overflow:"hidden" }}>
-          {/* POSE LIBRARY - Left/Right panel */}
-          <div style={{ width:"240px", background:C.sidebar, overflowY:"auto", flexShrink:0, borderLeft:isHe?`1px solid ${C.border}`:"none", borderRight:!isHe?`1px solid ${C.border}`:"none", padding:"12px" }}>
-            <div style={{ fontSize:"13px", fontWeight:"700", color:C.dark, marginBottom:"8px" }}>{isHe?"ספריית תנוחות":"Pose Library"}</div>
-            <input value={seqSearch} onChange={e => setSeqSearch(e.target.value)}
-              placeholder={isHe?"חפשי תנוחה...":"Search..."}
-              style={{ width:"100%", padding:"7px 10px", borderRadius:"8px", border:`1px solid ${C.border}`, background:C.paper, fontFamily:F, fontSize:"12px", color:C.dark, outline:"none", marginBottom:"8px", direction:isHe?"rtl":"ltr" }}/>
-            <div style={{ display:"flex", flexDirection:"column", gap:"2px" }}>
-              {allPoses.filter(p => {
-                if (!seqSearch.trim()) return true;
-                const q = seqSearch.toLowerCase();
-                return p.he.name.includes(q) || p.en.name.toLowerCase().includes(q) || p.sanskrit.toLowerCase().includes(q);
-              }).map(p => (
-                <div key={p.id} draggable
-                  onDragStart={e => { setDragPose(p); e.dataTransfer.effectAllowed="copy"; }}
-                  onDragEnd={() => setDragPose(null)}
-                  style={{ padding:"6px 10px", borderRadius:"6px", background:C.paper, border:`1px solid ${C.border}`, cursor:"grab", fontFamily:F, fontSize:"11px", userSelect:"none" }}>
-                  <div style={{ fontWeight:"600", color:C.dark, fontSize:"12px" }}>{poseName(p)}</div>
-                  <div style={{ fontSize:"9px", color:C.muted }}>{p.sanskrit}</div>
-                </div>
-              ))}
+        <div className="builder-layout-mobile" style={{ display:"flex", flex:1, minHeight:0, overflow:"hidden" }}>
+          {/* POSE LIBRARY - Side panel on desktop, collapsible top panel on mobile */}
+          <div className="builder-library-mobile" style={{ width:"240px", background:C.sidebar, overflowY:"auto", flexShrink:0, borderLeft:isHe?`1px solid ${C.border}`:"none", borderRight:!isHe?`1px solid ${C.border}`:"none", padding:"12px" }}>
+            {/* Mobile: collapsible toggle */}
+            <style>{`@media (max-width:768px) { .library-toggle-btn { display: flex !important; } .library-content { display: ${libraryOpen ? 'block' : 'none'} !important; } } @media (min-width:769px) { .library-toggle-btn { display: none !important; } .library-content { display: block !important; } }`}</style>
+            <button onClick={() => setLibraryOpen(!libraryOpen)}
+              className="tap-target library-toggle-btn"
+              style={{ display:"none", width:"100%", padding:"10px 12px", background:C.paper, border:`1px solid ${C.border}`, borderRadius:"8px", fontFamily:F, fontSize:"13px", fontWeight:"700", color:C.dark, cursor:"pointer", marginBottom:"8px", textAlign:isHe?"right":"left", minHeight:"44px", alignItems:"center", justifyContent:"space-between" }}>
+              <span>{isHe?"ספריית תנוחות":"Pose Library"} ({allPoses.length})</span>
+              <span>{libraryOpen ? "▲" : "▼"}</span>
+            </button>
+            <div className="library-content">
+              <div style={{ fontSize:"13px", fontWeight:"700", color:C.dark, marginBottom:"8px" }}>{isHe?"ספריית תנוחות":"Pose Library"}</div>
+              <input value={seqSearch} onChange={e => setSeqSearch(e.target.value)}
+                placeholder={isHe?"חפשי תנוחה...":"Search..."}
+                style={{ width:"100%", padding:"8px 10px", borderRadius:"8px", border:`1px solid ${C.border}`, background:C.paper, fontFamily:F, fontSize:"13px", color:C.dark, outline:"none", marginBottom:"8px", direction:isHe?"rtl":"ltr", minHeight:"44px", boxSizing:"border-box" }}/>
+              <div style={{ display:"flex", flexDirection:"column", gap:"2px" }}>
+                {allPoses.filter(p => {
+                  if (!seqSearch.trim()) return true;
+                  const q = seqSearch.toLowerCase();
+                  return p.he.name.includes(q) || p.en.name.toLowerCase().includes(q) || p.sanskrit.toLowerCase().includes(q);
+                }).map(p => (
+                  <div key={p.id} draggable
+                    onDragStart={e => { setDragPose(p); e.dataTransfer.effectAllowed="copy"; }}
+                    onDragEnd={() => setDragPose(null)}
+                    onTouchStart={e => { setDragPose(p); }}
+                    onTouchEnd={e => { setDragPose(null); }}
+                    onClick={() => {
+                      /* Mobile click-to-add: add to the first section that has poses, or default to flow */
+                      const poseSections = ["warmup","flow","seated","closing"];
+                      const target = poseSections.find(s => sequence[s].poses && sequence[s].poses.length > 0) || "flow";
+                      setSequence(prev => ({...prev, [target]: {...prev[target], poses:[...(prev[target].poses||[]), p]}}));
+                    }}
+                    style={{ padding:"8px 10px", borderRadius:"6px", background:C.paper, border:`1px solid ${C.border}`, cursor:"grab", fontFamily:F, fontSize:"11px", userSelect:"none", minHeight:"44px", display:"flex", flexDirection:"column", justifyContent:"center" }}>
+                    <div style={{ fontWeight:"600", color:C.dark, fontSize:"12px" }}>{poseName(p)}</div>
+                    <div style={{ fontSize:"9px", color:C.muted }}>{p.sanskrit}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
           {/* CLASS BUILDER - Main area */}
-          <main style={{ flex:1, overflowY:"auto", padding:"20px", background:C.bg }}>
+          <main className="content-area" style={{ flex:1, overflowY:"auto", padding:"20px", background:C.bg }}>
             <div style={{ maxWidth:"650px", margin:"0 auto" }}>
+
+              {/* READY TEMPLATES */}
+              <div style={{ background:`linear-gradient(135deg, #EFF5F0, #F4EFE6)`, borderRadius:"14px", overflow:"hidden", marginBottom:"14px", border:`1px solid ${C.border}` }}>
+                <div style={{ padding:"12px 18px", borderBottom:`1px solid ${C.border}`, display:"flex", alignItems:"center", gap:"10px" }}>
+                  <span style={{ fontSize:"18px" }}>📋</span>
+                  <span style={{ fontWeight:"700", fontSize:"14px", color:C.dark }}>{isHe ? "תבניות מוכנות" : "Ready Templates"}</span>
+                  <span style={{ fontSize:"10px", color:C.muted, flex:1, textAlign:isHe?"left":"right" }}>{isHe ? "לחצי לטעינת שיעור שלם" : "Click to load a full class"}</span>
+                </div>
+                <div style={{ padding:"10px 14px", display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(180px, 1fr))", gap:"8px" }}>
+                  {CLASS_TEMPLATES.map(tpl => (
+                    <button key={tpl.id} onClick={() => { if (window.confirm(isHe ? "לטעון תבנית? זה יחליף את הרצף הנוכחי." : "Load template? This will replace the current sequence.")) setSequence(applyTemplate(tpl.data)); }}
+                      style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:"4px", padding:"12px 10px", borderRadius:"10px", border:`1.5px solid ${C.border}`, background:C.paper, cursor:"pointer", fontFamily:F, transition:"all 0.15s", textAlign:"center" }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor=C.dark; e.currentTarget.style.background=`${C.dark}08`; e.currentTarget.style.transform="translateY(-2px)"; e.currentTarget.style.boxShadow="0 4px 12px rgba(31,61,52,0.1)"; }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor=C.border; e.currentTarget.style.background=C.paper; e.currentTarget.style.transform="none"; e.currentTarget.style.boxShadow="none"; }}>
+                      <span style={{ fontSize:"24px", lineHeight:1 }}>{tpl.icon}</span>
+                      <span style={{ fontWeight:"700", fontSize:"12px", color:C.dark, lineHeight:1.3 }}>{isHe ? tpl.he.name : tpl.en.name}</span>
+                      <span style={{ fontSize:"10px", color:C.muted, lineHeight:1.3 }}>{isHe ? tpl.he.desc : tpl.en.desc}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
 
               {/* SANKALPA */}
               <div style={{ background:`linear-gradient(135deg, #F4EFE6, #EFF5F0)`, borderRadius:"14px", overflow:"hidden", marginBottom:"14px", border:`1px solid ${C.border}` }}>
@@ -995,8 +1232,8 @@ function YogaShoshan() {
                   )}
 
                   {sec.type === "poses" && (!sequence[sec.key].poses || sequence[sec.key].poses.length === 0) && (
-                    <div style={{ padding:"12px 16px", textAlign:"center", color:C.dusty, fontSize:"11px" }}>
-                      {isHe ? "גררי תנוחות לכאן מהספרייה ←" : "→ Drag poses here from the library"}
+                    <div style={{ padding:"12px 16px", textAlign:"center", color:C.dusty, fontSize:"12px" }}>
+                      {isHe ? "גררי תנוחות לכאן מהספרייה, או לחצי על תנוחה להוספה ←" : "Drag poses here from the library, or tap a pose to add"}
                     </div>
                   )}
                 </div>
@@ -1021,17 +1258,32 @@ function YogaShoshan() {
               }} style={{ width:"100%", padding:"14px", background:C.dark, color:"white", border:"none", borderRadius:"10px", fontFamily:F, fontSize:"14px", fontWeight:"700", cursor:"pointer", marginBottom:"20px" }}>
                 {isHe ? "🖨️ הדפסת רצף השיעור" : "🖨️ Print Class Sequence"}
               </button>
+              <button onClick={() => {
+                if (confirm(isHe ? "למחוק את כל הרצף?" : "Clear entire sequence?")) {
+                  setSequence({
+                    sankalpa: { text:"", category:"" },
+                    meditation: { notes:"", duration:"5" },
+                    warmup: { poses:[], notes:"" },
+                    sunSalutations: { count:"4", notes:"" },
+                    flow: { poses:[], notes:"" },
+                    seated: { poses:[], notes:"" },
+                    closing: { poses:[], notes:"" },
+                  });
+                }
+              }} style={{ width:"100%", padding:"12px", background:"transparent", color:C.warn, border:`1.5px solid ${C.warn}40`, borderRadius:"10px", fontFamily:F, fontSize:"13px", fontWeight:"600", cursor:"pointer", marginBottom:"20px" }}>
+                {isHe ? "🗑 נקי הכל והתחלי מחדש" : "🗑 Clear All & Start Over"}
+              </button>
             </div>
           </main>
         </div>
       )}
 
       {/* ====== GUIDE VIEW ====== */}
-      {view === "guide" && <div style={{ display:"flex", flex:1, minHeight:0, overflow:"hidden" }}>
+      {view === "guide" && <><div style={{ display:"flex", flex:1, minHeight:0, overflow:"hidden" }}>
 
         {/* SIDEBAR OVERLAY */}
         {sidebarOpen && <div onClick={() => setSidebarOpen(false)} style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.3)", zIndex:60 }}/>}
-        <aside style={{ width:"260px", background:C.sidebar, overflowY:"auto", flexShrink:0, position:"fixed", top:"58px", bottom:0, [isHe?"right":"left"]:0, zIndex:70, transform:sidebarOpen?"translateX(0)":isHe?"translateX(100%)":"translateX(-100%)", transition:"transform 0.25s ease", boxShadow:sidebarOpen?"0 0 30px rgba(0,0,0,0.15)":"none", borderLeft: isHe ? "none" : `1px solid ${C.border}`, borderRight: !isHe ? "none" : `1px solid ${C.border}` }}>
+        <aside className="sidebar-overlay-mobile" style={{ width:"260px", background:C.sidebar, overflowY:"auto", flexShrink:0, position:"fixed", top:"58px", bottom:0, [isHe?"right":"left"]:0, zIndex:70, transform:sidebarOpen?"translateX(0)":isHe?"translateX(100%)":"translateX(-100%)", transition:"transform 0.25s ease", boxShadow:sidebarOpen?"0 0 30px rgba(0,0,0,0.15)":"none", borderLeft: isHe ? "none" : `1px solid ${C.border}`, borderRight: !isHe ? "none" : `1px solid ${C.border}` }}>
           <div style={{ padding:"10px 7px" }}>
             {/* Search */}
             <div style={{ position:"relative", marginBottom:"8px" }}>
@@ -1064,8 +1316,8 @@ function YogaShoshan() {
 
               return sorted.map(pose => (
                 <button key={pose.id} onClick={() => { setSelected(pose); setSearch(""); setTab("assist"); setSidebarOpen(false); }}
-                  className="sidebar-btn-hover"
-                  style={{ width:"100%", textAlign:isHe?"right":"left", padding:"8px 12px", marginBottom:"2px", borderRadius:"7px", background:selected.id===pose.id?`${pose.groupColor}18`:"transparent", border:`1.5px solid ${selected.id===pose.id ? pose.groupColor+"90":"transparent"}`, cursor:"pointer", fontFamily:F, transition:"all 0.15s" }}>
+                  className="sidebar-btn-hover tap-target"
+                  style={{ width:"100%", textAlign:isHe?"right":"left", padding:"10px 12px", marginBottom:"2px", borderRadius:"7px", minHeight:"44px", background:selected.id===pose.id?`${pose.groupColor}18`:"transparent", border:`1.5px solid ${selected.id===pose.id ? pose.groupColor+"90":"transparent"}`, cursor:"pointer", fontFamily:F, transition:"all 0.15s" }}>
                   <div style={{ display:"flex", alignItems:"center", gap:"6px" }}>
                     <div style={{ width:6, height:6, borderRadius:"50%", background:pose.groupColor, flexShrink:0 }}/>
                     <div style={{ fontSize:"12.5px", fontWeight:selected.id===pose.id?"700":"400", color:selected.id===pose.id ? C.plum : C.dark, lineHeight:1.3 }}>{poseName(pose)}</div>
@@ -1081,14 +1333,14 @@ function YogaShoshan() {
         <main style={{ flex:1, minWidth:0, overflowY:"auto", display:"flex", flexDirection:"column" }}>
 
           {/* Pose Header */}
-          <div style={{ background:C.paper, borderBottom:`1px solid ${C.border}`, padding:"16px 22px 0", position:"sticky", top:0, zIndex:10, boxShadow:"0 2px 14px rgba(0,0,0,0.05)" }}>
+          <div className="pose-header-area" style={{ background:C.paper, borderBottom:`1px solid ${C.border}`, padding:"16px 22px 0", position:"sticky", top:0, zIndex:10, boxShadow:"0 2px 14px rgba(0,0,0,0.05)" }}>
             <div key={`${selected.id}-${lang}`} className="fade">
               <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:"10px", marginBottom:"11px", flexWrap:"wrap" }}>
                 <div>
                   <div style={{ fontSize:"8px", letterSpacing:"3px", color:selected.groupColor, textTransform:"uppercase", fontWeight:"700", marginBottom:"4px" }}>
                     {isHe ? selected.group_he : selected.group_en}
                   </div>
-                  <h1 style={{ fontFamily:F, fontSize:"clamp(16px,2vw,22px)", fontWeight:"900", color:C.dark, margin:"0 0 3px" }}>{poseName(selected)}</h1>
+                  <h1 className="pose-title-mobile" style={{ fontFamily:F, fontSize:"clamp(16px,2vw,22px)", fontWeight:"900", color:C.dark, margin:"0 0 3px" }}>{poseName(selected)}</h1>
                   <div style={{ fontSize:"12px", color:C.muted, fontStyle:"italic" }}>
                     {selected.sanskrit} · {isHe ? selected.en.name : selected.he.name}
                   </div>
@@ -1120,22 +1372,22 @@ function YogaShoshan() {
 
               {/* Prev/Next Navigation */}
               <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"8px" }}>
-                <button onClick={goPrev} disabled={currentIndex===0}
-                  style={{ background:"transparent", border:`1px solid ${currentIndex===0?C.border:C.plum}40`, color:currentIndex===0?C.dusty:C.plum, borderRadius:"6px", padding:"4px 12px", fontFamily:F, fontSize:"11px", cursor:currentIndex===0?"default":"pointer", opacity:currentIndex===0?0.4:1 }}>
+                <button onClick={goPrev} disabled={currentIndex===0} className="tap-target"
+                  style={{ background:"transparent", border:`1px solid ${currentIndex===0?C.border:C.plum}40`, color:currentIndex===0?C.dusty:C.plum, borderRadius:"6px", padding:"8px 14px", fontFamily:F, fontSize:"12px", cursor:currentIndex===0?"default":"pointer", opacity:currentIndex===0?0.4:1, minHeight:"44px", minWidth:"44px" }}>
                   {isHe?"הבא ←":"← Prev"}
                 </button>
                 <span style={{ fontSize:"10px", color:C.muted }}>{currentIndex + 1} / {allPoses.length}</span>
-                <button onClick={goNext} disabled={currentIndex===allPoses.length-1}
-                  style={{ background:"transparent", border:`1px solid ${currentIndex===allPoses.length-1?C.border:C.plum}40`, color:currentIndex===allPoses.length-1?C.dusty:C.plum, borderRadius:"6px", padding:"4px 12px", fontFamily:F, fontSize:"11px", cursor:currentIndex===allPoses.length-1?"default":"pointer", opacity:currentIndex===allPoses.length-1?0.4:1 }}>
+                <button onClick={goNext} disabled={currentIndex===allPoses.length-1} className="tap-target"
+                  style={{ background:"transparent", border:`1px solid ${currentIndex===allPoses.length-1?C.border:C.plum}40`, color:currentIndex===allPoses.length-1?C.dusty:C.plum, borderRadius:"6px", padding:"8px 14px", fontFamily:F, fontSize:"12px", cursor:currentIndex===allPoses.length-1?"default":"pointer", opacity:currentIndex===allPoses.length-1?0.4:1, minHeight:"44px", minWidth:"44px" }}>
                   {isHe?"→ הקודם":"Next →"}
                 </button>
               </div>
 
               {/* Tabs */}
-              <div style={{ display:"flex", overflowX:"auto" }}>
+              <div style={{ display:"flex", overflowX:"auto", WebkitOverflowScrolling:"touch" }}>
                 {ui.tabs.map(t => (
-                  <button key={t.id} onClick={() => setTab(t.id)}
-                    style={{ padding:"8px 13px 10px", border:"none", background:"transparent", cursor:"pointer", fontFamily:F, fontSize:"11.5px", color:tab===t.id?C.dark:C.dusty, borderBottom:tab===t.id?`2.5px solid ${selected.groupColor}`:"2.5px solid transparent", marginBottom:"-1px", fontWeight:tab===t.id?"700":"500", transition:"all 0.15s", whiteSpace:"nowrap", display:"flex", gap:"4px", alignItems:"center" }}>
+                  <button key={t.id} onClick={() => setTab(t.id)} className="tab-btn-mobile tap-target"
+                    style={{ padding:"10px 13px 12px", border:"none", background:"transparent", cursor:"pointer", fontFamily:F, fontSize:"12px", color:tab===t.id?C.dark:C.dusty, borderBottom:tab===t.id?`2.5px solid ${selected.groupColor}`:"2.5px solid transparent", marginBottom:"-1px", fontWeight:tab===t.id?"700":"500", transition:"all 0.15s", whiteSpace:"nowrap", display:"flex", gap:"4px", alignItems:"center", minHeight:"44px" }}>
                     <span>{t.icon}</span><span>{t.label}</span>
                   </button>
                 ))}
@@ -1144,7 +1396,7 @@ function YogaShoshan() {
           </div>
 
           {/* Content */}
-          <div key={`${selected.id}-${tab}-${lang}`} className="slide" style={{ flex:1, padding:"18px 22px 30px" }}>
+          <div key={`${selected.id}-${tab}-${lang}`} className="slide content-area" style={{ flex:1, padding:"18px 22px 30px" }}>
 
             {/* Text */}
             <div style={{ flex:1, minWidth:0 }}>
@@ -1152,7 +1404,7 @@ function YogaShoshan() {
                 <div>
                   <div style={{ background:`${C.teacher}0D`, border:`1px solid ${C.teacher}25`, borderRight: isHe?`3px solid ${C.teacher}`:"1px solid transparent", borderLeft: !isHe?`3px solid ${C.teacher}`:"1px solid transparent", borderRadius:"10px", padding:"11px 14px", marginBottom:"14px", display:"flex", gap:"8px" }}>
                     <span style={{ fontSize:"14px", flexShrink:0 }}>✋</span>
-                    <p style={{ margin:0, fontSize:"12.5px", lineHeight:1.8, color:"#1A4A4A", fontFamily:F }}>
+                    <p style={{ margin:0, fontSize:"13px", lineHeight:1.8, color:"#1A4A4A", fontFamily:F }}>
                       <strong>{ui.beforeTouch}</strong> {ui.beforeTouchBody}
                     </p>
                   </div>
@@ -1193,23 +1445,23 @@ function YogaShoshan() {
       </div>
 
       {/* FOOTER */}
-      <footer style={{ background:`linear-gradient(135deg, ${C.header} 0%, #EFF5F0 100%)`, borderTop:`1px solid ${C.border}`, padding:"8px 22px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+      <footer className="footer-mobile" style={{ background:`linear-gradient(135deg, ${C.header} 0%, #EFF5F0 100%)`, borderTop:`1px solid ${C.border}`, padding:"8px 22px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
         <span style={{ fontFamily:"'Cinzel',Georgia,serif", fontSize:"12px", color:C.plum, letterSpacing:"2px" }}>יוגה שושן</span>
         <span style={{ fontSize:"9px", color:C.muted }}>Vinyasa & Ashtanga · {allPoses.length} {ui.poses}</span>
       </footer>
-      </div>}
+      </>}
 
       {/* ETHICS MODAL */}
       {showEthics && (
-        <div onClick={() => setShowEthics(false)} style={{ position:"fixed", inset:0, background:"rgba(15,22,15,0.88)", zIndex:100, display:"flex", alignItems:"center", justifyContent:"center", padding:"20px", backdropFilter:"blur(6px)" }}>
-          <div onClick={e => e.stopPropagation()} style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"680px", width:"100%", maxHeight:"88vh", overflowY:"auto", border:`2px solid ${C.gold}35`, boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
+        <div onClick={() => setShowEthics(false)} className="modal-backdrop-mobile" style={{ position:"fixed", inset:0, background:"rgba(15,22,15,0.88)", zIndex:100, display:"flex", alignItems:"center", justifyContent:"center", padding:"20px", backdropFilter:"blur(6px)" }}>
+          <div onClick={e => e.stopPropagation()} className="modal-content-mobile" style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"680px", width:"100%", maxHeight:"88vh", overflowY:"auto", border:`2px solid ${C.gold}35`, boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"4px" }}>
               <div>
                 <div style={{ fontFamily:"'Cinzel',Georgia,serif", fontSize:"8px", letterSpacing:"4px", color:C.gold, textTransform:"uppercase", marginBottom:"5px" }}>יוגה שושן</div>
                 <h2 style={{ fontFamily:F, fontSize:"20px", fontWeight:"900", color:C.dark, margin:0 }}>{ui.ethicsTitle}</h2>
                 <div style={{ fontSize:"12px", color:C.muted, fontStyle:"italic", marginTop:"2px" }}>{ui.ethicsSubtitle}</div>
               </div>
-              <button onClick={() => setShowEthics(false)} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:"8px", width:32, height:32, cursor:"pointer", color:C.muted, fontSize:"16px", display:"flex", alignItems:"center", justifyContent:"center" }}>×</button>
+              <button onClick={() => setShowEthics(false)} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:"8px", width:44, height:44, cursor:"pointer", color:C.muted, fontSize:"18px", display:"flex", alignItems:"center", justifyContent:"center" }}>×</button>
             </div>
             <p style={{ fontSize:"13px", lineHeight:1.9, color:C.muted, borderBottom:`1px solid ${C.border}`, paddingBottom:"14px", marginBottom:"18px", marginTop:"12px" }}>
               {ui.ethicsIntro}
@@ -1256,14 +1508,35 @@ function YogaShoshan() {
         const totalPoses = sections.reduce((sum,s) => sum + (sequence[s.key].poses?.length || 0), 0);
 
         return (
-        <div onClick={() => setShowSequencer(false)} style={{ position:"fixed", inset:0, background:"rgba(15,22,15,0.88)", zIndex:100, display:"flex", alignItems:"center", justifyContent:"center", padding:"20px", backdropFilter:"blur(6px)" }}>
-          <div onClick={e => e.stopPropagation()} style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"750px", width:"100%", maxHeight:"88vh", overflowY:"auto", boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
+        <div onClick={() => setShowSequencer(false)} className="modal-backdrop-mobile" style={{ position:"fixed", inset:0, background:"rgba(15,22,15,0.88)", zIndex:100, display:"flex", alignItems:"center", justifyContent:"center", padding:"20px", backdropFilter:"blur(6px)" }}>
+          <div onClick={e => e.stopPropagation()} className="modal-content-mobile" style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"750px", width:"100%", maxHeight:"88vh", overflowY:"auto", boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"16px" }}>
               <div>
                 <h2 style={{ fontFamily:F, fontSize:"22px", fontWeight:"900", color:C.dark, margin:0 }}>{isHe ? "בניית רצף שיעור" : "Build Class Sequence"}</h2>
                 <div style={{ fontSize:"12px", color:C.muted, fontStyle:"italic", marginTop:"4px" }}>{isHe ? `מבנה ויניאסה · ${totalPoses} תנוחות` : `Vinyasa Structure · ${totalPoses} poses`}</div>
               </div>
-              <button onClick={() => setShowSequencer(false)} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:"8px", width:32, height:32, cursor:"pointer", color:C.muted, fontSize:"16px", display:"flex", alignItems:"center", justifyContent:"center" }}>×</button>
+              <button onClick={() => setShowSequencer(false)} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:"8px", width:44, height:44, cursor:"pointer", color:C.muted, fontSize:"18px", display:"flex", alignItems:"center", justifyContent:"center" }}>×</button>
+            </div>
+
+            {/* READY TEMPLATES - MODAL */}
+            <div style={{ background:`linear-gradient(135deg, #EFF5F0, #F4EFE6)`, borderRadius:"14px", overflow:"hidden", marginBottom:"12px", border:`1px solid ${C.border}` }}>
+              <div style={{ padding:"12px 18px", borderBottom:`1px solid ${C.border}`, display:"flex", alignItems:"center", gap:"10px" }}>
+                <span style={{ fontSize:"18px" }}>📋</span>
+                <span style={{ fontWeight:"700", fontSize:"14px", color:C.dark }}>{isHe ? "תבניות מוכנות" : "Ready Templates"}</span>
+                <span style={{ fontSize:"10px", color:C.muted, flex:1, textAlign:isHe?"left":"right" }}>{isHe ? "לחצי לטעינת שיעור שלם" : "Click to load a full class"}</span>
+              </div>
+              <div style={{ padding:"10px 14px", display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(150px, 1fr))", gap:"8px" }}>
+                {CLASS_TEMPLATES.map(tpl => (
+                  <button key={tpl.id} onClick={() => { if (window.confirm(isHe ? "לטעון תבנית? זה יחליף את הרצף הנוכחי." : "Load template? This will replace the current sequence.")) setSequence(applyTemplate(tpl.data)); }}
+                    style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:"4px", padding:"10px 8px", borderRadius:"10px", border:`1.5px solid ${C.border}`, background:C.paper, cursor:"pointer", fontFamily:F, transition:"all 0.15s", textAlign:"center" }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor=C.dark; e.currentTarget.style.background=`${C.dark}08`; e.currentTarget.style.transform="translateY(-2px)"; e.currentTarget.style.boxShadow="0 4px 12px rgba(31,61,52,0.1)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor=C.border; e.currentTarget.style.background=C.paper; e.currentTarget.style.transform="none"; e.currentTarget.style.boxShadow="none"; }}>
+                    <span style={{ fontSize:"22px", lineHeight:1 }}>{tpl.icon}</span>
+                    <span style={{ fontWeight:"700", fontSize:"11px", color:C.dark, lineHeight:1.3 }}>{isHe ? tpl.he.name : tpl.en.name}</span>
+                    <span style={{ fontSize:"9px", color:C.muted, lineHeight:1.3 }}>{isHe ? tpl.he.desc : tpl.en.desc}</span>
+                  </button>
+                ))}
+              </div>
             </div>
 
             {/* SANKALPA SECTION */}
@@ -1407,14 +1680,14 @@ function YogaShoshan() {
 
       {/* CHAKRA GUIDE MODAL */}
       {showChakras && (
-        <div onClick={() => setShowChakras(false)} style={{ position:"fixed", inset:0, background:"rgba(15,22,15,0.88)", zIndex:100, display:"flex", alignItems:"center", justifyContent:"center", padding:"20px", backdropFilter:"blur(6px)" }}>
-          <div onClick={e => e.stopPropagation()} style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"750px", width:"100%", maxHeight:"88vh", overflowY:"auto", boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
+        <div onClick={() => setShowChakras(false)} className="modal-backdrop-mobile" style={{ position:"fixed", inset:0, background:"rgba(15,22,15,0.88)", zIndex:100, display:"flex", alignItems:"center", justifyContent:"center", padding:"20px", backdropFilter:"blur(6px)" }}>
+          <div onClick={e => e.stopPropagation()} className="modal-content-mobile" style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"750px", width:"100%", maxHeight:"88vh", overflowY:"auto", boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"16px" }}>
               <div>
                 <h2 style={{ fontFamily:F, fontSize:"22px", fontWeight:"900", color:C.dark, margin:0 }}>{isHe ? "מדריך הצ׳אקרות" : "Chakra Guide"}</h2>
                 <div style={{ fontSize:"12px", color:C.muted, fontStyle:"italic", marginTop:"4px" }}>{isHe ? "שבעת מרכזי האנרגיה בגוף" : "The seven energy centers of the body"}</div>
               </div>
-              <button onClick={() => setShowChakras(false)} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:"8px", width:32, height:32, cursor:"pointer", color:C.muted, fontSize:"16px", display:"flex", alignItems:"center", justifyContent:"center" }}>×</button>
+              <button onClick={() => setShowChakras(false)} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:"8px", width:44, height:44, cursor:"pointer", color:C.muted, fontSize:"18px", display:"flex", alignItems:"center", justifyContent:"center" }}>×</button>
             </div>
 
             <div style={{ display:"flex", flexDirection:"column", gap:"12px" }}>
@@ -1453,6 +1726,119 @@ function YogaShoshan() {
             </div>
 
             <button onClick={() => setShowChakras(false)} style={{ width:"100%", padding:"11px", marginTop:"16px", background:C.dark, color:"white", border:"none", borderRadius:"9px", fontFamily:F, fontSize:"13px", fontWeight:"700", cursor:"pointer" }}>{ui.close}</button>
+          </div>
+        </div>
+      )}
+
+      {/* PRANAYAMA GUIDE MODAL */}
+      {showPranayama && (
+        <div onClick={() => setShowPranayama(false)} className="modal-backdrop-mobile" style={{ position:"fixed", inset:0, background:"rgba(15,22,15,0.88)", zIndex:100, display:"flex", alignItems:"center", justifyContent:"center", padding:"20px", backdropFilter:"blur(6px)" }}>
+          <div onClick={e => e.stopPropagation()} className="modal-content-mobile" style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"800px", width:"100%", maxHeight:"88vh", overflowY:"auto", boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"16px" }}>
+              <div>
+                <h2 style={{ fontFamily:F, fontSize:"22px", fontWeight:"900", color:C.dark, margin:0 }}>{isHe ? "🌬 מדריך פרנאיאמה" : "🌬 Pranayama Guide"}</h2>
+                <div style={{ fontSize:"12px", color:C.muted, fontStyle:"italic", marginTop:"4px" }}>{isHe ? "טכניקות נשימה לשיעור יוגה — הנשימה היא הגשר בין גוף לנפש" : "Breathing techniques for yoga class — the breath is the bridge between body and soul"}</div>
+              </div>
+              <button onClick={() => setShowPranayama(false)} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:"8px", width:44, height:44, cursor:"pointer", color:C.muted, fontSize:"18px", display:"flex", alignItems:"center", justifyContent:"center" }}>×</button>
+            </div>
+            <div style={{ display:"flex", flexDirection:"column", gap:"14px" }}>
+              {PRANAYAMA.map((pr, i) => (
+                <div key={pr.id} style={{ background:`${pr.color}08`, border:`1px solid ${pr.color}20`, borderRadius:"14px", overflow:"hidden" }}>
+                  <div style={{ background:`${pr.color}15`, padding:"14px 18px", display:"flex", alignItems:"center", gap:"12px" }}>
+                    <span style={{ fontSize:"24px" }}>{pr.symbol}</span>
+                    <div style={{ flex:1 }}>
+                      <div style={{ fontWeight:"900", fontSize:"16px", color:pr.color }}>{isHe ? pr.he_name : pr.en_name}</div>
+                      <div style={{ fontSize:"11px", color:C.muted }}>{isHe ? pr.en_name : pr.he_name} · {pr.sanskrit}</div>
+                    </div>
+                    <div style={{ background:`${pr.color}20`, borderRadius:"8px", padding:"4px 10px", fontSize:"10px", fontWeight:"700", color:pr.color, whiteSpace:"nowrap" }}>{isHe ? pr.duration_he : pr.duration_en}</div>
+                  </div>
+                  <div style={{ padding:"16px 18px" }}>
+                    <div style={{ marginBottom:"12px" }}>
+                      <div style={{ fontSize:"10px", fontWeight:"700", color:pr.color, textTransform:"uppercase", letterSpacing:"1px", marginBottom:"6px" }}>{isHe ? "הוראות צעד אחר צעד" : "Step-by-Step Instructions"}</div>
+                      <ol style={{ margin:0, paddingRight:isHe?"18px":"0", paddingLeft:isHe?"0":"18px", fontSize:"12px", lineHeight:1.8, color:C.dark }}>
+                        {(isHe ? pr.steps_he : pr.steps_en).map((step, si) => (
+                          <li key={si} style={{ marginBottom:"2px" }}>{step}</li>
+                        ))}
+                      </ol>
+                    </div>
+                    <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(200px, 1fr))", gap:"10px" }}>
+                      <div>
+                        <div style={{ fontSize:"10px", fontWeight:"700", color:C.accent, textTransform:"uppercase", letterSpacing:"1px", marginBottom:"4px" }}>{isHe ? "יתרונות" : "Benefits"}</div>
+                        <p style={{ margin:0, fontSize:"12px", lineHeight:1.7, color:C.dark }}>{isHe ? pr.benefits_he : pr.benefits_en}</p>
+                      </div>
+                      <div>
+                        <div style={{ fontSize:"10px", fontWeight:"700", color:C.warn, textTransform:"uppercase", letterSpacing:"1px", marginBottom:"4px" }}>{isHe ? "אזהרות והתוויות נגד" : "Contraindications"}</div>
+                        <p style={{ margin:0, fontSize:"12px", lineHeight:1.7, color:"#6A4A4A" }}>{isHe ? pr.contra_he : pr.contra_en}</p>
+                      </div>
+                      <div>
+                        <div style={{ fontSize:"10px", fontWeight:"700", color:pr.color, textTransform:"uppercase", letterSpacing:"1px", marginBottom:"4px" }}>{isHe ? "מתי להשתמש בשיעור" : "When to Use in Class"}</div>
+                        <p style={{ margin:0, fontSize:"12px", lineHeight:1.7, color:C.dark }}>{isHe ? pr.when_he : pr.when_en}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button onClick={() => setShowPranayama(false)} style={{ width:"100%", padding:"11px", marginTop:"16px", background:C.dark, color:"white", border:"none", borderRadius:"9px", fontFamily:F, fontSize:"13px", fontWeight:"700", cursor:"pointer" }}>{ui.close}</button>
+          </div>
+        </div>
+      )}
+
+      {/* ANATOMY REFERENCE MODAL */}
+      {showAnatomy && (
+        <div onClick={() => setShowAnatomy(false)} style={{ position:"fixed", inset:0, background:"rgba(15,22,15,0.88)", zIndex:100, display:"flex", alignItems:"center", justifyContent:"center", padding:"20px", backdropFilter:"blur(6px)" }}>
+          <div onClick={e => e.stopPropagation()} style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"800px", width:"100%", maxHeight:"88vh", overflowY:"auto", boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"16px" }}>
+              <div>
+                <h2 style={{ fontFamily:F, fontSize:"22px", fontWeight:"900", color:C.dark, margin:0 }}>{isHe ? "🦴 מדריך אנטומיה בסיסי" : "🦴 Basic Anatomy Reference"}</h2>
+                <div style={{ fontSize:"12px", color:C.muted, fontStyle:"italic", marginTop:"4px" }}>{isHe ? "מה שכל מורת יוגה צריכה לדעת על הגוף" : "What every yoga teacher needs to know about the body"}</div>
+              </div>
+              <button onClick={() => setShowAnatomy(false)} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:"8px", width:32, height:32, cursor:"pointer", color:C.muted, fontSize:"16px", display:"flex", alignItems:"center", justifyContent:"center" }}>×</button>
+            </div>
+
+            <div style={{ background:`${C.accent}10`, border:`1px solid ${C.accent}25`, borderRadius:"10px", padding:"12px 16px", marginBottom:"16px", fontSize:"12px", lineHeight:1.7, color:C.dark }}>
+              {isHe
+                ? "💡 מדריך זה נועד לתת לך כלים מעשיים להנחיה בטוחה. זה לא מחליף הכשרה רפואית — אם תלמידה מתלוננת על כאב חד או מתמשך, הפני אותה לאיש מקצוע."
+                : "💡 This guide gives you practical tools for safe cueing. It does not replace medical training — if a student reports sharp or persistent pain, refer them to a professional."}
+            </div>
+
+            <div style={{ display:"flex", flexDirection:"column", gap:"14px" }}>
+              {ANATOMY.map((area) => (
+                <div key={area.id} style={{ background:`${area.color}08`, border:`1px solid ${area.color}20`, borderRadius:"14px", overflow:"hidden" }}>
+                  <div style={{ background:`${area.color}15`, padding:"14px 18px", display:"flex", alignItems:"center", gap:"12px" }}>
+                    <span style={{ fontSize:"24px" }}>{area.symbol}</span>
+                    <div>
+                      <div style={{ fontWeight:"900", fontSize:"16px", color:area.color }}>{isHe ? area.he : area.en}</div>
+                      <div style={{ fontSize:"11px", color:C.muted }}>{isHe ? area.en : area.he}</div>
+                    </div>
+                  </div>
+                  <div style={{ padding:"14px 18px", display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(200px, 1fr))", gap:"10px" }}>
+                    <div>
+                      <div style={{ fontSize:"10px", fontWeight:"700", color:area.color, textTransform:"uppercase", letterSpacing:"1px", marginBottom:"4px" }}>{isHe ? "מיקום" : "Location"}</div>
+                      <p style={{ margin:0, fontSize:"12px", lineHeight:1.7, color:C.dark }}>{isHe ? area.location_he : area.location_en}</p>
+                    </div>
+                    <div>
+                      <div style={{ fontSize:"10px", fontWeight:"700", color:area.color, textTransform:"uppercase", letterSpacing:"1px", marginBottom:"4px" }}>{isHe ? "תפקיד ביוגה" : "Function in Yoga"}</div>
+                      <p style={{ margin:0, fontSize:"12px", lineHeight:1.7, color:C.dark }}>{isHe ? area.function_he : area.function_en}</p>
+                    </div>
+                    <div>
+                      <div style={{ fontSize:"10px", fontWeight:"700", color:C.warn, textTransform:"uppercase", letterSpacing:"1px", marginBottom:"4px" }}>{isHe ? "בעיות שכיחות" : "Common Issues"}</div>
+                      <p style={{ margin:0, fontSize:"12px", lineHeight:1.7, color:"#6A4A4A" }}>{isHe ? area.issues_he : area.issues_en}</p>
+                    </div>
+                    <div>
+                      <div style={{ fontSize:"10px", fontWeight:"700", color:C.accent, textTransform:"uppercase", letterSpacing:"1px", marginBottom:"4px" }}>{isHe ? "איך להגן בתרגול" : "Protection Cues"}</div>
+                      <p style={{ margin:0, fontSize:"12px", lineHeight:1.7, color:C.dark }}>{isHe ? area.protection_he : area.protection_en}</p>
+                    </div>
+                    <div style={{ gridColumn:"1 / -1" }}>
+                      <div style={{ fontSize:"10px", fontWeight:"700", color:C.terra, textTransform:"uppercase", letterSpacing:"1px", marginBottom:"4px" }}>{isHe ? "תנוחות קשורות" : "Related Poses"}</div>
+                      <p style={{ margin:0, fontSize:"12px", lineHeight:1.7, color:C.dark, fontStyle:"italic" }}>{isHe ? area.poses_he : area.poses_en}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <button onClick={() => setShowAnatomy(false)} style={{ width:"100%", padding:"11px", marginTop:"16px", background:C.dark, color:"white", border:"none", borderRadius:"9px", fontFamily:F, fontSize:"13px", fontWeight:"700", cursor:"pointer" }}>{ui.close}</button>
           </div>
         </div>
       )}

@@ -39,10 +39,11 @@ async function sendEmail(name, email, password) {
     });
 
     if (!response.ok) {
-        throw new Error('Failed to send email');
+        const errorText = await response.text();
+        throw new Error(`Failed to send email: ${response.status} ${errorText}`);
     }
 
-    return response.json();
+    return response.text();
 }
 
 exports.handler = async (event) => {
@@ -58,24 +59,74 @@ exports.handler = async (event) => {
 
     try {
         console.log('Received callback from PayMe');
-        
+        console.log('Raw body:', event.body);
+
         const params = new URLSearchParams(event.body);
         const paymentStatus = params.get('payme_status');
-        const buyerEmail = params.get('buyer_email');
-        const buyerName = params.get('buyer_name') || 'תלמידה';
         const paymentId = params.get('payme_sale_id');
 
+        // Try to get email from PayMe callback first
+        let buyerEmail = params.get('buyer_email') || params.get('sale_buyer_email') || '';
+        let buyerName = params.get('buyer_name') || params.get('sale_buyer_name') || '';
+
         console.log('Payment status:', paymentStatus);
-        console.log('Buyer email:', buyerEmail);
+        console.log('Payment ID:', paymentId);
+        console.log('Buyer email from PayMe:', buyerEmail);
 
         if (paymentStatus !== 'completed' && paymentStatus !== 'success') {
             return {
                 statusCode: 200,
                 headers,
-                body: JSON.stringify({ message: 'Payment not successful' })
+                body: JSON.stringify({ message: 'Payment not successful', status: paymentStatus })
             };
         }
 
+        // If PayMe didn't return the email, look it up in pending_purchases
+        if (!buyerEmail && paymentId) {
+            console.log('Email not in callback, looking up pending purchase by sale_id:', paymentId);
+            const { data: pending } = await supabase
+                .from('pending_purchases')
+                .select('*')
+                .eq('sale_id', paymentId)
+                .single();
+
+            if (pending) {
+                buyerEmail = pending.email;
+                console.log('Found email from pending purchase:', buyerEmail);
+            }
+        }
+
+        // Fallback: find the most recent pending purchase (within last 30 minutes)
+        if (!buyerEmail) {
+            console.log('Trying fallback: most recent pending purchase');
+            const thirtyMinAgo = new Date(Date.now() - 30 * 60 * 1000).toISOString();
+            const { data: recentPending } = await supabase
+                .from('pending_purchases')
+                .select('*')
+                .eq('status', 'pending')
+                .gte('created_at', thirtyMinAgo)
+                .order('created_at', { ascending: false })
+                .limit(1)
+                .single();
+
+            if (recentPending) {
+                buyerEmail = recentPending.email;
+                console.log('Found email from recent pending:', buyerEmail);
+            }
+        }
+
+        if (!buyerEmail) {
+            console.error('Could not determine buyer email');
+            return {
+                statusCode: 200,
+                headers,
+                body: JSON.stringify({ message: 'Payment successful but no email found', paymentId })
+            };
+        }
+
+        if (!buyerName) buyerName = 'תלמידה';
+
+        // Check if student already exists
         const { data: existing } = await supabase
             .from('students')
             .select('*')
@@ -83,7 +134,13 @@ exports.handler = async (event) => {
             .single();
 
         if (existing) {
-            console.log('Student already exists');
+            console.log('Student already exists:', buyerEmail);
+            // Mark pending purchase as completed
+            await supabase
+                .from('pending_purchases')
+                .update({ status: 'completed' })
+                .eq('email', buyerEmail);
+
             return {
                 statusCode: 200,
                 headers,
@@ -91,8 +148,9 @@ exports.handler = async (event) => {
             };
         }
 
+        // Create student with generated password
         const password = generatePassword();
-        
+
         const { data: student, error: insertError } = await supabase
             .from('students')
             .insert([{
@@ -112,18 +170,26 @@ exports.handler = async (event) => {
 
         console.log('Student created:', student.email);
 
+        // Send welcome email with credentials
         try {
             await sendEmail(buyerName, buyerEmail, password);
-            console.log('Email sent successfully');
+            console.log('Welcome email sent successfully to:', buyerEmail);
         } catch (emailError) {
             console.error('Error sending email:', emailError);
+            // Log the failure but don't fail the callback
         }
+
+        // Mark pending purchase as completed
+        await supabase
+            .from('pending_purchases')
+            .update({ status: 'completed' })
+            .eq('email', buyerEmail);
 
         return {
             statusCode: 200,
             headers,
-            body: JSON.stringify({ 
-                message: 'Student created successfully',
+            body: JSON.stringify({
+                message: 'Student created and email sent',
                 email: buyerEmail
             })
         };
