@@ -21,6 +21,10 @@ const { useState } = React;
 const FONTS = `
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Cinzel:wght@400;600&display=swap');
 * { box-sizing: border-box; margin: 0; padding: 0; }
+nav::-webkit-scrollbar { display: none; }
+nav { -ms-overflow-style: none; scrollbar-width: none; }
+.page-enter { animation: pageIn 0.2s ease both; }
+@keyframes pageIn { from { opacity:0; } to { opacity:1; } }
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #1F3D3455; border-radius: 10px; }
@@ -1042,14 +1046,16 @@ function YogaShoshan() {
           ))}
         </div>
       </header>
-      <nav style={{ background:C.paper, borderBottom:`1px solid ${C.border}`, padding:"0 16px", display:"flex", overflowX:"auto", position:"sticky", top:"52px", zIndex:49 }}>
+      <nav style={{ background:C.paper, borderBottom:`1px solid ${C.border}`, padding:"0", display:"flex", overflowX:"auto", position:"sticky", top:"52px", zIndex:49, WebkitOverflowScrolling:"touch", scrollbarWidth:"none" }}>
+        <div style={{ display:"flex", margin:"0 auto", maxWidth:"700px", width:"100%" }}>
         {navItems.map(n => (
           <button key={n.id} onClick={() => { setView(n.id); setShowChakras(n.id==="chakras"); setShowPranayama(n.id==="pranayama"); setShowAnatomy(n.id==="anatomy"); setShowEthics(n.id==="ethics"); }}
-            style={{ padding:"10px 14px", border:"none", background:"transparent", cursor:"pointer", fontFamily:F, fontSize:"12px", fontWeight:view===n.id?"700":"400", color:view===n.id?C.dark:C.muted, borderBottom:view===n.id?`2.5px solid ${C.dark}`:"2.5px solid transparent", display:"flex", alignItems:"center", gap:"5px", whiteSpace:"nowrap", transition:"all 0.15s" }}>
-            {LI(n.licn, 14)}
+            style={{ flex:1, padding:"12px 8px", border:"none", background:view===n.id?`${C.dark}08`:"transparent", cursor:"pointer", fontFamily:F, fontSize:"11px", fontWeight:view===n.id?"700":"400", color:view===n.id?C.dark:C.muted, borderBottom:view===n.id?`2.5px solid ${C.dark}`:"2.5px solid transparent", display:"flex", flexDirection:"column", alignItems:"center", gap:"3px", whiteSpace:"nowrap", transition:"all 0.15s" }}>
+            {LI(n.licn, 16)}
             <span>{isHe ? n.he : n.en}</span>
           </button>
         ))}
+        </div>
       </nav>
         </>);
       })()}
@@ -1438,7 +1444,7 @@ function YogaShoshan() {
 
       {/* ETHICS MODAL */}
       {(showEthics || view==="ethics") && (
-        <div style={{ flex:1, overflowY:"auto", padding:"20px 20px 40px", background:C.bg }}>
+        <div className="page-enter" style={{ flex:1, overflowY:"auto", padding:"30px 20px 60px", background:C.bg }}>
           <div onClick={e => e.stopPropagation()} className="modal-content-mobile" style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"680px", width:"100%", maxHeight:"88vh", overflowY:"auto", border:`2px solid ${C.gold}35`, boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"4px" }}>
               <div>
@@ -1665,7 +1671,7 @@ function YogaShoshan() {
 
       {/* CHAKRA GUIDE MODAL */}
       {(showChakras || view==="chakras") && (
-        <div style={{ flex:1, overflowY:"auto", padding:"20px 20px 40px", background:C.bg }}>
+        <div className="page-enter" style={{ flex:1, overflowY:"auto", padding:"30px 20px 60px", background:C.bg }}>
           <div onClick={e => e.stopPropagation()} className="modal-content-mobile" style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"750px", width:"100%", maxHeight:"88vh", overflowY:"auto", boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"16px" }}>
               <div>
@@ -1717,7 +1723,7 @@ function YogaShoshan() {
 
       {/* PRANAYAMA GUIDE MODAL */}
       {(showPranayama || view==="pranayama") && (
-        <div style={{ flex:1, overflowY:"auto", padding:"20px 20px 40px", background:C.bg }}>
+        <div className="page-enter" style={{ flex:1, overflowY:"auto", padding:"30px 20px 60px", background:C.bg }}>
           <div onClick={e => e.stopPropagation()} className="modal-content-mobile" style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"800px", width:"100%", maxHeight:"88vh", overflowY:"auto", boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"16px" }}>
               <div>
@@ -1771,7 +1777,7 @@ function YogaShoshan() {
 
       {/* ANATOMY REFERENCE MODAL */}
       {(showAnatomy || view==="anatomy") && (
-        <div style={{ flex:1, overflowY:"auto", padding:"20px 20px 40px", background:C.bg }}>
+        <div className="page-enter" style={{ flex:1, overflowY:"auto", padding:"30px 20px 60px", background:C.bg }}>
           <div onClick={e => e.stopPropagation()} style={{ background:C.paper, borderRadius:"18px", padding:"26px 30px", maxWidth:"800px", width:"100%", maxHeight:"88vh", overflowY:"auto", boxShadow:"0 28px 80px rgba(0,0,0,0.6)", direction:dir }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"16px" }}>
               <div>
