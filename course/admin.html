@@ -689,7 +689,8 @@ return `
 <td>${s.last_login?new Date(s.last_login).toLocaleDateString('he-IL'):'—'}</td>
 <td>
 <div style="display:flex;gap:5px">
-<button class="btn btn-sm ${isActive?'danger':'success'}" onclick="toggleSubscriber('${s.email}','${s.status}')">${isActive?'השהה':'הפעל'}</button>
+<button class="btn btn-sm info" onclick="sendSubEmail('${s.email}','${s.name||'מנויה'}','${s.password||''}')">📧</button>
+<button class="btn btn-sm ${isActive?'danger':'success'}" onclick="toggleSubscriber('${s.email}','${s.status}','${s.payment_id||''}')">${isActive?'השהה':'הפעל'}</button>
 <button class="btn btn-sm danger" onclick="deleteSubscriber('${s.email}')">🗑️</button>
 </div>
 </td>
@@ -709,11 +710,44 @@ document.getElementById("subscribersTable").innerHTML=`
 </div>`;
 }
 
-async function toggleSubscriber(email,status){
+async function sendSubEmail(email,name,password){
+if(!email){alert('אין מייל!');return}
+if(!password){alert('אין סיסמה לשליחה');return}
+const cleanEmail=email.trim().toLowerCase();
+try{
+await emailjs.send('yoga_service','template_o3kxtq3',{
+to_email:cleanEmail,
+to_name:name||'מנויה',
+password:password,
+user_email:cleanEmail,
+course_link:'https://asanaguides.netlify.app'
+});
+alert('✅ מייל נשלח בהצלחה ל-'+cleanEmail);
+}catch(error){
+console.error('Email error:',error);
+alert('❌ שגיאה: '+error.text);
+}
+}
+
+async function toggleSubscriber(email,status,paymentId){
 const newStatus=status==='active'?'inactive':'active';
+if(status==='active'&&!confirm(`להשהות את המנוי של ${email}? החיוב החודשי יבוטל.`))return;
+
 const {error}=await db.from("asana_subscribers").update({status:newStatus,updated_at:new Date().toISOString()}).eq('email',email);
-if(error)alert('שגיאה: '+error.message);
-else loadSubscribers();
+if(error){alert('שגיאה: '+error.message);return}
+
+// Cancel/reactivate PayMe subscription
+if(paymentId && status==='active'){
+try{
+await fetch('https://asanaguides.netlify.app/.netlify/functions/cancel-subscription',{
+method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({email:email})
+});
+}catch(e){console.error('PayMe cancel error:',e)}
+}
+
+loadSubscribers();
 }
 
 async function deleteSubscriber(email){
