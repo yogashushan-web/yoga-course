@@ -731,23 +731,12 @@ alert('❌ שגיאה: '+error.text);
 
 async function toggleSubscriber(email,status,paymentId){
 const newStatus=status==='active'?'inactive':'active';
-if(status==='active'&&!confirm(`להשהות את המנוי של ${email}? החיוב החודשי יבוטל.`))return;
+const msg=status==='active'?`להשהות את הגישה של ${email}? (החיוב ב-PayMe לא יבוטל)`:`להפעיל מחדש את הגישה של ${email}?`;
+if(!confirm(msg))return;
 
 const {error}=await db.from("asana_subscribers").update({status:newStatus,updated_at:new Date().toISOString()}).eq('email',email);
-if(error){alert('שגיאה: '+error.message);return}
-
-// Cancel/reactivate PayMe subscription
-if(paymentId && status==='active'){
-try{
-await fetch('https://asanaguides.netlify.app/.netlify/functions/cancel-subscription',{
-method:'POST',
-headers:{'Content-Type':'application/json'},
-body:JSON.stringify({email:email})
-});
-}catch(e){console.error('PayMe cancel error:',e)}
-}
-
-loadSubscribers();
+if(error)alert('שגיאה: '+error.message);
+else loadSubscribers();
 }
 
 async function deleteSubscriber(email){
