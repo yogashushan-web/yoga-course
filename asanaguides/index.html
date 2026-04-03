@@ -39,12 +39,17 @@ nav { -ms-overflow-style: none; scrollbar-width: none; }
   header .logo-text { font-size: 15px !important; }
   .hide-mobile { display: none !important; }
   .sidebar-overlay-mobile { width: 100% !important; max-width: 100% !important; }
-  .builder-library-mobile { width: 100% !important; max-height: 250px !important; border-left: none !important; border-right: none !important; border-bottom: 1px solid #D8E0DA !important; }
+  .builder-library-mobile { width: 100% !important; max-height: 220px !important; border-left: none !important; border-right: none !important; border-bottom: 1px solid #D8E0DA !important; }
   .builder-layout-mobile { flex-direction: column !important; }
   .modal-content-mobile { padding: 18px 16px !important; max-width: 100% !important; margin: 8px !important; }
   .pose-header-area { padding: 12px 14px 0 !important; }
   .content-area { padding: 14px 14px 24px !important; }
-  .footer-mobile { padding: 8px 14px !important; }
+  .footer-mobile { padding: 10px 14px !important; font-size: 11px !important; }
+}
+/* ── Mobile: phablets ── */
+@media (max-width: 600px) {
+  .builder-library-mobile { max-height: 180px !important; }
+  .modal-content-mobile { padding: 16px 14px !important; }
 }
 /* ── Mobile: small phones ── */
 @media (max-width: 480px) {
@@ -52,13 +57,13 @@ nav { -ms-overflow-style: none; scrollbar-width: none; }
   header .logo-text { font-size: 13px !important; }
   .hide-small { display: none !important; }
   .sidebar-overlay-mobile { width: 100% !important; }
-  .builder-library-mobile { max-height: 200px !important; }
-  .pose-header-area { padding: 10px 10px 0 !important; }
-  .content-area { padding: 10px 10px 20px !important; }
-  .pose-title-mobile { font-size: 18px !important; }
+  .builder-library-mobile { max-height: 160px !important; }
+  .pose-header-area { padding: 10px 12px 0 !important; }
+  .content-area { padding: 12px 12px 20px !important; }
+  .pose-title-mobile { font-size: 17px !important; }
   .tab-btn-mobile { padding: 10px 10px 12px !important; font-size: 12px !important; min-height: 44px !important; }
   .modal-content-mobile { padding: 14px 10px !important; }
-  .footer-mobile { flex-direction: column !important; gap: 4px !important; text-align: center !important; }
+  .footer-mobile { flex-direction: column !important; gap: 6px !important; text-align: center !important; }
 }
 /* ── Touch-friendly tap targets ── */
 @media (pointer: coarse) {
@@ -1212,7 +1217,7 @@ function YogaShoshan() {
         )}
         <div style={{ fontFamily:F, fontSize:"16px", fontWeight:"700", color:C.dark, letterSpacing:"1px", lineHeight:1 }}>יוגה שושן</div>
         <div style={{ flex:1 }}/>
-        <div style={{ position:"relative", width:"140px" }}>
+        <div style={{ position:"relative", width:"clamp(100px, 25vw, 160px)" }}>
           <input value={headerSearch} onChange={e => setHeaderSearch(e.target.value)}
             placeholder={isHe?"חיפוש...":"Search..."}
             style={{ width:"100%", padding:"6px 10px", borderRadius:"8px", border:`1px solid ${C.border}`, background:C.bg, fontFamily:F, fontSize:"12px", color:C.dark, outline:"none", direction:isHe?"rtl":"ltr" }}/>
@@ -1235,7 +1240,7 @@ function YogaShoshan() {
         <div style={{ display:"flex", background:`${C.dark}08`, borderRadius:"6px", padding:"2px", gap:"1px" }}>
           {["he","en"].map(l => (
             <button key={l} onClick={() => setLang(l)}
-              style={{ padding:"4px 10px", borderRadius:"5px", border:"none", background:lang===l ? C.dark : "transparent", color:lang===l ? "#FFF" : C.dark, fontFamily:F, fontSize:"11px", fontWeight:lang===l?"700":"500", cursor:"pointer" }}>
+              style={{ padding:"6px 12px", borderRadius:"5px", border:"none", background:lang===l ? C.dark : "transparent", color:lang===l ? "#FFF" : C.dark, fontFamily:F, fontSize:"12px", fontWeight:lang===l?"700":"500", cursor:"pointer" }}>
               {l === "he" ? "עב" : "EN"}
             </button>
           ))}
@@ -1245,7 +1250,7 @@ function YogaShoshan() {
         <div style={{ display:"flex", margin:"0 auto", maxWidth:"700px", width:"100%" }}>
         {navItems.map(n => (
           <button key={n.id} onClick={() => { setView(n.id); setShowChakras(n.id==="chakras"); setShowPranayama(n.id==="pranayama"); setShowAnatomy(n.id==="anatomy"); setShowEthics(n.id==="ethics"); setShowSutras(n.id==="sutras"); setShowInjuries(n.id==="injuries"); }}
-            style={{ flex:1, padding:"12px 8px", border:"none", background:view===n.id?`${C.dark}08`:"transparent", cursor:"pointer", fontFamily:F, fontSize:"11px", fontWeight:view===n.id?"700":"400", color:view===n.id?C.dark:C.muted, borderBottom:view===n.id?`2.5px solid ${C.dark}`:"2.5px solid transparent", display:"flex", flexDirection:"column", alignItems:"center", gap:"3px", whiteSpace:"nowrap", transition:"all 0.15s" }}>
+            style={{ flex:1, padding:"10px 6px", border:"none", background:view===n.id?`${C.dark}08`:"transparent", cursor:"pointer", fontFamily:F, fontSize:"12px", fontWeight:view===n.id?"700":"400", color:view===n.id?C.dark:C.muted, borderBottom:view===n.id?`2.5px solid ${C.dark}`:"2.5px solid transparent", display:"flex", flexDirection:"column", alignItems:"center", gap:"4px", whiteSpace:"nowrap", transition:"all 0.15s", minWidth:0 }}>
             {LI(n.licn, 16)}
             <span>{isHe ? n.he : n.en}</span>
           </button>
@@ -1502,7 +1507,7 @@ function YogaShoshan() {
                     <div style={{ width:6, height:6, borderRadius:"50%", background:pose.groupColor, flexShrink:0 }}/>
                     <div style={{ fontSize:"12.5px", fontWeight:selected.id===pose.id?"700":"400", color:selected.id===pose.id ? C.plum : C.dark, lineHeight:1.3 }}>{poseName(pose)}</div>
                   </div>
-                  <div style={{ fontSize:"9px", color:C.dusty, marginTop:"2px", [isHe?"paddingRight":"paddingLeft"]:"12px" }}>{pose.sanskrit}</div>
+                  <div style={{ fontSize:"10px", color:C.dusty, marginTop:"2px", [isHe?"paddingRight":"paddingLeft"]:"12px" }}>{pose.sanskrit}</div>
                 </button>
               ));
             })()}
@@ -1627,7 +1632,7 @@ function YogaShoshan() {
       {/* FOOTER */}
       <footer className="footer-mobile" style={{ background:`linear-gradient(135deg, ${C.header} 0%, #EFF5F0 100%)`, borderTop:`1px solid ${C.border}`, padding:"8px 22px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
         <span style={{ fontFamily:F, fontSize:"12px", color:C.plum, letterSpacing:"2px" }}>יוגה שושן</span>
-        <span style={{ fontSize:"9px", color:C.muted }}>Vinyasa & Ashtanga · {allPoses.length} {ui.poses}</span>
+        <span style={{ fontSize:"11px", color:C.muted }}>Vinyasa & Ashtanga · {allPoses.length} {ui.poses}</span>
       </footer>
       </>}
 
@@ -1645,7 +1650,7 @@ function YogaShoshan() {
             <p style={{ fontSize:"13px", lineHeight:1.9, color:C.muted, borderBottom:`1px solid ${C.border}`, paddingBottom:"14px", marginBottom:"18px", marginTop:"12px" }}>
               {ui.ethicsIntro}
             </p>
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))", gap:"10px", marginBottom:"16px" }}>
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(min(260px,100%),1fr))", gap:"10px", marginBottom:"16px" }}>
               {touchEthics.map((item, i) => {
                 const t = isHe ? item.he : item.en;
                 return (
