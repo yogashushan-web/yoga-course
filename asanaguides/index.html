@@ -1163,7 +1163,110 @@ function YogaShoshan() {
   const [libraryOpen, setLibraryOpen] = useState(false);
 
   const [headerSearch, setHeaderSearch] = useState("");
+  const [cmdkOpen, setCmdkOpen] = useState(false);
+  const [cmdkQuery, setCmdkQuery] = useState("");
+  const cmdkRef = React.useRef(null);
   const handlePrint = () => window.print();
+
+  // Cmd+K / Ctrl+K listener
+  React.useEffect(() => {
+    const handler = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") { e.preventDefault(); setCmdkOpen(true); setCmdkQuery(""); }
+      if (e.key === "Escape") setCmdkOpen(false);
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, []);
+
+  React.useEffect(() => { if (cmdkOpen && cmdkRef.current) cmdkRef.current.focus(); }, [cmdkOpen]);
+
+  // Universal search across all content
+  const cmdkResults = React.useMemo(() => {
+    if (!cmdkQuery || cmdkQuery.length < 2) return [];
+    const q = cmdkQuery.toLowerCase();
+    const results = [];
+    const langKey = lang === "he" ? "he" : "en";
+    const match = (text) => text && text.toLowerCase().includes(q);
+
+    // Search poses
+    allPoses.forEach(p => {
+      if (match(p.he.name) || match(p.en.name) || match(p.sanskrit)) {
+        results.push({ type:"pose", icon:"book-open", cat:langKey==="he"?"תנוחות":"Poses", title:langKey==="he"?p.he.name:p.en.name, sub:p.sanskrit, action:() => { setSelected(p); setTab("assist"); setView("guide"); setCmdkOpen(false); } });
+      }
+    });
+
+    // Search pose content (assist, cueing, alignment, mods, watch)
+    allPoses.forEach(p => {
+      const fields = ["assist","cueing","alignment","mods","watch"];
+      fields.forEach(f => {
+        const arr = p[f+"_"+langKey] || p[f+"_he"] || [];
+        if (Array.isArray(arr) && arr.some(t => match(t))) {
+          const label = {assist:langKey==="he"?"הנחיית מגע":"Assist",cueing:langKey==="he"?"הנחיה מילולית":"Cueing",alignment:langKey==="he"?"אלינמנט":"Alignment",mods:langKey==="he"?"התאמות":"Modifications",watch:langKey==="he"?"שימי לב":"Watch For"}[f];
+          results.push({ type:"pose-detail", icon:"book-open", cat:langKey==="he"?"תוכן תנוחות":"Pose Details", title:(langKey==="he"?p.he.name:p.en.name)+" — "+label, sub:arr.find(t => match(t))?.substring(0,60)+"...", action:() => { setSelected(p); setTab(f==="mods"?"modifications":f==="watch"?"watchFor":f); setView("guide"); setCmdkOpen(false); } });
+        }
+      });
+    });
+
+    // Search chakras
+    Object.entries(CHAKRAS).forEach(([key, c]) => {
+      const searchFields = [c.he, c.en, c["location_"+langKey], c["element_"+langKey], c["organs_"+langKey], c["meaning_"+langKey], c["blocked_"+langKey], c["balance_"+langKey]];
+      if (searchFields.some(match)) {
+        results.push({ type:"chakra", icon:"rainbow", cat:langKey==="he"?"צ׳אקרות":"Chakras", title:langKey==="he"?c.he:c.en, sub:c["element_"+langKey], color:c.color, action:() => { setView("chakras"); setShowChakras(true); setShowPranayama(false); setShowAnatomy(false); setShowEthics(false); setShowSutras(false); setShowInjuries(false); setCmdkOpen(false); } });
+      }
+    });
+
+    // Search pranayama
+    PRANAYAMA.forEach(p => {
+      const searchFields = [p.sanskrit, p.he_name, p.en_name, ...(p["steps_"+langKey]||[]), ...(p["benefits_"+langKey]||[])];
+      if (searchFields.some(match)) {
+        results.push({ type:"pranayama", icon:"wind", cat:langKey==="he"?"פרנאיאמה":"Pranayama", title:langKey==="he"?p.he_name:p.en_name, sub:p.sanskrit, color:p.color, action:() => { setView("pranayama"); setShowPranayama(true); setShowChakras(false); setShowAnatomy(false); setShowEthics(false); setShowSutras(false); setShowInjuries(false); setCmdkOpen(false); } });
+      }
+    });
+
+    // Search anatomy
+    ANATOMY.forEach(a => {
+      const searchFields = [a[langKey], a.he, a.en, a["location_"+langKey], a["function_"+langKey], a["issues_"+langKey], a["protection_"+langKey], a["poses_"+langKey]];
+      if (searchFields.some(match)) {
+        results.push({ type:"anatomy", icon:"bone", cat:langKey==="he"?"אנטומיה":"Anatomy", title:langKey==="he"?a.he:a.en, sub:a["location_"+langKey]?.substring(0,50)+"...", color:a.color, action:() => { setView("anatomy"); setShowAnatomy(true); setShowChakras(false); setShowPranayama(false); setShowEthics(false); setShowSutras(false); setShowInjuries(false); setCmdkOpen(false); } });
+      }
+    });
+
+    // Search ethics
+    touchEthics.forEach((e, i) => {
+      if (match(e[langKey]?.title) || match(e[langKey]?.body)) {
+        results.push({ type:"ethics", icon:"heart-handshake", cat:langKey==="he"?"אתיקת מגע":"Touch Ethics", title:e[langKey].title, sub:e[langKey].body?.substring(0,60)+"...", action:() => { setView("ethics"); setShowEthics(true); setShowChakras(false); setShowPranayama(false); setShowAnatomy(false); setShowSutras(false); setShowInjuries(false); setCmdkOpen(false); } });
+      }
+    });
+
+    // Search sutras
+    SUTRAS.forEach((s, i) => {
+      const searchFields = [s.sanskrit, s[langKey], s["theme_"+langKey], s["teaching_"+langKey], ...(s["class_ideas_"+langKey]||[])];
+      if (searchFields.some(match)) {
+        results.push({ type:"sutra", icon:"scroll-text", cat:langKey==="he"?"יוגה סוטרה":"Yoga Sutras", title:s["theme_"+langKey]+" ("+s.chapter+"."+s.verse+")", sub:s.sanskrit, color:s.color, action:() => { setView("sutras"); setShowSutras(true); setExpandedSutra(i); setShowChakras(false); setShowPranayama(false); setShowAnatomy(false); setShowEthics(false); setShowInjuries(false); setCmdkOpen(false); } });
+      }
+    });
+
+    // Search injuries
+    INJURIES.forEach((inj, i) => {
+      const searchFields = [inj[langKey], inj.he, inj.en, inj["prevalence_"+langKey], ...(inj["causes_"+langKey]||[]), ...(inj["iyengar_"+langKey]||[]), ...(inj["avoid_"+langKey]||[]), ...(inj["signs_"+langKey]||[])];
+      if (searchFields.some(match)) {
+        results.push({ type:"injury", icon:"shield-plus", cat:langKey==="he"?"פציעות":"Injuries", title:langKey==="he"?inj.he:inj.en, sub:inj["prevalence_"+langKey]?.substring(0,60)+"...", color:inj.color, action:() => { setView("injuries"); setShowInjuries(true); setExpandedInjury(i); setShowChakras(false); setShowPranayama(false); setShowAnatomy(false); setShowEthics(false); setShowSutras(false); setCmdkOpen(false); } });
+      }
+    });
+
+    // Search sankalpas
+    SANKALPAS.forEach(cat => {
+      cat.items.forEach(item => {
+        if (match(item[langKey])) {
+          results.push({ type:"sankalpa", icon:"sparkles", cat:langKey==="he"?"סנקלפות":"Sankalpas", title:langKey==="he"?cat.cat_he:cat.cat_en, sub:item[langKey]?.substring(0,60)+"...", action:() => { setView("builder"); setCmdkOpen(false); } });
+        }
+      });
+    });
+
+    // Deduplicate by title
+    const seen = new Set();
+    return results.filter(r => { const k = r.type+r.title; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 20);
+  }, [cmdkQuery, lang]);
 
   const ui = UI[lang];
   const isHe = lang === "he";
@@ -1217,26 +1320,12 @@ function YogaShoshan() {
         )}
         <div style={{ fontFamily:F, fontSize:"16px", fontWeight:"700", color:C.dark, letterSpacing:"1px", lineHeight:1 }}>יוגה שושן</div>
         <div style={{ flex:1 }}/>
-        <div style={{ position:"relative", width:"clamp(100px, 25vw, 160px)" }}>
-          <input value={headerSearch} onChange={e => setHeaderSearch(e.target.value)}
-            placeholder={isHe?"חיפוש...":"Search..."}
-            style={{ width:"100%", padding:"6px 10px", borderRadius:"8px", border:`1px solid ${C.border}`, background:C.bg, fontFamily:F, fontSize:"12px", color:C.dark, outline:"none", direction:isHe?"rtl":"ltr" }}/>
-          {headerSearch && (() => {
-            const q = headerSearch.toLowerCase();
-            const results = allPoses.filter(p => p.he.name.includes(q) || p.en.name.toLowerCase().includes(q) || p.sanskrit.toLowerCase().includes(q));
-            return results.length > 0 ? (
-              <div style={{ position:"absolute", top:"100%", [isHe?"right":"left"]:0, width:"220px", background:C.paper, border:`1px solid ${C.border}`, borderRadius:"8px", boxShadow:"0 8px 24px rgba(0,0,0,0.12)", zIndex:99, maxHeight:"250px", overflowY:"auto", marginTop:"4px" }}>
-                {results.map(p => (
-                  <button key={p.id} onClick={() => { setSelected(p); setHeaderSearch(""); setTab("assist"); setView("guide"); }}
-                    style={{ width:"100%", padding:"6px 10px", border:"none", background:"transparent", cursor:"pointer", fontFamily:F, fontSize:"11px", textAlign:isHe?"right":"left", display:"block" }}>
-                    <div style={{ fontWeight:"600", color:C.dark }}>{poseName(p)}</div>
-                    <div style={{ fontSize:"9px", color:C.muted }}>{p.sanskrit}</div>
-                  </button>
-                ))}
-              </div>
-            ) : null;
-          })()}
-        </div>
+        <button onClick={() => { setCmdkOpen(true); setCmdkQuery(""); }}
+          style={{ display:"flex", alignItems:"center", gap:"6px", padding:"6px 12px", borderRadius:"8px", border:`1px solid ${C.border}`, background:C.bg, cursor:"pointer", fontFamily:F, fontSize:"12px", color:C.muted, minWidth:"clamp(100px, 25vw, 180px)" }}>
+          {LI("search", 14)}
+          <span style={{ flex:1, textAlign:isHe?"right":"left" }}>{isHe?"חיפוש...":"Search..."}</span>
+          <kbd style={{ fontSize:"10px", padding:"2px 5px", borderRadius:"4px", background:`${C.dark}10`, color:C.muted, border:`1px solid ${C.border}`, lineHeight:1, fontFamily:"inherit" }}>⌘K</kbd>
+        </button>
         <div style={{ display:"flex", background:`${C.dark}08`, borderRadius:"6px", padding:"2px", gap:"1px" }}>
           {["he","en"].map(l => (
             <button key={l} onClick={() => setLang(l)}
@@ -2126,6 +2215,63 @@ function YogaShoshan() {
                 </div>
                 );
               })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ====== CMD+K SEARCH PALETTE ====== */}
+      {cmdkOpen && (
+        <div onClick={() => setCmdkOpen(false)} style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.5)", backdropFilter:"blur(4px)", zIndex:200, display:"flex", alignItems:"flex-start", justifyContent:"center", paddingTop:"min(15vh, 120px)" }}>
+          <div onClick={e => e.stopPropagation()} style={{ background:C.paper, borderRadius:"16px", width:"min(560px, 92vw)", maxHeight:"70vh", display:"flex", flexDirection:"column", boxShadow:"0 20px 60px rgba(0,0,0,0.25)", border:`1px solid ${C.border}`, overflow:"hidden", direction:dir }}>
+            {/* Search input */}
+            <div style={{ display:"flex", alignItems:"center", gap:"10px", padding:"16px 18px", borderBottom:`1px solid ${C.border}` }}>
+              {LI("search", 20)}
+              <input ref={cmdkRef} value={cmdkQuery} onChange={e => setCmdkQuery(e.target.value)}
+                placeholder={isHe ? "חיפוש בכל התוכן — תנוחות, צ׳אקרות, פרנאיאמה, אנטומיה..." : "Search all content — poses, chakras, pranayama, anatomy..."}
+                style={{ flex:1, border:"none", outline:"none", background:"transparent", fontFamily:F, fontSize:"16px", color:C.dark, direction:isHe?"rtl":"ltr" }} />
+              <kbd onClick={() => setCmdkOpen(false)} style={{ fontSize:"11px", padding:"3px 8px", borderRadius:"5px", background:`${C.dark}10`, color:C.muted, border:`1px solid ${C.border}`, cursor:"pointer", fontFamily:"inherit" }}>ESC</kbd>
+            </div>
+
+            {/* Results */}
+            <div style={{ overflowY:"auto", maxHeight:"calc(70vh - 64px)" }}>
+              {cmdkQuery.length < 2 ? (
+                <div style={{ padding:"30px 20px", textAlign:"center", color:C.muted, fontSize:"14px" }}>
+                  {LI("sparkles", 24)}
+                  <div style={{ marginTop:"8px" }}>{isHe ? "הקלידי לפחות 2 תווים לחיפוש" : "Type at least 2 characters to search"}</div>
+                  <div style={{ fontSize:"11px", marginTop:"12px", color:C.dusty, lineHeight:"2" }}>
+                    {isHe ? "תנוחות · צ׳אקרות · פרנאיאמה · אנטומיה · אתיקה · סוטרות · פציעות · סנקלפות" : "Poses · Chakras · Pranayama · Anatomy · Ethics · Sutras · Injuries · Sankalpas"}
+                  </div>
+                </div>
+              ) : cmdkResults.length === 0 ? (
+                <div style={{ padding:"30px 20px", textAlign:"center", color:C.muted, fontSize:"14px" }}>
+                  {isHe ? "לא נמצאו תוצאות" : "No results found"}
+                </div>
+              ) : (() => {
+                // Group results by category
+                const groups = {};
+                cmdkResults.forEach(r => { if (!groups[r.cat]) groups[r.cat] = []; groups[r.cat].push(r); });
+                return Object.entries(groups).map(([cat, items]) => (
+                  <div key={cat}>
+                    <div style={{ padding:"8px 18px 4px", fontSize:"11px", fontWeight:"700", color:C.muted, textTransform:"uppercase", letterSpacing:"0.5px", background:`${C.dark}04` }}>{cat}</div>
+                    {items.map((r, i) => (
+                      <button key={i} onClick={r.action}
+                        style={{ width:"100%", display:"flex", alignItems:"center", gap:"12px", padding:"10px 18px", border:"none", background:"transparent", cursor:"pointer", fontFamily:F, textAlign:isHe?"right":"left", transition:"background 0.1s" }}
+                        onMouseEnter={e => e.currentTarget.style.background=`${C.dark}08`}
+                        onMouseLeave={e => e.currentTarget.style.background="transparent"}>
+                        <div style={{ width:"32px", height:"32px", borderRadius:"8px", background:r.color ? r.color+"18" : `${C.dark}08`, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+                          {LI(r.icon, 16)}
+                        </div>
+                        <div style={{ flex:1, minWidth:0 }}>
+                          <div style={{ fontSize:"14px", fontWeight:"600", color:C.dark, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{r.title}</div>
+                          {r.sub && <div style={{ fontSize:"11px", color:C.muted, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", marginTop:"1px" }}>{r.sub}</div>}
+                        </div>
+                        <div style={{ flexShrink:0, color:C.muted }}>{LI("arrow-left", 14)}</div>
+                      </button>
+                    ))}
+                  </div>
+                ));
+              })()}
             </div>
           </div>
         </div>
