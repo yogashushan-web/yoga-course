@@ -68,6 +68,7 @@ exports.handler = async (event) => {
         // Try to get email from PayMe callback first
         let buyerEmail = params.get('buyer_email') || params.get('sale_buyer_email') || '';
         let buyerName = params.get('buyer_name') || params.get('sale_buyer_name') || '';
+        let pricePaid = null;
 
         console.log('Payment status:', paymentStatus);
         console.log('Payment ID:', paymentId);
@@ -92,7 +93,8 @@ exports.handler = async (event) => {
 
             if (pending) {
                 buyerEmail = pending.email;
-                console.log('Found email from pending purchase:', buyerEmail);
+                pricePaid = pending.price;
+                console.log('Found email from pending purchase:', buyerEmail, 'price:', pricePaid);
             }
         }
 
@@ -111,7 +113,8 @@ exports.handler = async (event) => {
 
             if (recentPending) {
                 buyerEmail = recentPending.email;
-                console.log('Found email from recent pending:', buyerEmail);
+                pricePaid = recentPending.price;
+                console.log('Found email from recent pending:', buyerEmail, 'price:', pricePaid);
             }
         }
 
@@ -158,7 +161,8 @@ exports.handler = async (event) => {
                 name: buyerName,
                 password: password,
                 payment_id: paymentId,
-                payment_status: 'completed'
+                payment_status: 'completed',
+                price_paid: pricePaid || 550
             }])
             .select()
             .single();
