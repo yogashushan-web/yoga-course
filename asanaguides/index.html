@@ -1127,6 +1127,157 @@ const SUTRAS = [
     color:"#E06020" },
 ];
 
+/* ── SANSKRIT DICTIONARY ── */
+const SANSKRIT_DICT = [
+  // Pose foundations
+  { sanskrit:"Asana", he:"תנוחה, מושב", en:"Posture, seat", category:"foundation" },
+  { sanskrit:"Vinyasa", he:"חיבור תנועה ונשימה, זרימה", en:"Linking breath and movement, flow", category:"foundation" },
+  { sanskrit:"Ashtanga", he:"שמונה איברים (שמונת שלבי היוגה)", en:"Eight limbs (of yoga)", category:"foundation" },
+  { sanskrit:"Hatha", he:"שמש וירח, יוגה פיזית", en:"Sun and moon, physical yoga", category:"foundation" },
+  { sanskrit:"Yoga", he:"חיבור, איחוד", en:"Union, connection", category:"foundation" },
+  { sanskrit:"Namaste", he:"האור שבי מכבד את האור שבך", en:"The light in me honors the light in you", category:"foundation" },
+  { sanskrit:"Guru", he:"מורה, מאיר חושך", en:"Teacher, dispeller of darkness", category:"foundation" },
+  { sanskrit:"Shanti", he:"שלום, שקט פנימי", en:"Peace, inner tranquility", category:"foundation" },
+  { sanskrit:"Om (Aum)", he:"הצליל הקדמוני, צליל היקום", en:"The primordial sound, sound of the universe", category:"foundation" },
+  { sanskrit:"Mantra", he:"כלי להגנת התודעה, מילים חוזרות", en:"Mind instrument, repeated sacred words", category:"foundation" },
+  { sanskrit:"Sankalpa", he:"כוונה, החלטה פנימית", en:"Intention, inner resolve", category:"foundation" },
+  { sanskrit:"Drishti", he:"מיקוד מבט, נקודת מבט", en:"Gaze point, focused looking", category:"foundation" },
+  { sanskrit:"Ujjayi", he:"נשימת הניצחון", en:"Victorious breath", category:"foundation" },
+
+  // Body parts
+  { sanskrit:"Pada", he:"כף רגל, רגל", en:"Foot, leg", category:"body" },
+  { sanskrit:"Hasta", he:"יד, כף יד", en:"Hand", category:"body" },
+  { sanskrit:"Mukha", he:"פנים", en:"Face", category:"body" },
+  { sanskrit:"Janu", he:"ברך", en:"Knee", category:"body" },
+  { sanskrit:"Sira / Shirsha", he:"ראש", en:"Head", category:"body" },
+  { sanskrit:"Karna", he:"אוזן", en:"Ear", category:"body" },
+  { sanskrit:"Angustha", he:"בוהן (יד או רגל)", en:"Big toe / thumb", category:"body" },
+  { sanskrit:"Bhuja", he:"זרוע, כתף", en:"Arm, shoulder", category:"body" },
+  { sanskrit:"Kati", he:"מותניים, אגן", en:"Waist, hip", category:"body" },
+  { sanskrit:"Nabhi", he:"טבור", en:"Navel", category:"body" },
+  { sanskrit:"Anga", he:"איבר, חלק מהגוף", en:"Limb, body part", category:"body" },
+
+  // Directions & movements
+  { sanskrit:"Adho", he:"למטה", en:"Downward", category:"movement" },
+  { sanskrit:"Urdhva", he:"למעלה", en:"Upward", category:"movement" },
+  { sanskrit:"Parivrtta", he:"מסובב, טוויסט", en:"Revolved, twisted", category:"movement" },
+  { sanskrit:"Utthita", he:"מתוח, מורחב", en:"Extended", category:"movement" },
+  { sanskrit:"Supta", he:"שוכב, מונח", en:"Reclined, supine", category:"movement" },
+  { sanskrit:"Ardha", he:"חצי", en:"Half", category:"movement" },
+  { sanskrit:"Purna", he:"מלא, שלם", en:"Full, complete", category:"movement" },
+  { sanskrit:"Parsva", he:"צד, לצד", en:"Side, lateral", category:"movement" },
+  { sanskrit:"Prasarita", he:"רגליים רחבות, מפושק", en:"Spread out, wide-legged", category:"movement" },
+  { sanskrit:"Paschima", he:"אחורי הגוף, מערב", en:"Back of body, west", category:"movement" },
+  { sanskrit:"Purva", he:"חזית הגוף, מזרח", en:"Front of body, east", category:"movement" },
+  { sanskrit:"Upavistha", he:"ישיבה, יושב", en:"Seated", category:"movement" },
+
+  // Qualities & states
+  { sanskrit:"Sthira", he:"יציבות, חוזק, קביעות", en:"Steadiness, strength, stability", category:"quality" },
+  { sanskrit:"Sukha", he:"נוחות, קלילות, אושר", en:"Ease, comfort, happiness", category:"quality" },
+  { sanskrit:"Ahimsa", he:"לא-אלימות, חמלה", en:"Non-violence, compassion", category:"quality" },
+  { sanskrit:"Satya", he:"אמת", en:"Truth, truthfulness", category:"quality" },
+  { sanskrit:"Tapas", he:"משמעת, חום פנימי, מאמץ", en:"Discipline, inner heat, effort", category:"quality" },
+  { sanskrit:"Svadhyaya", he:"לימוד עצמי, התבוננות פנימית", en:"Self-study, inner observation", category:"quality" },
+  { sanskrit:"Ishvara Pranidhana", he:"מסירות, כניעה לגבוה", en:"Surrender to the divine", category:"quality" },
+  { sanskrit:"Dharma", he:"חובה, דרך, מטרת חיים", en:"Duty, path, life purpose", category:"quality" },
+  { sanskrit:"Karma", he:"פעולה, סיבה ותוצאה", en:"Action, cause and effect", category:"quality" },
+  { sanskrit:"Bhakti", he:"מסירות, אהבה", en:"Devotion, love", category:"quality" },
+  { sanskrit:"Moksha", he:"שחרור, חירות מסבל", en:"Liberation, freedom from suffering", category:"quality" },
+  { sanskrit:"Samadhi", he:"התמזגות, קליטה מלאה", en:"Absorption, complete integration", category:"quality" },
+  { sanskrit:"Dhyana", he:"מדיטציה, התבוננות עמוקה", en:"Meditation, deep contemplation", category:"quality" },
+  { sanskrit:"Dharana", he:"ריכוז, מיקוד", en:"Concentration, focused attention", category:"quality" },
+  { sanskrit:"Pratyahara", he:"הסגת חושים פנימה", en:"Withdrawal of senses", category:"quality" },
+
+  // Breathing & energy
+  { sanskrit:"Prana", he:"כוח חיים, אנרגיה חיונית", en:"Life force, vital energy", category:"energy" },
+  { sanskrit:"Pranayama", he:"שליטה/הרחבה של כוח החיים", en:"Breath control / expansion of life force", category:"energy" },
+  { sanskrit:"Apana", he:"אנרגיה יורדת, שחרור", en:"Downward energy, release", category:"energy" },
+  { sanskrit:"Nadi", he:"ערוץ אנרגיה בגוף", en:"Energy channel in the body", category:"energy" },
+  { sanskrit:"Ida", he:"נאדי שמאלי, ירח, נקבי", en:"Left channel, moon, feminine", category:"energy" },
+  { sanskrit:"Pingala", he:"נאדי ימני, שמש, זכרי", en:"Right channel, sun, masculine", category:"energy" },
+  { sanskrit:"Sushumna", he:"ערוץ מרכזי בעמוד השדרה", en:"Central channel along the spine", category:"energy" },
+  { sanskrit:"Kundalini", he:"אנרגיה מקופלת בבסיס עמוד השדרה", en:"Coiled energy at base of spine", category:"energy" },
+  { sanskrit:"Bandha", he:"נעילה, מנעול אנרגטי", en:"Lock, energetic seal", category:"energy" },
+  { sanskrit:"Mula Bandha", he:"מנעול שורש (רצפת אגן)", en:"Root lock (pelvic floor)", category:"energy" },
+  { sanskrit:"Uddiyana Bandha", he:"מנעול בטן (בטן תחתונה)", en:"Abdominal lock (flying up)", category:"energy" },
+  { sanskrit:"Jalandhara Bandha", he:"מנעול סנטר (גרון)", en:"Chin lock (throat)", category:"energy" },
+  { sanskrit:"Rechaka", he:"נשיפה", en:"Exhalation", category:"energy" },
+  { sanskrit:"Puraka", he:"שאיפה", en:"Inhalation", category:"energy" },
+  { sanskrit:"Kumbhaka", he:"עצירת נשימה", en:"Breath retention", category:"energy" },
+
+  // Chakras
+  { sanskrit:"Chakra", he:"גלגל, מרכז אנרגיה", en:"Wheel, energy center", category:"chakra" },
+  { sanskrit:"Muladhara", he:"צ׳אקרת שורש", en:"Root chakra", category:"chakra" },
+  { sanskrit:"Svadhisthana", he:"צ׳אקרת סקראל", en:"Sacral chakra", category:"chakra" },
+  { sanskrit:"Manipura", he:"צ׳אקרת מקלעת השמש", en:"Solar plexus chakra", category:"chakra" },
+  { sanskrit:"Anahata", he:"צ׳אקרת הלב", en:"Heart chakra", category:"chakra" },
+  { sanskrit:"Vishuddha", he:"צ׳אקרת הגרון", en:"Throat chakra", category:"chakra" },
+  { sanskrit:"Ajna", he:"צ׳אקרת העין השלישית", en:"Third eye chakra", category:"chakra" },
+  { sanskrit:"Sahasrara", he:"צ׳אקרת הכתר", en:"Crown chakra", category:"chakra" },
+
+  // Common pose names (roots)
+  { sanskrit:"Trikonasana", he:"תנוחת המשולש (tri=שלוש, kona=זווית)", en:"Triangle pose (tri=three, kona=angle)", category:"pose" },
+  { sanskrit:"Virabhadrasana", he:"תנוחת הלוחם (Virabhadra=לוחם)", en:"Warrior pose (Virabhadra=fierce warrior)", category:"pose" },
+  { sanskrit:"Tadasana", he:"תנוחת ההר (tada=הר)", en:"Mountain pose (tada=mountain)", category:"pose" },
+  { sanskrit:"Vrksasana", he:"תנוחת העץ (vrksa=עץ)", en:"Tree pose (vrksa=tree)", category:"pose" },
+  { sanskrit:"Savasana", he:"תנוחת הגופה (sava=גופה), מנוחה מלאה", en:"Corpse pose (sava=corpse), total rest", category:"pose" },
+  { sanskrit:"Balasana", he:"תנוחת הילד (bala=ילד)", en:"Child's pose (bala=child)", category:"pose" },
+  { sanskrit:"Bhujangasana", he:"תנוחת הקוברה (bhujanga=נחש)", en:"Cobra pose (bhujanga=serpent)", category:"pose" },
+  { sanskrit:"Dandasana", he:"תנוחת המקל (danda=מקל)", en:"Staff pose (danda=staff)", category:"pose" },
+  { sanskrit:"Matsyasana", he:"תנוחת הדג (matsya=דג)", en:"Fish pose (matsya=fish)", category:"pose" },
+  { sanskrit:"Garudasana", he:"תנוחת הנשר (garuda=נשר)", en:"Eagle pose (garuda=eagle)", category:"pose" },
+  { sanskrit:"Bakasana", he:"תנוחת העגור (baka=עגור)", en:"Crane pose (baka=crane)", category:"pose" },
+  { sanskrit:"Ustrasana", he:"תנוחת הגמל (ustra=גמל)", en:"Camel pose (ustra=camel)", category:"pose" },
+  { sanskrit:"Kapotasana", he:"תנוחת היונה (kapota=יונה)", en:"Pigeon pose (kapota=pigeon)", category:"pose" },
+  { sanskrit:"Gomukhasana", he:"תנוחת פני הפרה (go=פרה, mukha=פנים)", en:"Cow face pose (go=cow, mukha=face)", category:"pose" },
+  { sanskrit:"Navasana", he:"תנוחת הסירה (nava=סירה)", en:"Boat pose (nava=boat)", category:"pose" },
+  { sanskrit:"Dhanurasana", he:"תנוחת הקשת (dhanu=קשת)", en:"Bow pose (dhanu=bow)", category:"pose" },
+  { sanskrit:"Halasana", he:"תנוחת המחרשה (hala=מחרשה)", en:"Plow pose (hala=plow)", category:"pose" },
+  { sanskrit:"Sarvangasana", he:"תנוחת כל האיברים (sarva=כל, anga=איבר)", en:"Shoulder stand (sarva=all, anga=limb)", category:"pose" },
+  { sanskrit:"Sirsasana", he:"עמידת ראש (sirsa=ראש)", en:"Headstand (sirsa=head)", category:"pose" },
+  { sanskrit:"Chaturanga", he:"ארבעה איברים (chatur=ארבע, anga=איבר)", en:"Four-limbed (chatur=four, anga=limb)", category:"pose" },
+  { sanskrit:"Surya Namaskara", he:"קידה לשמש (surya=שמש, namaskara=קידה)", en:"Sun salutation (surya=sun, namaskara=bow)", category:"pose" },
+  { sanskrit:"Uttanasana", he:"קיפול קדימה עמוק (ut=עוצמה, tan=מתיחה)", en:"Intense stretch (ut=intense, tan=stretch)", category:"pose" },
+  { sanskrit:"Utkatasana", he:"תנוחת הכיסא (utkata=חזק, עז)", en:"Chair/fierce pose (utkata=fierce, powerful)", category:"pose" },
+  { sanskrit:"Padmasana", he:"תנוחת הלוטוס (padma=לוטוס)", en:"Lotus pose (padma=lotus)", category:"pose" },
+  { sanskrit:"Sukhasana", he:"תנוחת הנוחות (sukha=נוחות)", en:"Easy pose (sukha=ease)", category:"pose" },
+  { sanskrit:"Malasana", he:"תנוחת הגרלנד (mala=שרשרת)", en:"Garland pose (mala=garland)", category:"pose" },
+
+  // Philosophy & concepts
+  { sanskrit:"Sutra", he:"חוט, פסוק מרוכז", en:"Thread, concise verse", category:"philosophy" },
+  { sanskrit:"Citta", he:"תודעה, שדה המודעות", en:"Consciousness, mind-field", category:"philosophy" },
+  { sanskrit:"Vrtti", he:"תנודות, גלי מחשבה", en:"Fluctuations, thought waves", category:"philosophy" },
+  { sanskrit:"Nirodha", he:"עצירה, ריסון", en:"Cessation, restraint", category:"philosophy" },
+  { sanskrit:"Klesha", he:"סבל, מכשול נפשי", en:"Affliction, mental obstacle", category:"philosophy" },
+  { sanskrit:"Avidya", he:"אי-ידיעה, בורות", en:"Ignorance, not-seeing", category:"philosophy" },
+  { sanskrit:"Asmita", he:"אגו, זהות עצמית מוגזמת", en:"Ego, over-identification with self", category:"philosophy" },
+  { sanskrit:"Raga", he:"היקשרות, תשוקה", en:"Attachment, desire", category:"philosophy" },
+  { sanskrit:"Dvesha", he:"דחייה, שנאה", en:"Aversion, hatred", category:"philosophy" },
+  { sanskrit:"Abhinivesha", he:"פחד מוות, היאחזות בחיים", en:"Fear of death, clinging to life", category:"philosophy" },
+  { sanskrit:"Samsara", he:"גלגל הלידה והמוות", en:"Cycle of birth and death", category:"philosophy" },
+  { sanskrit:"Nirvana", he:"כיבוי הסבל, שחרור", en:"Extinction of suffering, liberation", category:"philosophy" },
+  { sanskrit:"Duhkha", he:"סבל, חוסר נוחות", en:"Suffering, dis-ease", category:"philosophy" },
+  { sanskrit:"Abhyasa", he:"תרגול מתמיד", en:"Persistent practice", category:"philosophy" },
+  { sanskrit:"Vairagya", he:"אי-היקשרות, שחרור", en:"Non-attachment, detachment", category:"philosophy" },
+  { sanskrit:"Viveka", he:"הבחנה, אבחנה", en:"Discernment, discrimination", category:"philosophy" },
+  { sanskrit:"Sattva", he:"גונה של אור, טוהר, איזון", en:"Quality of light, purity, balance", category:"philosophy" },
+  { sanskrit:"Rajas", he:"גונה של פעילות, תנועה, אי-שקט", en:"Quality of activity, movement, restlessness", category:"philosophy" },
+  { sanskrit:"Tamas", he:"גונה של אינרציה, כבדות, חושך", en:"Quality of inertia, heaviness, darkness", category:"philosophy" },
+  { sanskrit:"Guna", he:"תכונה, איכות של הטבע", en:"Quality, attribute of nature", category:"philosophy" },
+  { sanskrit:"Kosha", he:"נדן, שכבה של הקיום", en:"Sheath, layer of existence", category:"philosophy" },
+];
+
+const DICT_CATEGORIES = {
+  foundation: { he:"יסודות", en:"Foundations", color:C.dark, icon:"book-open" },
+  body: { he:"חלקי גוף", en:"Body Parts", color:"#C06030", icon:"bone" },
+  movement: { he:"כיוונים ותנועות", en:"Directions & Movements", color:"#4A8A6D", icon:"move" },
+  quality: { he:"תכונות ומצבים", en:"Qualities & States", color:"#8B6CC1", icon:"heart" },
+  energy: { he:"נשימה ואנרגיה", en:"Breathing & Energy", color:"#D0A020", icon:"wind" },
+  chakra: { he:"צ׳אקרות", en:"Chakras", color:"#E06020", icon:"rainbow" },
+  pose: { he:"שמות תנוחות", en:"Pose Names", color:"#4A6FA5", icon:"user" },
+  philosophy: { he:"פילוסופיה ומושגים", en:"Philosophy & Concepts", color:"#5B7D6E", icon:"scroll-text" },
+};
+
 const levelColor = { "בסיס":C.accent, "מתחילות":C.teacher, "בינוניים":C.gold, "מתקדמים":C.warn, "Foundation":C.accent, "Beginner":C.teacher, "Intermediate":C.gold, "Advanced":C.warn };
 
 // PoseImage component removed
@@ -1144,6 +1295,9 @@ function YogaShoshan() {
   const [expandedSutra, setExpandedSutra] = useState(null);
   const [showInjuries, setShowInjuries] = useState(false);
   const [expandedInjury, setExpandedInjury] = useState(null);
+  const [showDictionary, setShowDictionary] = useState(false);
+  const [dictSearch, setDictSearch] = useState("");
+  const [dictCategory, setDictCategory] = useState("all");
   const [showSequencer, setShowSequencer] = useState(false);
   const [search, setSearch] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -1263,9 +1417,16 @@ function YogaShoshan() {
       });
     });
 
+    // Search Sanskrit dictionary
+    SANSKRIT_DICT.forEach(d => {
+      if (match(d.sanskrit) || match(d.he) || match(d.en)) {
+        results.push({ type:"dict", icon:"languages", cat:langKey==="he"?"מילון סנסקריט":"Sanskrit Dictionary", title:d.sanskrit, sub:langKey==="he"?d.he:d.en, action:() => { setView("dictionary"); setShowDictionary(true); setShowChakras(false); setShowPranayama(false); setShowAnatomy(false); setShowEthics(false); setShowSutras(false); setShowInjuries(false); setDictSearch(d.sanskrit); setCmdkOpen(false); } });
+      }
+    });
+
     // Deduplicate by title
     const seen = new Set();
-    return results.filter(r => { const k = r.type+r.title; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 20);
+    return results.filter(r => { const k = r.type+r.title; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 25);
   }, [cmdkQuery, lang]);
 
   const ui = UI[lang];
@@ -1303,12 +1464,15 @@ function YogaShoshan() {
         const navItems = [
           { id:"guide", licn:"book-open", he:"מדריך תנוחות", en:"Pose Guide" },
           { id:"builder", licn:"calendar", he:"בניית שיעור", en:"Build Class" },
+          "sep",
           { id:"chakras", licn:"rainbow", he:"צ\u05f3אקרות", en:"Chakras" },
           { id:"pranayama", licn:"wind", he:"פרנאיאמה", en:"Pranayama" },
           { id:"anatomy", licn:"bone", he:"אנטומיה", en:"Anatomy" },
+          "sep",
           { id:"ethics", licn:"heart-handshake", he:"אתיקת מגע", en:"Touch Ethics" },
           { id:"sutras", licn:"scroll-text", he:"יוגה סוטרה", en:"Yoga Sutras" },
           { id:"injuries", licn:"shield-plus", he:"פציעות והתאמות", en:"Injuries & Modifications" },
+          { id:"dictionary", licn:"languages", he:"מילון סנסקריט", en:"Sanskrit Dictionary" },
         ];
         return (<>
       <header style={{ background:C.paper, padding:"8px 16px", display:"flex", alignItems:"center", gap:"10px", borderBottom:`1px solid ${C.border}`, position:"sticky", top:0, zIndex:50 }}>
@@ -1337,8 +1501,10 @@ function YogaShoshan() {
       </header>
       <nav style={{ background:C.paper, borderBottom:`1px solid ${C.border}`, padding:"0", display:"flex", overflowX:"auto", position:"sticky", top:"52px", zIndex:49, WebkitOverflowScrolling:"touch", scrollbarWidth:"none" }}>
         <div style={{ display:"flex", margin:"0 auto", maxWidth:"700px", width:"100%" }}>
-        {navItems.map(n => (
-          <button key={n.id} onClick={() => { setView(n.id); setShowChakras(n.id==="chakras"); setShowPranayama(n.id==="pranayama"); setShowAnatomy(n.id==="anatomy"); setShowEthics(n.id==="ethics"); setShowSutras(n.id==="sutras"); setShowInjuries(n.id==="injuries"); }}
+        {navItems.map((n, idx) => n === "sep" ? (
+          <div key={"sep"+idx} style={{ width:"1px", background:`${C.dark}15`, margin:"8px 0", flexShrink:0 }}/>
+        ) : (
+          <button key={n.id} onClick={() => { setView(n.id); setShowChakras(n.id==="chakras"); setShowPranayama(n.id==="pranayama"); setShowAnatomy(n.id==="anatomy"); setShowEthics(n.id==="ethics"); setShowSutras(n.id==="sutras"); setShowInjuries(n.id==="injuries"); setShowDictionary(n.id==="dictionary"); }}
             style={{ flex:1, padding:"10px 6px", border:"none", background:view===n.id?`${C.dark}08`:"transparent", cursor:"pointer", fontFamily:F, fontSize:"12px", fontWeight:view===n.id?"700":"400", color:view===n.id?C.dark:C.muted, borderBottom:view===n.id?`2.5px solid ${C.dark}`:"2.5px solid transparent", display:"flex", flexDirection:"column", alignItems:"center", gap:"4px", whiteSpace:"nowrap", transition:"all 0.15s", minWidth:0 }}>
             {LI(n.licn, 16)}
             <span>{isHe ? n.he : n.en}</span>
@@ -2219,6 +2385,86 @@ function YogaShoshan() {
           </div>
         </div>
       )}
+
+      {/* ====== SANSKRIT DICTIONARY ====== */}
+      {(showDictionary || view==="dictionary") && (() => {
+        const filteredDict = SANSKRIT_DICT.filter(d => {
+          const matchCat = dictCategory === "all" || d.category === dictCategory;
+          if (!dictSearch) return matchCat;
+          const q = dictSearch.toLowerCase();
+          return matchCat && (d.sanskrit.toLowerCase().includes(q) || d.he.includes(q) || d.en.toLowerCase().includes(q));
+        });
+        const grouped = {};
+        filteredDict.forEach(d => { if (!grouped[d.category]) grouped[d.category] = []; grouped[d.category].push(d); });
+        return (
+        <div className="page-enter" style={{ flex:1, overflowY:"auto", padding:"30px 20px 60px", background:C.bg }}>
+          <div style={{ maxWidth:"720px", margin:"0 auto", direction:dir }}>
+            <div style={{ marginBottom:"24px" }}>
+              <h2 style={{ fontFamily:F, fontSize:"22px", fontWeight:"900", color:C.dark, margin:"0 0 6px" }}>{isHe ? "מילון סנסקריט" : "Sanskrit Dictionary"}</h2>
+              <p style={{ fontSize:"13px", color:C.muted, lineHeight:"1.6" }}>{isHe ? `${SANSKRIT_DICT.length} מונחים מהעולם היוגי — יסודות, תנוחות, אנטומיה, נשימה, פילוסופיה ועוד` : `${SANSKRIT_DICT.length} terms from the yoga world — foundations, poses, anatomy, breath, philosophy and more`}</p>
+            </div>
+
+            {/* Search + filter */}
+            <div style={{ display:"flex", gap:"10px", marginBottom:"20px", flexWrap:"wrap" }}>
+              <div style={{ position:"relative", flex:"1 1 200px" }}>
+                <input value={dictSearch} onChange={e => setDictSearch(e.target.value)}
+                  placeholder={isHe ? "חיפוש מונח..." : "Search term..."}
+                  style={{ width:"100%", padding:"10px 14px", paddingRight:isHe?"36px":"14px", paddingLeft:isHe?"14px":"36px", borderRadius:"10px", border:`1px solid ${C.border}`, background:C.paper, fontFamily:F, fontSize:"14px", color:C.dark, outline:"none", direction:isHe?"rtl":"ltr" }} />
+                <div style={{ position:"absolute", top:"50%", [isHe?"right":"left"]:"12px", transform:"translateY(-50%)", color:C.muted, pointerEvents:"none" }}>{LI("search",16)}</div>
+              </div>
+            </div>
+
+            {/* Category pills */}
+            <div style={{ display:"flex", gap:"6px", marginBottom:"24px", flexWrap:"wrap" }}>
+              <button onClick={() => setDictCategory("all")}
+                style={{ padding:"6px 14px", borderRadius:"20px", border:`1px solid ${dictCategory==="all"?C.dark:C.border}`, background:dictCategory==="all"?C.dark:"transparent", color:dictCategory==="all"?"#FFF":C.muted, fontFamily:F, fontSize:"12px", fontWeight:dictCategory==="all"?"700":"500", cursor:"pointer" }}>
+                {isHe?"הכל":"All"}
+              </button>
+              {Object.entries(DICT_CATEGORIES).map(([key, cat]) => (
+                <button key={key} onClick={() => setDictCategory(key)}
+                  style={{ padding:"6px 14px", borderRadius:"20px", border:`1px solid ${dictCategory===key?cat.color:C.border}`, background:dictCategory===key?cat.color+"15":"transparent", color:dictCategory===key?cat.color:C.muted, fontFamily:F, fontSize:"12px", fontWeight:dictCategory===key?"700":"500", cursor:"pointer", display:"flex", alignItems:"center", gap:"4px" }}>
+                  {LI(cat.icon, 12)}
+                  {isHe?cat.he:cat.en}
+                </button>
+              ))}
+            </div>
+
+            {/* Results */}
+            {Object.entries(grouped).length === 0 ? (
+              <div style={{ textAlign:"center", padding:"40px 20px", color:C.muted }}>
+                {LI("search", 24)}
+                <div style={{ marginTop:"8px", fontSize:"14px" }}>{isHe ? "לא נמצאו תוצאות" : "No results found"}</div>
+              </div>
+            ) : Object.entries(grouped).map(([catKey, items]) => {
+              const cat = DICT_CATEGORIES[catKey];
+              return (
+              <div key={catKey} style={{ marginBottom:"28px" }}>
+                <div style={{ display:"flex", alignItems:"center", gap:"8px", marginBottom:"12px", paddingBottom:"8px", borderBottom:`2px solid ${cat.color}30` }}>
+                  <div style={{ width:"28px", height:"28px", borderRadius:"8px", background:cat.color+"18", display:"flex", alignItems:"center", justifyContent:"center" }}>{LI(cat.icon, 14)}</div>
+                  <h3 style={{ fontFamily:F, fontSize:"16px", fontWeight:"800", color:cat.color, margin:0 }}>{isHe?cat.he:cat.en}</h3>
+                  <span style={{ fontSize:"11px", color:C.muted }}>({items.length})</span>
+                </div>
+                <div style={{ display:"grid", gap:"8px" }}>
+                  {items.map((d, i) => (
+                    <div key={i} style={{ background:C.paper, borderRadius:"10px", padding:"14px 16px", border:`1px solid ${C.border}`, display:"flex", alignItems:"flex-start", gap:"14px", transition:"box-shadow 0.15s" }}
+                      onMouseEnter={e => e.currentTarget.style.boxShadow="0 2px 12px rgba(0,0,0,0.06)"}
+                      onMouseLeave={e => e.currentTarget.style.boxShadow="none"}>
+                      <div style={{ flexShrink:0, minWidth:"130px" }}>
+                        <div style={{ fontFamily:"'Georgia', serif", fontSize:"16px", fontWeight:"700", color:cat.color, fontStyle:"italic" }}>{d.sanskrit}</div>
+                      </div>
+                      <div style={{ flex:1 }}>
+                        <div style={{ fontSize:"14px", fontWeight:"600", color:C.dark, lineHeight:"1.5" }}>{isHe ? d.he : d.en}</div>
+                        <div style={{ fontSize:"11px", color:C.muted, marginTop:"2px" }}>{isHe ? d.en : d.he}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );})}
+          </div>
+        </div>
+        );
+      })()}
 
       {/* ====== CMD+K SEARCH PALETTE ====== */}
       {cmdkOpen && (
