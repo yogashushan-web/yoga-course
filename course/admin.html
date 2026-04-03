@@ -135,6 +135,7 @@ table th:nth-child(5), table td:nth-child(5){display:none} /* מה אהבתי */
     <h2>התחלה מדויקת 🧘‍♀️</h2>
     <button id="btn-dashboard" class="active" onclick="showView('dashboard')">📊 דשבורד</button>
     <button id="btn-students" onclick="showView('students')">👥 תלמידות</button>
+    <button id="btn-subscribers" onclick="showView('subscribers')">💳 מנויות</button>
     <button id="btn-codes" onclick="showView('codes')">🏷️ קודי הנחה</button>
     <button id="btn-feedback" onclick="showView('feedback')">💬 פידבקים</button>
     <hr style="border:none;border-top:1px solid rgba(255,255,255,.2);margin:20px 0">
@@ -225,6 +226,35 @@ table th:nth-child(5), table td:nth-child(5){display:none} /* מה אהבתי */
           </div>
         </div>
         <div id="codesTable" class="loader">טוען...</div>
+      </div>
+    </div>
+
+    <!-- Subscribers View -->
+    <div id="subscribersView" style="display:none">
+      <div class="section">
+        <div class="section-header">
+          <h3>💳 מנויות חודשיות — מדריך אסאנות</h3>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn primary" onclick="loadSubscribers()">🔄 רענן</button>
+          </div>
+        </div>
+
+        <div class="card-grid" style="margin-bottom:20px">
+          <div class="card">
+            <h4>מנויות פעילות</h4>
+            <div class="value" id="kpiActiveSubs">0</div>
+          </div>
+          <div class="card">
+            <h4>הכנסה חודשית ממנויות</h4>
+            <div class="value" id="kpiSubRevenue">₪0</div>
+          </div>
+          <div class="card">
+            <h4>סה״כ מנויות (כולל מבוטלות)</h4>
+            <div class="value" id="kpiTotalSubs">0</div>
+          </div>
+        </div>
+
+        <div id="subscribersTable" class="loader">טוען...</div>
       </div>
     </div>
 
@@ -352,6 +382,7 @@ const {createClient}=supabase;
 const db=createClient(SUPABASE_URL,SUPABASE_KEY);
 
 let students=[];
+let subscribers=[];
 let feedbacks=[];
 let codes=[];
 let currentEditId=null;
@@ -385,7 +416,7 @@ location.reload();
 
 /* VIEW SWITCH */
 function showView(view){
-["dashboard","students","codes","feedback"].forEach(v=>{
+["dashboard","students","subscribers","codes","feedback"].forEach(v=>{
 document.getElementById(v+"View").style.display=(v===view)?"block":"none";
 document.getElementById("btn-"+v).classList.toggle("active",v===view);
 });
@@ -404,6 +435,7 @@ updateDate();
 setInterval(updateDate,60000);
 await loadDeviceCounts();
 await loadStudents();
+await loadSubscribers();
 await loadCodes();
 await loadFeedback();
 calculateKPIs();
@@ -624,6 +656,71 @@ alert('✅ מייל נשלח בהצלחה ל-' + cleanEmail);
 console.error('Email error:', error);
 alert('❌ שגיאה: ' + error.text);
 }
+}
+
+/* SUBSCRIBERS */
+async function loadSubscribers(){
+const {data}=await db.from("asana_subscribers").select("*").order("created_at",{ascending:false});
+subscribers=data||[];
+renderSubscribers();
+}
+
+function renderSubscribers(){
+const activeSubs=subscribers.filter(s=>s.status==='active');
+document.getElementById("kpiActiveSubs").textContent=activeSubs.length;
+document.getElementById("kpiSubRevenue").textContent="₪"+(activeSubs.length*20);
+document.getElementById("kpiTotalSubs").textContent=subscribers.length;
+
+if(subscribers.length===0){
+document.getElementById("subscribersTable").innerHTML="<div class='loader'>אין מנויות</div>";
+return;
+}
+
+const rows=subscribers.map(s=>{
+const isActive=s.status==='active';
+return `
+<tr>
+<td><strong>${s.name||'לא צוין'}</strong></td>
+<td>${s.email}</td>
+<td><code>${s.password||'—'}</code></td>
+<td><span style="padding:4px 10px;border-radius:20px;font-size:12px;font-weight:700;background:${isActive?'#d4edda':'#f8d7da'};color:${isActive?'#155724':'#e74c3c'}">${isActive?'פעיל':'מבוטל'}</span></td>
+<td>₪${s.price||20}/חודש</td>
+<td>${new Date(s.created_at).toLocaleDateString('he-IL')}</td>
+<td>${s.last_login?new Date(s.last_login).toLocaleDateString('he-IL'):'—'}</td>
+<td>
+<div style="display:flex;gap:5px">
+<button class="btn btn-sm ${isActive?'danger':'success'}" onclick="toggleSubscriber('${s.email}','${s.status}')">${isActive?'השהה':'הפעל'}</button>
+<button class="btn btn-sm danger" onclick="deleteSubscriber('${s.email}')">🗑️</button>
+</div>
+</td>
+</tr>`;
+}).join("");
+
+document.getElementById("subscribersTable").innerHTML=`
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>שם</th><th>מייל</th><th>סיסמה</th><th>סטטוס</th><th>מחיר</th><th>תאריך הצטרפות</th><th>כניסה אחרונה</th><th>פעולות</th>
+</tr>
+</thead>
+<tbody>${rows}</tbody>
+</table>
+</div>`;
+}
+
+async function toggleSubscriber(email,status){
+const newStatus=status==='active'?'inactive':'active';
+const {error}=await db.from("asana_subscribers").update({status:newStatus,updated_at:new Date().toISOString()}).eq('email',email);
+if(error)alert('שגיאה: '+error.message);
+else loadSubscribers();
+}
+
+async function deleteSubscriber(email){
+if(!confirm(`למחוק את ${email}?`))return;
+const {error}=await db.from("asana_subscribers").delete().eq('email',email);
+if(error)alert('שגיאה: '+error.message);
+else{alert('נמחק');loadSubscribers();}
 }
 
 /* CODES */
