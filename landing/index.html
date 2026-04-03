@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "w3qn6puywy");
+    </script>
+
     <!-- Primary Meta Tags -->
     <title>קורס התחלה מדויקת למורות יוגה | שרון שושן</title>
     <meta name="title" content="קורס התחלה מדויקת למורות יוגה | שרון שושן">
@@ -18,19 +27,22 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://landingpageyogac.netlify.app/">
-    <meta property="og:title" content="קורס התחלה מדויקת למורות יוגה | שרון שושן">
-    <meta property="og:description" content="קורס השתלמות למורות ומורי יוגה בתחילת הדרך. לומדים לבנות זהות מקצועית, לקרוא קבוצה, ולהתנהל כמורה בביטחון.">
-    <meta property="og:image" content="https://landingpageyogac.netlify.app/yoga-outdoor-1.jpg">
+    <meta property="og:title" content="קורס התחלה מדויקת | שרון שושן - קורס למורות יוגה מתחילות">
+    <meta property="og:description" content="סיימת הכשרת מורי יוגה ולא יודעת מאיפה להתחיל? קורס דיגיטלי עם 5 שיעורים מוקלטים, דפי עבודה, קבוצת ליווי ומדריכי אסנות. הצטרפי עכשיו!">
+    <meta property="og:image" content="https://landingpageyogac.netlify.app/sharon-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="שרון שושן - קורס התחלה מדויקת למורות יוגה">
     <meta property="og:locale" content="he_IL">
-    <meta property="og:site_name" content="התחלה מדויקת">
-    
+    <meta property="og:site_name" content="Yoga Shushan | שרון שושן">
+
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://landingpageyogac.netlify.app/">
-    <meta property="twitter:title" content="קורס התחלה מדויקת למורות יוגה">
-    <meta property="twitter:description" content="קורס השתלמות למורות ומורי יוגה בתחילת הדרך">
-    <meta property="twitter:image" content="https://landingpageyogac.netlify.app/yoga-outdoor-1.jpg">
-    
+    <meta property="twitter:title" content="קורס התחלה מדויקת | למורות יוגה מתחילות">
+    <meta property="twitter:description" content="סיימת הכשרת מורי יוגה ולא יודעת מאיפה להתחיל? 5 שיעורים, דפי עבודה, קבוצת ליווי ומדריכי אסנות">
+    <meta property="twitter:image" content="https://landingpageyogac.netlify.app/sharon-image.jpg">
+
     <!-- Canonical URL -->
     <link rel="canonical" href="https://landingpageyogac.netlify.app/">
     
@@ -56,11 +68,16 @@
     
     <style>
         :root {
-            --primary: #1F3D34;
-            --primary-light: #F4EFE6;
-            --accent: #F4EBD7;
-            --text: #6F6F6F;
-            --dark: #1F3D34;
+            --primary: #3D3228;
+            --primary-light: #FAF8F4;
+            --accent: #F5F0E8;
+            --text: #6B5E52;
+            --dark: #3D3228;
+            --terracotta: #C4846C;
+            --terracotta-dark: #A96B54;
+            --sand: #F5F0E8;
+            --sand-dark: #E8DFD0;
+            --cream: #FFFDF9;
         }
 
         * {
@@ -75,7 +92,7 @@
         
         body {
             font-family: 'Heebo', sans-serif;
-            background: #FFFFFF;
+            background: var(--cream);
             color: var(--text);
             line-height: 1.7;
             padding-bottom: 100px;
@@ -144,35 +161,35 @@
         ======================================== */
 
         header {
-            background: rgba(255, 255, 255, 0.98);
+            background: var(--cream);
             padding: 20px;
             position: sticky;
             top: 0;
             z-index: 1000;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-bottom: 1px solid var(--sand-dark);
         }
 
         .logo {
             max-width: 1200px;
             margin: 0 auto;
             font-size: 22px;
-            font-weight: 700;
-            color: var(--primary);
+            font-weight: 300;
+            color: var(--dark);
             text-align: center;
+            letter-spacing: 2px;
         }
 
         .hero {
-            background: linear-gradient(rgba(31,61,52,0.72), rgba(21,40,31,0.82)),
+            background: linear-gradient(rgba(61,50,40,0.72), rgba(61,50,40,0.82)),
                         url('hero-bg.jpg') center center / cover no-repeat;
-            padding: 35px 20px 30px;
+            padding: 55px 20px 50px;
             text-align: center;
             color: white;
         }
 
         .hero h1 { color: white !important; }
         .hero .subtitle { color: rgba(255,255,255,0.9) !important; }
-        .hero .hero-badge { background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.4); }
+        .hero .hero-badge { background: rgba(196,132,108,0.2); color: white; border: 1px solid rgba(196,132,108,0.5); }
 
         .hero-badge {
             display: inline-block;
@@ -198,7 +215,7 @@
         }
 
         .benefits-section-green {
-            background: #E8F5E9;
+            background: var(--accent);
             padding: 30px 20px;
             border-radius: 20px;
             margin: 40px auto;
@@ -210,13 +227,15 @@
         }
 
         .problem-box {
-            background: var(--primary-light);
-            padding: 30px;
+            background: white;
+            padding: 36px;
             border-radius: 20px;
             margin: 25px auto;
-            border-right: 5px solid var(--primary);
+            border-right: 3px solid var(--terracotta);
             max-width: 600px;
             text-align: center;
+            border: 1px solid var(--sand-dark);
+            border-right: 3px solid var(--terracotta);
         }
 
         .problem-box p:last-child {
@@ -225,9 +244,9 @@
 
         /* סקשנים כהים */
         .dark-section {
-            background: linear-gradient(135deg, var(--primary) 0%, #15281f 100%);
+            background: var(--dark);
             color: white;
-            padding: 30px 20px;
+            padding: 50px 20px;
             margin: 40px 0;
             text-align: center;
         }
@@ -272,8 +291,8 @@
 
         /* סקשן Curriculum */
         .curriculum-section {
-            background: var(--primary);
-            padding: 35px 20px;
+            background: var(--dark);
+            padding: 60px 20px;
             margin: 60px 0;
             text-align: center;
         }
@@ -326,11 +345,14 @@
         .benefit-card {
             background: white;
             padding: 35px 25px;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-            border-top: 4px solid var(--primary);
+            border-radius: 16px;
+            border: 1px solid var(--sand-dark);
             text-align: center;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            box-shadow: 0 10px 30px rgba(61,50,40,0.08);
         }
 
         .benefit-card:hover {
@@ -382,9 +404,9 @@
         }
 
         .pricing-section {
-            background: linear-gradient(135deg, #15281f 0%, var(--primary) 100%);
-            color: white;
-            padding: 45px 20px;
+            background: linear-gradient(170deg, var(--sand) 0%, var(--primary-light) 100%);
+            color: var(--dark);
+            padding: 60px 20px;
             margin: 80px 0 0;
             text-align: center;
         }
@@ -447,24 +469,26 @@
         }
 
         .cta-button {
-            background: var(--primary);
+            background: var(--terracotta);
             color: white;
-            padding: 22px 60px;
+            padding: 18px 48px;
             border: none;
-            font-size: 22px;
-            font-weight: 700;
+            font-size: 18px;
+            font-weight: 500;
             cursor: pointer;
             display: inline-block;
             text-decoration: none;
             margin: 20px 0;
             border-radius: 50px;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(31, 61, 52, 0.3);
+            box-shadow: 0 8px 30px rgba(196,132,108,0.3);
+            font-family: 'Heebo', sans-serif;
         }
 
         .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(31, 61, 52, 0.5);
+            background: var(--terracotta-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 36px rgba(196,132,108,0.4);
         }
 
         .about-section {
@@ -483,11 +507,11 @@
         }
 
         .about-image {
-            width: 200px;
-            height: 300px;
-            border-radius: 15px;
+            width: 180px;
+            height: 260px;
+            border-radius: 100px;
             overflow: hidden;
-            border: 5px solid var(--primary);
+            border: 3px solid var(--sand-dark);
             margin: 0 auto;
         }
 
@@ -514,11 +538,12 @@
         }
 
         .whats-included {
-            background: var(--accent);
-            padding: 30px 25px;
+            background: white;
+            padding: 40px 30px;
             border-radius: 20px;
-            margin: 20px 0;
-            border-right: 5px solid var(--primary); text-align: center;
+            margin: 40px 0;
+            border: 1px solid var(--sand-dark);
+            text-align: center;
         }
 
         .whats-included h2 {
@@ -604,24 +629,26 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: var(--primary);
-            padding: 20px;
+            background: rgba(61,50,40,0.95);
+            backdrop-filter: blur(10px);
+            padding: 16px 20px;
             text-align: center;
             z-index: 999;
-            box-shadow: 0 -5px 30px rgba(31, 61, 52, 0.3);
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
 
         .sticky-cta .cta-button {
             margin: 0;
-            background: white;
-            color: var(--primary);
+            padding: 14px 36px;
+            font-size: 15px;
         }
 
         footer {
-            background: var(--dark);
-            color: white;
-            padding: 18px 20px;
+            background: var(--accent);
+            color: var(--text);
+            padding: 28px 20px;
             text-align: center;
+            border-top: 1px solid var(--sand-dark);
         }
 
         @media (max-width: 768px) {
@@ -664,8 +691,8 @@
 
         /* ========== LEAD FORM ========== */
         .lead-section {
-            background: var(--primary);
-            padding: 35px 20px;
+            background: var(--dark);
+            padding: 50px 20px;
             text-align: center;
         }
         .lead-section h2 {
@@ -1139,14 +1166,18 @@
         btn.disabled = true;
         btn.textContent = 'שולח...';
 
-        const { error } = await db.from('leads').insert({ name, phone, email });
+        // If lead has email, start at stage 1 (welcome email will be sent)
+        const leadData = { name, phone, email };
+        if (email) leadData.email_stage = 1;
+
+        const { error } = await db.from('leads').insert(leadData);
 
         if (error) {
             alert('משהו השתבש, נסי שוב');
             btn.disabled = false;
             btn.textContent = '← שלחי לי פרטים ואני מדברת איתך בקרוב';
         } else {
-            // שליחת התראה במייל
+            // שליחת התראה לשרון + מייל ברוכה הבאה ללידה
             fetch('/.netlify/functions/notify-lead', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -1159,6 +1190,47 @@
     }
     </script>
 
+
+<!-- Passover Popup -->
+<div id="pesachPopup" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(61,50,40,0.6); backdrop-filter:blur(4px); z-index:10000; display:none; align-items:center; justify-content:center;">
+    <div style="background:#FFFDF9; border-radius:20px; padding:48px 36px; max-width:440px; width:90%; text-align:center; position:relative; border:1px solid #E8DFD0; box-shadow:0 20px 60px rgba(61,50,40,0.25); animation:popIn 0.4s ease;">
+        <button onclick="closePesachPopup()" style="position:absolute; top:16px; left:16px; background:none; border:none; font-size:24px; color:#9B8E82; cursor:pointer; line-height:1;">&times;</button>
+        <div style="font-size:40px; margin-bottom:16px;">🕊️</div>
+        <h2 style="font-family:'Heebo',sans-serif; font-size:28px; font-weight:700; color:#3D3228; margin-bottom:8px;">חג פסח שמח!</h2>
+        <p style="font-size:16px; color:#6B5E52; margin-bottom:20px; font-weight:300;">לכבוד החג, קבלי <strong style="color:#C4846C; font-size:22px;">20% הנחה</strong> על הקורס</p>
+        <div style="background:#FAF8F4; border:2px dashed #C4846C; border-radius:14px; padding:18px; margin-bottom:20px;">
+            <p style="font-size:13px; color:#9B8E82; margin-bottom:6px;">הקוד שלך:</p>
+            <p style="font-size:32px; font-weight:700; color:#C4846C; letter-spacing:3px; margin:0;">YOGA20</p>
+        </div>
+        <p style="font-size:13px; color:#9B8E82; margin-bottom:24px;">המבצע בתוקף עד ה-8 באפריל</p>
+        <a href="https://checkoutyogac.netlify.app" style="display:inline-block; background:#C4846C; color:white; padding:16px 40px; border-radius:50px; text-decoration:none; font-size:16px; font-weight:500; font-family:'Heebo',sans-serif; transition:all 0.3s;" onmouseover="this.style.background='#A96B54'" onmouseout="this.style.background='#C4846C'">לרכישה עם הנחה</a>
+    </div>
+</div>
+
+<style>
+@keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+</style>
+
+<script>
+function closePesachPopup() {
+    document.getElementById('pesachPopup').style.display = 'none';
+    sessionStorage.setItem('pesachPopupClosed', 'true');
+}
+
+// Show popup after 3 seconds, only if not already closed and before April 8
+(function() {
+    const now = new Date();
+    const expiry = new Date('2026-04-08T23:59:59');
+    if (now < expiry && !sessionStorage.getItem('pesachPopupClosed')) {
+        setTimeout(function() {
+            document.getElementById('pesachPopup').style.display = 'flex';
+        }, 3000);
+    }
+})();
+</script>
 
 </body>
 </html>

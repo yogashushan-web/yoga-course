@@ -1,0 +1,9 @@
+[build]
+  publish = "."
+
+[functions]
+  node_bundler = "esbuild"
+
+# Run follow-up emails every day at 6:00 UTC (9:00 Israel time)
+[functions."send-followups"]
+  schedule = "0 6 * * *"
