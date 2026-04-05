@@ -715,12 +715,11 @@ if(!email){alert('אין מייל!');return}
 if(!password){alert('אין סיסמה לשליחה');return}
 const cleanEmail=email.trim().toLowerCase();
 try{
-await emailjs.send('yoga_service','template_o3kxtq3',{
+await emailjs.send('yoga_service','template_g9kf8xa',{
 to_email:cleanEmail,
 to_name:name||'מנויה',
-password:password,
-user_email:cleanEmail,
-course_link:'https://asanaguides.netlify.app'
+user_password:password,
+user_email:cleanEmail
 });
 alert('✅ מייל נשלח בהצלחה ל-'+cleanEmail);
 }catch(error){
