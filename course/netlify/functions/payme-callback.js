@@ -23,9 +23,11 @@ async function sendEmail(name, email, password) {
         service_id: EMAILJS_SERVICE_ID,
         template_id: EMAILJS_TEMPLATE_ID,
         user_id: EMAILJS_PUBLIC_KEY,
+        accessToken: 'whdrm0tpmW_JfEc6GVuvZ',
         template_params: {
-            name: name,
-            email: email,
+            to_email: email,
+            to_name: name,
+            user_email: email,
             password: password,
             course_url: 'https://coursepageyogac.netlify.app',
             whatsapp_url: 'https://chat.whatsapp.com/BiN8sg5oTjo4DAjNCAMMaI'
