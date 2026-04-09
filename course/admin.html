@@ -502,9 +502,9 @@ return `
 <td><span style="padding:4px 10px;border-radius:20px;font-size:13px;font-weight:700;background:${devBg};color:${devColor}">${devText}</span></td>
 <td>
 <div style="display:flex;gap:5px">
-<button class="btn btn-sm primary" onclick="openEditModal('${s.id}','${s.name||''}','${s.email}','${s.password}',${s.price_paid||220},'${s.source||'other'}')">✏️</button>
-<button class="btn btn-sm info" onclick="sendEmail('${s.email}','${s.name||'תלמידה'}','${s.password}')">📧</button>
-<button class="btn btn-sm danger" onclick="deleteStudent('${s.id}','${s.email}')">🗑️</button>
+<button class="btn btn-sm primary" onclick="openEditModal(\`${s.id}\`,\`${(s.name||'').replace(/`/g,'')}\`,\`${s.email}\`,\`${s.password}\`,${s.price_paid||220},\`${s.source||'other'}\`)">✏️</button>
+<button class="btn btn-sm info" onclick="sendEmail(\`${s.email}\`,\`${(s.name||'תלמידה').replace(/`/g,'')}\`,\`${s.password}\`)">📧</button>
+<button class="btn btn-sm danger" onclick="deleteStudent(\`${s.id}\`,\`${s.email}\`)">🗑️</button>
 </div>
 </td>
 </tr>`;
@@ -561,6 +561,7 @@ source:source
 if(error)alert('שגיאה: '+error.message);
 else{
 alert(`תלמידה נוספה!\nסיסמה: ${password}`);
+await sendEmail(email, name, password);
 closeAddStudent();
 document.getElementById("newName").value='';
 document.getElementById("newEmail").value='';
@@ -634,13 +635,13 @@ alert('אין מייל!');
 return;
 }
 
-// Remove spaces and special characters
-const cleanEmail = email.trim().toLowerCase();
+// Remove spaces, invisible characters, and special unicode
+const cleanEmail = email.replace(/[^\x20-\x7E]/g, '').trim().toLowerCase();
 
 // Validate email format
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 if (!emailRegex.test(cleanEmail)) {
-alert('כתובת מייל לא תקינה: ' + email);
+alert('כתובת מייל לא תקינה: ' + cleanEmail);
 return;
 }
 
