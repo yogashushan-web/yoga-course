@@ -485,7 +485,8 @@ return;
 
 const sourceLabels={instagram:'📸 אינסטגרם',facebook:'👥 פייסבוק',recommendation:'💬 המלצה',google:'🔍 גוגל',other:'📌 אחר'};
 
-const rows=filtered.map(s=>{
+window._filteredStudents=filtered;
+const rows=filtered.map((s,i)=>{
 const devCount=deviceCounts[s.email]||0;
 const devColor=devCount<=1?'#27ae60':devCount===2?'#f39c12':'#e74c3c';
 const devBg=devCount<=1?'#d4edda':devCount===2?'#fff3cd':'#f8d7da';
@@ -502,9 +503,9 @@ return `
 <td><span style="padding:4px 10px;border-radius:20px;font-size:13px;font-weight:700;background:${devBg};color:${devColor}">${devText}</span></td>
 <td>
 <div style="display:flex;gap:5px">
-<button class="btn btn-sm primary" onclick="openEditModal(\`${s.id}\`,\`${(s.name||'').replace(/`/g,'')}\`,\`${s.email}\`,\`${s.password}\`,${s.price_paid||220},\`${s.source||'other'}\`)">✏️</button>
-<button class="btn btn-sm info" onclick="sendEmail(\`${s.email}\`,\`${(s.name||'תלמידה').replace(/`/g,'')}\`,\`${s.password}\`)">📧</button>
-<button class="btn btn-sm danger" onclick="deleteStudent(\`${s.id}\`,\`${s.email}\`)">🗑️</button>
+<button class="btn btn-sm primary" onclick="editByIndex(${i})">✏️</button>
+<button class="btn btn-sm info" onclick="emailByIndex(${i})">📧</button>
+<button class="btn btn-sm danger" onclick="deleteByIndex(${i})">🗑️</button>
 </div>
 </td>
 </tr>`;
@@ -571,6 +572,23 @@ loadStudents();
 calculateKPIs();
 updateChart();
 }
+}
+
+/* INDEX-BASED ACTIONS */
+function editByIndex(i){
+const s=window._filteredStudents[i];
+if(!s)return;
+openEditModal(s.id,s.name||'',s.email,s.password,s.price_paid||220,s.source||'other');
+}
+function emailByIndex(i){
+const s=window._filteredStudents[i];
+if(!s)return;
+sendEmail(s.email,s.name||'תלמידה',s.password);
+}
+function deleteByIndex(i){
+const s=window._filteredStudents[i];
+if(!s)return;
+deleteStudent(s.id,s.email);
 }
 
 /* EDIT STUDENT */
