@@ -513,6 +513,11 @@
                 </button>
             </div>
 
+            <label style="display:flex; align-items:center; justify-content:center; gap:8px; margin:8px 0 16px; font-size:14px; color:var(--text); cursor:pointer;">
+                <input type="checkbox" id="rememberMe" style="width:16px; height:16px; accent-color:var(--primary); cursor:pointer;">
+                זכור אותי
+            </label>
+
             <button class="login-btn" onclick="checkLogin()">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
                 כניסה לקורס
@@ -878,7 +883,7 @@
             const { data, error } = await db
                 .from('students')
                 .select('*')
-                .eq('email', email)
+                .ilike('email', email)
                 .eq('password', password)
                 .single();
 
@@ -911,7 +916,8 @@
             } catch(e) { console.log('device log error', e); }
 
             // שמור session
-            sessionStorage.setItem('yogaUser', JSON.stringify({ email, name: data.name }));
+            const storage = document.getElementById('rememberMe').checked ? localStorage : sessionStorage;
+            storage.setItem('yogaUser', JSON.stringify({ email, name: data.name }));
 
             showCourse(data.name || email);
         }
@@ -923,6 +929,7 @@
         }
 
         function logout() {
+            localStorage.removeItem('yogaUser');
             sessionStorage.removeItem('yogaUser');
             document.getElementById('loginScreen').style.display = 'flex';
             document.getElementById('courseContent').style.display = 'none';
@@ -931,7 +938,7 @@
         }
 
         window.onload = function () {
-            const saved = sessionStorage.getItem('yogaUser');
+            const saved = localStorage.getItem('yogaUser') || sessionStorage.getItem('yogaUser');
             if (saved) {
                 const user = JSON.parse(saved);
                 showCourse(user.name || user.email);

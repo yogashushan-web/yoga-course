@@ -129,6 +129,7 @@ exports.handler = async (event) => {
             };
         }
 
+        buyerEmail = buyerEmail.trim().toLowerCase();
         if (!buyerName) buyerName = 'תלמידה';
 
         // Check if student already exists
