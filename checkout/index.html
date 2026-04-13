@@ -225,8 +225,9 @@
 
             <!-- מחיר -->
             <div class="price-display">
-                <div class="current-price" id="currentPrice">₪550</div>
-                <div class="price-note">גישה ללא הגבלת זמן לכל החומרים + קבוצת וואטסאפ פרטית</div>
+                <div style="font-size:14px;color:#e74c3c;text-decoration:line-through;opacity:0.7;margin-bottom:2px;">₪550</div>
+                <div class="current-price" id="currentPrice">₪399</div>
+                <div class="price-note">🎉 מבצע חזרה לשגרה — גישה ללא הגבלת זמן לכל החומרים + קבוצת וואטסאפ פרטית</div>
             </div>
 
             <!-- מה מקבלים -->
@@ -331,8 +332,8 @@
         const { createClient } = supabase;
         const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        const BASE_PRICE = 550;
-        let finalPrice = 550;
+        const BASE_PRICE = 399;
+        let finalPrice = 399;
         let appliedCode = null;
         const SHARE_CODE = 'SHARE20';
 
