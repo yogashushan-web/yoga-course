@@ -26,39 +26,42 @@
 
     <style>
         :root {
-            --primary: #1F3D34;
-            --primary-light: #F4EFE6;
-            --accent: #F4EBD7;
-            --text: #6F6F6F;
-            --dark: #1F3D34;
+            --primary: #3D3228;
+            --primary-light: #FAF8F4;
+            --accent: #F5F0E8;
+            --text: #6B5E52;
+            --dark: #3D3228;
+            --terracotta: #C4846C;
+            --sand-dark: #E8DFD0;
+            --cream: #FFFDF9;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Heebo', sans-serif;
-            background: #FFFFFF;
+            background: var(--cream);
             color: var(--text);
             line-height: 1.7;
         }
 
         header {
-            background: rgba(255, 255, 255, 0.98);
+            background: var(--cream);
             padding: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-bottom: 1px solid var(--sand-dark);
             text-align: center;
         }
 
         .logo {
             font-size: 22px;
-            font-weight: 700;
-            color: var(--primary);
+            font-weight: 300;
+            color: var(--dark);
+            letter-spacing: 2px;
         }
 
         .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, #15281f 100%);
-            padding: 50px 20px;
+            background: var(--dark);
+            padding: 60px 20px;
             text-align: center;
             color: white;
         }
@@ -141,10 +144,12 @@
         }
 
         .next-steps {
-            background: var(--accent);
+            background: white;
             padding: 24px;
             border-radius: 16px;
-            border-right: 4px solid var(--primary);
+            border-right: 3px solid var(--terracotta);
+            border: 1px solid var(--sand-dark);
+            border-right: 3px solid var(--terracotta);
             margin-bottom: 20px;
             text-align: right;
         }
@@ -190,14 +195,14 @@
         }
 
         .btn-primary {
-            background: var(--primary);
+            background: var(--terracotta);
             color: white;
-            box-shadow: 0 6px 20px rgba(31, 61, 52, 0.25);
+            box-shadow: 0 6px 20px rgba(196,132,108,0.25);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(31, 61, 52, 0.35);
+            box-shadow: 0 10px 30px rgba(196,132,108,0.35);
         }
 
         .btn-whatsapp {
@@ -224,11 +229,12 @@
         .note a { color: var(--primary); font-weight: 700; }
 
         footer {
-            background: var(--primary);
-            color: white;
+            background: var(--accent);
+            color: var(--text);
             padding: 25px 20px;
             text-align: center;
             margin-top: 40px;
+            border-top: 1px solid var(--sand-dark);
         }
 
         footer p {
@@ -289,10 +295,10 @@
         </div>
 
         <div class="cta-buttons">
-            <a href="https://coursepageyogac.netlify.app" class="btn btn-primary">
+            <a href="https://yogashushan.com/course" class="btn btn-primary">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-left: 6px;"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg> כניסה לקורס
             </a>
-            <a href="https://asanaguides.netlify.app/" target="_blank" class="btn btn-primary" style="background: #2a5c4a;">
+            <a href="https://yogashushan.com/guides/" target="_blank" class="btn btn-primary" style="background: #2a5c4a;">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-left: 6px;"><circle cx="12" cy="4" r="2"/><path d="M12 8c-3 0-5 2-7 5l2 1 2-3v4l-2 5h2.5l1.5-4 1.5 4H15l-2-5v-4l2 3 2-1c-2-3-4-5-7-5z"/></svg> מדריך אסנות
             </a>
             <a href="https://chat.whatsapp.com/BiN8sg5oTjo4DAjNCAMMaI" class="btn btn-whatsapp">

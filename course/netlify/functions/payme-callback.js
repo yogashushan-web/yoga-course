@@ -29,7 +29,7 @@ async function sendEmail(name, email, password) {
             to_name: name,
             user_email: email,
             password: password,
-            course_url: 'https://coursepageyogac.netlify.app',
+            course_url: 'https://yogashushan.com/course',
             whatsapp_url: 'https://chat.whatsapp.com/BiN8sg5oTjo4DAjNCAMMaI'
         }
     };

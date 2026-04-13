@@ -3,7 +3,7 @@ const { createClient } = require('@supabase/supabase-js');
 
 const PAYME_API_KEY = 'MPL17172-30698Y8A-DZIV0NFT-INFT0OPW';
 const CALLBACK_URL = 'https://coursepageyogac.netlify.app/.netlify/functions/payme-callback';
-const SUCCESS_URL = 'https://thankyouyogac.netlify.app';
+const SUCCESS_URL = 'https://yogashushan.com/thankyou';
 
 const SUPABASE_URL = 'https://tyjlyfyqwgihbhhxbeqe.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR5amx5Znlxd2dpaGJoaHhiZXFlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzMDY2NDMsImV4cCI6MjA4Njg4MjY0M30.SA9hudQQdroQhdQAg6aYICNmhg8aSavE3qZ5YhTmCE0';

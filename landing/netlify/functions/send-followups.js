@@ -130,7 +130,7 @@ function getEmailTemplate(stage, name) {
         </ul>
 
         <div style="text-align:center;margin:28px 0;">
-          <a href="https://checkoutyogac.netlify.app" style="display:inline-block;background:#C4846C;color:white;padding:14px 32px;border-radius:50px;text-decoration:none;font-size:15px;font-weight:500;">
+          <a href="https://yogashushan.com/checkout" style="display:inline-block;background:#C4846C;color:white;padding:14px 32px;border-radius:50px;text-decoration:none;font-size:15px;font-weight:500;">
             לפרטים נוספים על הקורס
           </a>
         </div>
@@ -200,7 +200,7 @@ function getEmailTemplate(stage, name) {
         </p>
 
         <div style="text-align:center;margin:28px 0;">
-          <a href="https://checkoutyogac.netlify.app" style="display:inline-block;background:#C4846C;color:white;padding:16px 36px;border-radius:50px;text-decoration:none;font-size:16px;font-weight:600;">
+          <a href="https://yogashushan.com/checkout" style="display:inline-block;background:#C4846C;color:white;padding:16px 36px;border-radius:50px;text-decoration:none;font-size:16px;font-weight:600;">
             אני רוצה להתחיל
           </a>
         </div>
