@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ברוכה הבאה למסע - הרגע היומי | 21 ימי מדיטציה</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1448149729783570');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1448149729783570&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
+    <style>
+        :root {
+            --primary: #1F3D34;
+            --primary-soft: #2a5c4a;
+            --cream: #F4EFE6;
+            --cream-soft: #FBF8F2;
+            --text: #3a4a44;
+            --muted: #6f7f78;
+            --border: #e3dccf;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body { min-height: 100%; }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        header {
+            background: var(--cream);
+            padding: 22px 20px;
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 300;
+            color: var(--primary);
+            letter-spacing: 2px;
+        }
+
+        .logo strong {
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-soft) 100%);
+            padding: 70px 20px 80px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -10%;
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(244,239,230,0.12) 0%, rgba(244,239,230,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(244,239,230,0.08) 0%, rgba(244,239,230,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 620px;
+            margin: 0 auto;
+        }
+
+        .check-wrap {
+            width: 96px;
+            height: 96px;
+            margin: 0 auto 22px;
+            border-radius: 50%;
+            background: rgba(244,239,230,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2.6s ease-in-out infinite;
+        }
+
+        .check-wrap svg {
+            width: 54px;
+            height: 54px;
+        }
+
+        .check-wrap circle.bg {
+            stroke-dasharray: 63;
+            stroke-dashoffset: 63;
+            animation: drawCircle 0.9s ease-out 0.1s forwards;
+        }
+
+        .check-wrap path.tick {
+            stroke-dasharray: 22;
+            stroke-dashoffset: 22;
+            animation: drawTick 0.5s ease-out 0.9s forwards;
+        }
+
+        @keyframes drawCircle {
+            to { stroke-dashoffset: 0; }
+        }
+
+        @keyframes drawTick {
+            to { stroke-dashoffset: 0; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(244,239,230,0.25); }
+            50% { box-shadow: 0 0 0 18px rgba(244,239,230,0); }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            font-weight: 900;
+            line-height: 1.3;
+            margin-bottom: 14px;
+            color: white;
+            opacity: 0;
+            animation: fadeUp 0.7s ease-out 0.3s forwards;
+        }
+
+        .hero .subtitle {
+            font-size: 15px;
+            color: rgba(255,255,255,0.75);
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+            opacity: 0;
+            animation: fadeUp 0.7s ease-out 0.45s forwards;
+        }
+
+        .hero p.welcome {
+            font-size: 17px;
+            color: rgba(255,255,255,0.92);
+            max-width: 520px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: fadeUp 0.7s ease-out 0.6s forwards;
+        }
+
+        .container {
+            max-width: 640px;
+            margin: -40px auto 40px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 32px 28px;
+            margin-bottom: 18px;
+            box-shadow: 0 8px 30px rgba(31,61,52,0.06);
+            border: 1px solid var(--border);
+            opacity: 0;
+            animation: fadeUp 0.6s ease-out 0.8s forwards;
+        }
+
+        .card.delay-2 { animation-delay: 0.95s; }
+        .card.delay-3 { animation-delay: 1.1s; }
+        .card.delay-4 { animation-delay: 1.25s; }
+
+        .card h2 {
+            font-size: 20px;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 14px;
+            text-align: right;
+        }
+
+        .card p {
+            font-size: 15.5px;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .card p:last-child { margin-bottom: 0; }
+
+        .cta-wrap {
+            text-align: center;
+            padding: 8px 0 4px;
+        }
+
+        .btn-cta {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 20px 44px;
+            border-radius: 50px;
+            font-family: 'Heebo', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 10px 28px rgba(31,61,52,0.28);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 34px rgba(31,61,52,0.35);
+            background: var(--primary-soft);
+        }
+
+        .btn-cta svg {
+            vertical-align: middle;
+            margin-left: 8px;
+        }
+
+        .todo-note {
+            display: block;
+            margin-top: 10px;
+            font-size: 12px;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        .login-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: var(--cream-soft);
+            padding: 16px 18px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .login-row .icon {
+            flex-shrink: 0;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-row strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 3px;
+            font-size: 15px;
+        }
+
+        .login-row .value {
+            font-size: 14.5px;
+            color: var(--text);
+        }
+
+        .tips-list {
+            list-style: none;
+            padding: 0;
+            margin: 4px 0 0;
+        }
+
+        .tips-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px dashed var(--border);
+            font-size: 15px;
+            color: var(--text);
+        }
+
+        .tips-list li:last-child { border-bottom: none; }
+
+        .tips-list .tip-icon {
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+
+        .tips-list .tip-icon svg { width: 18px; height: 18px; }
+
+        .tips-list strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 2px;
+            font-size: 15px;
+        }
+
+        .tips-list small {
+            font-size: 13.5px;
+            color: var(--muted);
+            display: block;
+        }
+
+        .support-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-soft) 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .support-card h2 { color: white; }
+
+        .support-card p {
+            color: rgba(255,255,255,0.88);
+            margin-bottom: 18px;
+        }
+
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #25D366;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 15.5px;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(37, 211, 102, 0.4);
+        }
+
+        footer {
+            padding: 28px 20px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+            background: var(--cream);
+            border-top: 1px solid var(--border);
+        }
+
+        footer p { margin-bottom: 4px; }
+
+        @media (max-width: 520px) {
+            .hero { padding: 54px 18px 70px; }
+            .hero h1 { font-size: 28px; }
+            .hero p.welcome { font-size: 15.5px; }
+            .card { padding: 26px 22px; }
+            .btn-cta { padding: 18px 32px; font-size: 16px; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><strong>הרגע היומי</strong> · מסע 21 ימי מדיטציה</div>
+    </header>
+
+    <div class="hero">
+        <div class="hero-inner">
+            <div class="check-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle class="bg" cx="12" cy="12" r="10"/>
+                    <path class="tick" d="M8 12.5l2.8 2.8L16 9.5"/>
+                </svg>
+            </div>
+            <div class="subtitle">הרכישה הושלמה בהצלחה</div>
+            <h1>ברוכה הבאה למסע 🙏</h1>
+            <p class="welcome">21 מדיטציות מחכות לך. אפשר להתחיל מתי שירגיש לך נכון — אין לחץ, אין לוח זמנים נוקשה. רק את, הנשימה, והרגע הזה.</p>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="card">
+            <h2>מוכנה להתחיל? ✨</h2>
+            <p>כל 21 המדיטציות כבר ממתינות לך באתר הקורס. לחצי על הכפתור למטה והתחילי מהיום הראשון — או מכל מקום שמרגיש לך נכון.</p>
+            <div class="cta-wrap">
+                <a href="https://21days-course.netlify.app" class="btn-cta">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                    כניסה למסע
+                </a>
+                <span class="todo-note">TODO: החליפי את ה-URL ב-URL הסופי של אתר הקורס</span>
+            </div>
+        </div>
+
+        <div class="card delay-2">
+            <h2>איך נכנסים לקורס?</h2>
+            <div class="login-row">
+                <div class="icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
+                </div>
+                <div>
+                    <strong>המייל שלך = שם המשתמש שלך</strong>
+                    <div class="value">השתמשי בכתובת המייל שאיתה ביצעת את הרכישה כדי להיכנס לאתר הקורס. שלחנו לך גם מייל אישור עם פרטי הכניסה — אם הוא לא הגיע, בדקי בתיקיית הספאם / דואר זבל.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card delay-3">
+            <h2>טיפים לחוויה הכי טובה</h2>
+            <ul class="tips-list">
+                <li>
+                    <span class="tip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3v4zM3 19a2 2 0 0 0 2 2h1v-6H3v4z"/></svg></span>
+                    <div><strong>אוזניות</strong><small>החוויה עמוקה ואינטימית יותר עם אוזניות טובות</small></div>
+                </li>
+                <li>
+                    <span class="tip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+                    <div><strong>מקום שקט ונעים</strong><small>פינה קבועה בבית תעזור לך לחזור למסע יום אחרי יום</small></div>
+                </li>
+                <li>
+                    <span class="tip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+                    <div><strong>10-15 דקות ביום</strong><small>זה מספיק. תני לעצמך את הזמן הקטן הזה, כל יום</small></div>
+                </li>
+                <li>
+                    <span class="tip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><polyline points="12 5 19 12 12 19"/></svg></span>
+                    <div><strong>התחילי מיום 1</strong><small>המסע בנוי הדרגתית — כל יום מכין אותך לבא</small></div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card support-card delay-4">
+            <h2>כאן בשבילך 💚</h2>
+            <p>יש לך שאלה? משהו לא עובד? פשוט רוצה לשתף? אני כאן. שלחי הודעה בוואטסאפ ואחזור אלייך בהקדם.</p>
+            <a href="https://wa.me/972502018743" target="_blank" class="btn-whatsapp">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white" stroke="none"><path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.8-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.8-1.5c1.5.9 3.3 1.4 5.2 1.4 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+                050-201-8743
+            </a>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2025 שרון שושן · הרגע היומי — מסע 21 ימי מדיטציה</p>
+        <p style="font-size: 11px; opacity: 0.7;">* התוכן מנוסח בלשון נקבה מטעמי נוחות, אך המסע פתוח לכולם.</p>
+    </footer>
+
+    <script>
+        // Track purchase event
+        const urlParams = new URLSearchParams(window.location.search);
+        const purchaseValue = urlParams.get('amount') || urlParams.get('price') || 259;
+
+        fbq('track', 'Purchase', {
+            value: parseFloat(purchaseValue),
+            currency: 'ILS',
+            content_name: 'הרגע היומי - מסע 21 ימי מדיטציה'
+        });
+    </script>
+</body>
+</html>

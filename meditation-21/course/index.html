@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הרגע היומי - מסע 21 ימי מדיטציה</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --primary: #1F3D34;
+            --primary-soft: #2a5c4a;
+            --cream: #F4EFE6;
+            --accent: #F4EBD7;
+            --text: #6F6F6F;
+            --text-dark: #2d2d2d;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Heebo', sans-serif;
+            background: linear-gradient(135deg, #F4EFE6 0%, #E8F5E9 50%, #FFFFFF 100%);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* ========== LOGIN SCREEN ========== */
+        .login-screen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(31, 61, 52, 0.55), rgba(21, 40, 31, 0.7)), url('yoga-outdoor-2.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 20px;
+        }
+        .login-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 50px 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+            max-width: 440px;
+            width: 100%;
+            text-align: center;
+        }
+        .login-logo {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-soft));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 25px rgba(31, 61, 52, 0.3);
+        }
+        .login-box h1 { font-size: 28px; font-weight: 900; color: var(--primary); margin-bottom: 8px; }
+        .login-box .subtitle { font-size: 15px; color: var(--text); margin-bottom: 28px; }
+
+        .input-group, .password-wrapper {
+            position: relative;
+            margin-bottom: 16px;
+        }
+        .input-icon {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+        }
+        .input-field {
+            width: 100%;
+            padding: 16px 50px 16px 22px;
+            border: 2px solid #e8e4de;
+            border-radius: 14px;
+            font-family: 'Heebo', sans-serif;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            text-align: right;
+            background: white;
+        }
+        .input-field:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(31, 61, 52, 0.1); }
+
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-soft));
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-family: 'Heebo', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+            box-shadow: 0 6px 20px rgba(31, 61, 52, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .login-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(31, 61, 52, 0.4); }
+
+        .remember-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 8px 0 16px;
+            font-size: 14px;
+            color: var(--text);
+            cursor: pointer;
+        }
+        .remember-label input {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .login-divider { height: 1px; background: #e8e4de; margin: 22px 0 18px; }
+        .login-footer { font-size: 13px; color: #aaa; }
+        .login-footer a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        .login-footer a:hover { text-decoration: underline; }
+
+        .error-msg {
+            color: #e74c3c;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+            background: #fdf0ef;
+            padding: 12px 16px;
+            border-radius: 10px;
+            line-height: 1.5;
+        }
+        .error-msg a {
+            color: #e74c3c;
+            font-weight: 700;
+            text-decoration: underline;
+        }
+
+        /* ========== COURSE CONTENT ========== */
+        .course-content { display: none; }
+
+        .top-bar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .top-bar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+        .top-bar-logo { font-size: 20px; font-weight: 900; color: var(--primary); }
+        .welcome-name { font-size: 15px; color: var(--text); }
+        .logout-btn {
+            background: none;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-family: 'Heebo', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .logout-btn:hover { background: var(--primary); color: white; }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-soft));
+            color: white;
+            padding: 60px 20px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(244,235,215,0.15), transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(244,235,215,0.1), transparent 50%);
+        }
+        .header-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+        .header h1 { font-size: 42px; font-weight: 900; margin-bottom: 12px; letter-spacing: -0.5px; }
+        .header .subtitle { font-size: 18px; opacity: 0.9; font-weight: 300; }
+        .header .badge {
+            display: inline-block;
+            background: rgba(244, 235, 215, 0.2);
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 14px;
+            margin-bottom: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(244,235,215,0.3);
+        }
+
+        .progress-bar {
+            max-width: 1200px;
+            margin: -40px auto 40px;
+            background: white;
+            border-radius: 20px;
+            padding: 20px 30px;
+            box-shadow: 0 10px 40px rgba(31,61,52,0.1);
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .progress-bar .label { font-weight: 600; color: var(--primary); white-space: nowrap; }
+        .progress-track {
+            flex: 1;
+            height: 10px;
+            background: var(--cream);
+            border-radius: 50px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-soft));
+            border-radius: 50px;
+            transition: width 0.5s;
+        }
+        .progress-count { font-weight: 700; color: var(--primary); }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(31,61,52,0.06);
+            border: 1px solid rgba(31,61,52,0.05);
+            position: relative;
+            overflow: hidden;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-soft));
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.35s;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(31,61,52,0.15);
+        }
+        .card:hover::before { transform: scaleX(1); }
+        .card:hover .day-number { background: var(--primary); color: white; }
+
+        .day-number {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--cream);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 18px;
+            transition: all 0.3s;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            color: var(--text);
+            margin-top: auto;
+        }
+        .card-meta svg { flex-shrink: 0; }
+
+        .card.watched { background: linear-gradient(135deg, #fff, #F4EFE6); }
+        .card.watched .day-number { background: var(--primary); color: white; }
+        .card.watched::after {
+            content: '✓';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 14px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(31,61,52,0.85);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+            animation: slideUp 0.4s cubic-bezier(0.4,0,0.2,1);
+        }
+        @keyframes slideUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-header {
+            padding: 24px 30px;
+            border-bottom: 1px solid var(--cream);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-title { font-size: 22px; font-weight: 700; color: var(--primary); }
+        .close-btn {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: var(--cream);
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--primary);
+            transition: all 0.2s;
+        }
+        .close-btn:hover { background: var(--primary); color: white; transform: rotate(90deg); }
+        .video-wrapper {
+            position: relative;
+            padding-top: 56.25%;
+            background: #000;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 { font-size: 30px; }
+            .header .subtitle { font-size: 15px; }
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .card { padding: 18px; min-height: 150px; }
+            .card-title { font-size: 15px; }
+            .progress-bar { flex-wrap: wrap; margin: -30px 16px 30px; padding: 16px 20px; }
+            .top-bar-inner { padding: 12px 16px; gap: 10px; }
+            .top-bar-logo { font-size: 16px; }
+            .welcome-name { display: none; }
+            .logout-btn { padding: 6px 14px; font-size: 13px; }
+            .login-box { padding: 35px 25px; margin: 0 10px; }
+            .login-box h1 { font-size: 24px; }
+            .modal-title { font-size: 16px; }
+            .modal-header { padding: 16px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Login Screen -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-box">
+            <div class="login-logo">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="4"/>
+                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+                </svg>
+            </div>
+            <h1>הרגע היומי</h1>
+            <p class="subtitle">הזיני את המייל ומספר הטלפון שאיתם נרשמת לקורס</p>
+
+            <div class="input-group">
+                <div class="input-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
+                </div>
+                <input type="email" id="emailInput" class="input-field" placeholder="כתובת מייל" autocomplete="email" />
+            </div>
+
+            <div class="input-group">
+                <div class="input-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                </div>
+                <input type="tel" id="phoneInput" class="input-field" placeholder="מספר טלפון" autocomplete="tel" />
+            </div>
+
+            <label class="remember-label">
+                <input type="checkbox" id="rememberMe" checked>
+                זכור אותי
+            </label>
+
+            <button class="login-btn" onclick="checkLogin()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                כניסה לקורס
+            </button>
+
+            <p class="error-msg" id="errorMsg"></p>
+
+            <div class="login-divider"></div>
+            <p class="login-footer">עדיין לא נרשמת? <a href="https://wa.me/972502018743">כתבי לי בוואטסאפ</a></p>
+        </div>
+    </div>
+
+    <!-- Course Content -->
+    <div class="course-content" id="courseContent">
+        <div class="top-bar">
+            <div class="top-bar-inner">
+                <div class="top-bar-logo">הרגע היומי</div>
+                <span class="welcome-name" id="welcomeName"></span>
+                <button class="logout-btn" onclick="logout()">יציאה</button>
+            </div>
+        </div>
+
+        <header class="header">
+            <div class="header-content">
+                <div class="badge">✨ מסע פנימי</div>
+                <h1>הרגע היומי</h1>
+                <div class="subtitle">מסע 21 ימי מדיטציה לשקט ושלווה פנימית</div>
+            </div>
+        </header>
+
+        <div class="progress-bar">
+            <div class="label">ההתקדמות שלך</div>
+            <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+            <div class="progress-count"><span id="watchedCount">0</span>/21</div>
+        </div>
+
+        <main class="container">
+            <div class="grid" id="grid"></div>
+        </main>
+
+        <div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title" id="modalTitle">—</div>
+                    <button class="close-btn" onclick="closeModal()">✕</button>
+                </div>
+                <div class="video-wrapper">
+                    <iframe id="videoFrame" src="" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== SUPABASE CONFIG ==========
+        const SUPABASE_URL = 'https://tyjlyfyqwgihbhhxbeqe.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR5amx5Znlxd2dpaGJoaHhiZXFlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzMDY2NDMsImV4cCI6MjA4Njg4MjY0M30.SA9hudQQdroQhdQAg6aYICNmhg8aSavE3qZ5YhTmCE0';
+        const PRODUCT_SLUG = 'meditation-21';
+        const { createClient } = supabase;
+        const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // ========== AUTH ==========
+        function normalizePhone(raw) {
+            // Keep digits only; strip leading country code (972) if present so "0501234567" and "+972501234567" match.
+            const digits = (raw || '').replace(/\D/g, '');
+            if (digits.startsWith('972')) return '0' + digits.slice(3);
+            return digits;
+        }
+
+        function showError(html) {
+            const el = document.getElementById('errorMsg');
+            el.innerHTML = html;
+            el.style.display = 'block';
+        }
+        function clearError() {
+            document.getElementById('errorMsg').style.display = 'none';
+        }
+
+        async function checkLogin() {
+            clearError();
+            const email = document.getElementById('emailInput').value.trim().toLowerCase();
+            const phoneRaw = document.getElementById('phoneInput').value.trim();
+            const phone = normalizePhone(phoneRaw);
+
+            if (!email || !phone) {
+                showError('נא למלא מייל ומספר טלפון');
+                return;
+            }
+
+            // Look up student entitlement for this product.
+            const { data, error } = await db
+                .from('students')
+                .select('*')
+                .ilike('email', email)
+                .eq('product', PRODUCT_SLUG)
+                .maybeSingle();
+
+            if (error) {
+                showError('שגיאת חיבור, נסי שוב בעוד רגע');
+                console.error(error);
+                return;
+            }
+
+            if (!data) {
+                showError('לא נמצאת ברשימת הרוכשים.<br>לעזרה <a href="https://wa.me/972502018743">כתבי לי בוואטסאפ</a>');
+                return;
+            }
+
+            // Match phone (normalized) against stored phone.
+            const storedPhone = normalizePhone(data.phone || '');
+            if (!storedPhone || storedPhone !== phone) {
+                showError('מספר הטלפון לא תואם למייל. נסי שוב או <a href="https://wa.me/972502018743">כתבי לי</a>');
+                return;
+            }
+
+            // Update last_login best-effort (ignore errors - column may or may not exist).
+            try {
+                await db
+                    .from('students')
+                    .update({ last_login: new Date().toISOString() })
+                    .eq('email', data.email)
+                    .eq('product', PRODUCT_SLUG);
+            } catch (e) { /* non-critical */ }
+
+            const storage = document.getElementById('rememberMe').checked ? localStorage : sessionStorage;
+            storage.setItem('meditation21User', JSON.stringify({
+                email: data.email,
+                name: data.name || '',
+                product: PRODUCT_SLUG
+            }));
+
+            showCourse(data.name || data.email);
+        }
+
+        function showCourse(name) {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('courseContent').style.display = 'block';
+            document.getElementById('welcomeName').textContent = `שלום ${name} 🌿`;
+            renderCards();
+            updateProgress();
+        }
+
+        function logout() {
+            localStorage.removeItem('meditation21User');
+            sessionStorage.removeItem('meditation21User');
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('courseContent').style.display = 'none';
+            document.getElementById('emailInput').value = '';
+            document.getElementById('phoneInput').value = '';
+            clearError();
+        }
+
+        // Auto-login via saved session
+        window.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('meditation21User') || sessionStorage.getItem('meditation21User');
+            if (saved) {
+                try {
+                    const user = JSON.parse(saved);
+                    showCourse(user.name || user.email);
+                } catch (e) { /* ignore */ }
+            }
+        });
+
+        // Enter key submits
+        ['emailInput', 'phoneInput'].forEach(id => {
+            document.getElementById(id).addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') checkLogin();
+            });
+        });
+
+        // ========== MEDITATIONS GRID ==========
+        const meditations = [
+            { day: 1,  title: 'מודעות לנשימה',              youtube: 'TFxIBF17eKc' },
+            { day: 2,  title: 'הכרת הרגשות',                youtube: 'iYniL8olwkY' },
+            { day: 3,  title: 'הכרת המחשבות',               youtube: 'sU0tGeKQ-PI' },
+            { day: 4,  title: 'אהבה עצמית',                 youtube: 'gvNZNgBP-r0' },
+            { day: 5,  title: 'סליחה ושחרור',               youtube: 'Vcc-zvfGyR8' },
+            { day: 6,  title: 'מדיטציית הודיה',             youtube: 'TJyez3Nr30w' },
+            { day: 7,  title: 'סבלנות',                     youtube: '_DC128oXdX4' },
+            { day: 8,  title: 'אומץ',                       youtube: 'rk_gyfG32oY' },
+            { day: 9,  title: 'יצירתיות',                   youtube: '68Ja02jUvzA' },
+            { day: 10, title: 'אחדות עם היקום',             youtube: 'hzJ7sUaLYZ4' },
+            { day: 11, title: 'אמונה',                      youtube: 'ap0aUEYh4PA' },
+            { day: 12, title: 'שקט פנימי',                  youtube: 'Fgw1LckD8xo' },
+            { day: 13, title: 'חמלה',                       youtube: 'AtbHyNn498M' },
+            { day: 14, title: 'מדיטציה תודעתית',            youtube: 'At3yrFfwfME' },
+            { day: 15, title: 'איחוד גוף-נפש-רוח',          youtube: '_oI4vR4uT88' },
+            { day: 16, title: 'השגת יעדים',                 youtube: 'lkkzl4mv8F4' },
+            { day: 17, title: 'טיפוח קשרים בין-אישיים',     youtube: 'Un1-uVapcRE' },
+            { day: 18, title: 'דמיון ושפע',                 youtube: 'J65-zChSsok' },
+            { day: 19, title: 'יוגה נידרה',                 youtube: 'jG91VLO3bws' },
+            { day: 20, title: 'בריאות פיזית ונפשית',        youtube: 'b12PSgmvrvw' },
+            { day: 21, title: 'חקירה תודעתית',              youtube: 'ogdmbp8O5_o' }
+        ];
+
+        const watched = new Set(JSON.parse(localStorage.getItem('meditation21Watched') || '[]'));
+        const grid = document.getElementById('grid');
+
+        function renderCards() {
+            grid.innerHTML = '';
+            meditations.forEach(m => {
+                const card = document.createElement('div');
+                card.className = 'card' + (watched.has(m.day) ? ' watched' : '');
+                card.onclick = () => openModal(m);
+                card.innerHTML = `
+                    <div>
+                        <div class="day-number">${m.day}</div>
+                        <div class="card-title">${m.title}</div>
+                    </div>
+                    <div class="card-meta">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5 3 19 12 5 21 5 3"/>
+                        </svg>
+                        <span>צפי במדיטציה</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function openModal(m) {
+            if (!m.youtube) { alert('סרטון יעלה בקרוב 🙏'); return; }
+            document.getElementById('modalTitle').textContent = `יום ${m.day} · ${m.title}`;
+            document.getElementById('videoFrame').src = `https://www.youtube.com/embed/${m.youtube}?autoplay=1&rel=0`;
+            document.getElementById('modal').classList.add('active');
+            watched.add(m.day);
+            localStorage.setItem('meditation21Watched', JSON.stringify([...watched]));
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+            document.getElementById('videoFrame').src = '';
+            renderCards();
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const pct = (watched.size / 21) * 100;
+            document.getElementById('progressFill').style.width = pct + '%';
+            document.getElementById('watchedCount').textContent = watched.size;
+        }
+
+        // ESC closes modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.getElementById('modal').classList.contains('active')) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

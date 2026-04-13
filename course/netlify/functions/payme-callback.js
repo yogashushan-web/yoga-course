@@ -91,6 +91,7 @@ exports.handler = async (event) => {
                 .from('pending_purchases')
                 .select('*')
                 .eq('sale_id', paymentId)
+                .eq('product', 'precise-beginning')
                 .single();
 
             if (pending) {
@@ -108,6 +109,7 @@ exports.handler = async (event) => {
                 .from('pending_purchases')
                 .select('*')
                 .eq('status', 'pending')
+                .eq('product', 'precise-beginning')
                 .gte('created_at', thirtyMinAgo)
                 .order('created_at', { ascending: false })
                 .limit(1)
@@ -137,6 +139,7 @@ exports.handler = async (event) => {
             .from('students')
             .select('*')
             .eq('email', buyerEmail)
+            .eq('product', 'precise-beginning')
             .single();
 
         if (existing) {
@@ -145,7 +148,8 @@ exports.handler = async (event) => {
             await supabase
                 .from('pending_purchases')
                 .update({ status: 'completed' })
-                .eq('email', buyerEmail);
+                .eq('email', buyerEmail)
+                .eq('product', 'precise-beginning');
 
             return {
                 statusCode: 200,
@@ -161,6 +165,7 @@ exports.handler = async (event) => {
             .from('students')
             .insert([{
                 email: buyerEmail,
+                product: 'precise-beginning',
                 name: buyerName,
                 password: password,
                 payment_id: paymentId,
@@ -190,7 +195,8 @@ exports.handler = async (event) => {
         await supabase
             .from('pending_purchases')
             .update({ status: 'completed' })
-            .eq('email', buyerEmail);
+            .eq('email', buyerEmail)
+            .eq('product', 'precise-beginning');
 
         return {
             statusCode: 200,

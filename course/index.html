@@ -885,6 +885,7 @@
                 .select('*')
                 .ilike('email', email)
                 .eq('password', password)
+                .eq('product', 'precise-beginning')
                 .single();
 
             if (error || !data) {
@@ -900,7 +901,8 @@
                     last_login: new Date().toISOString(),
                     login_count: (data.login_count || 0) + 1
                 })
-                .eq('email', email);
+                .eq('email', email)
+                .eq('product', 'precise-beginning');
 
             // רישום מכשיר
             try {

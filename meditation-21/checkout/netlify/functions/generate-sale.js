@@ -1,12 +1,23 @@
 const https = require('https');
 const { createClient } = require('@supabase/supabase-js');
 
-const PAYME_API_KEY = 'MPL17172-30698Y8A-DZIV0NFT-INFT0OPW';
-const CALLBACK_URL = 'https://coursepageyogac.netlify.app/.netlify/functions/payme-callback';
-const SUCCESS_URL = 'https://yogashushan.com/thankyou';
+// TODO(Sharon): set these env vars in Netlify site settings → Environment variables.
+//   PAYME_API_KEY      — PayMe seller API key (MPL...)
+//   SUPABASE_URL       — Supabase project URL
+//   SUPABASE_KEY       — Supabase anon key
+//   CHECKOUT_SITE_URL  — the deployed checkout site URL, e.g. https://meditation-21-checkout.netlify.app
+//   SUCCESS_URL        — thank-you page URL after successful payment (placeholder: https://21days-thankyou.netlify.app)
+const PAYME_API_KEY = process.env.PAYME_API_KEY;
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_KEY;
+const CHECKOUT_SITE_URL = process.env.CHECKOUT_SITE_URL || 'https://meditation-21-checkout.netlify.app';
+// PLACEHOLDER — replace via env var once the thank-you site is deployed.
+const SUCCESS_URL = process.env.SUCCESS_URL || 'https://21days-thankyou.netlify.app';
+const CALLBACK_URL = `${CHECKOUT_SITE_URL}/.netlify/functions/payme-callback`;
 
-const SUPABASE_URL = 'https://tyjlyfyqwgihbhhxbeqe.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR5amx5Znlxd2dpaGJoaHhiZXFlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzMDY2NDMsImV4cCI6MjA4Njg4MjY0M30.SA9hudQQdroQhdQAg6aYICNmhg8aSavE3qZ5YhTmCE0';
+const PRODUCT_SLUG = 'meditation-21';
+const PRODUCT_NAME = 'מסע 21 ימי מדיטציה - הרגע היומי';
+const DEFAULT_PRICE = 259;
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -23,22 +34,28 @@ exports.handler = async (event) => {
 
     try {
         const body = JSON.parse(event.body || '{}');
-        const priceInAgorot = (body.price || 550) * 100;
+        const price = body.price || DEFAULT_PRICE;
+        const priceInAgorot = price * 100;
         const buyerEmail = body.email || '';
+        const buyerName = body.name || '';
+        const buyerPhone = body.phone || '';
 
-        // Build return URL with email parameter
-        const successUrl = buyerEmail
-            ? `${SUCCESS_URL}?buyer_email=${encodeURIComponent(buyerEmail)}`
-            : SUCCESS_URL;
+        // Build return URL with email + product parameters
+        const params = new URLSearchParams();
+        if (buyerEmail) params.set('buyer_email', buyerEmail);
+        params.set('product', PRODUCT_SLUG);
+        const successUrl = `${SUCCESS_URL}?${params.toString()}`;
 
-        // Save pending purchase to Supabase so the callback can find the email
+        // Save pending purchase to Supabase so the callback can find the buyer
         if (buyerEmail) {
             await supabase
                 .from('pending_purchases')
                 .upsert({
                     email: buyerEmail,
-                    product: 'precise-beginning',
-                    price: body.price || 550,
+                    name: buyerName,
+                    phone: buyerPhone,
+                    product: PRODUCT_SLUG,
+                    price: price,
                     status: 'pending',
                     created_at: new Date().toISOString()
                 }, { onConflict: 'email,product' });
@@ -48,13 +65,15 @@ exports.handler = async (event) => {
             seller_payme_id: PAYME_API_KEY,
             sale_price: priceInAgorot,
             currency: 'ILS',
-            sale_description: 'קורס התחלה מדויקת',
-            product_name: 'קורס התחלה מדויקת',
+            sale_description: PRODUCT_NAME,
+            product_name: PRODUCT_NAME,
             sale_callback_url: CALLBACK_URL,
             sale_return_url: successUrl,
             sale_send_notification: true,
             language: 'he',
-            buyer_email: buyerEmail
+            buyer_email: buyerEmail,
+            buyer_name: buyerName,
+            buyer_phone: buyerPhone
         };
 
         const postData = JSON.stringify(saleData);
@@ -73,7 +92,7 @@ exports.handler = async (event) => {
                 res.on('data', chunk => data += chunk);
                 res.on('end', () => {
                     try { resolve(JSON.parse(data)); }
-                    catch(e) { resolve({ raw: data }); }
+                    catch (e) { resolve({ raw: data }); }
                 });
             });
             req.on('error', reject);
@@ -81,14 +100,14 @@ exports.handler = async (event) => {
             req.end();
         });
 
-        // Save the sale_id from PayMe linked to the email
+        // Save the sale_id from PayMe linked to the email + product
         const saleId = result.payme_sale_id || result.sale_id;
         if (buyerEmail && saleId) {
             await supabase
                 .from('pending_purchases')
                 .update({ sale_id: saleId })
                 .eq('email', buyerEmail)
-                .eq('product', 'precise-beginning');
+                .eq('product', PRODUCT_SLUG);
         }
 
         return { statusCode: 200, headers, body: JSON.stringify(result) };
