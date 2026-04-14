@@ -1,486 +1,398 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>רכישת הקורס · התחלה מדויקת</title>
+<meta name="description" content="רכישת קורס התחלה מדויקת - 5 שיעורים, דפי עבודה, קבוצת ליווי וגישה למדריך אסאנות.">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- Microsoft Clarity -->
-    <script type="text/javascript">
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "w3rt32hcdo");
-    </script>
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","w3rt32hcdo");
+</script>
 
-    <title>רכישת הקורס - התחלה מדויקת</title>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1448149729783570');fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1448149729783570&ev=PageView&noscript=1"/></noscript>
 
-    <!-- Meta Pixel Code -->
-    <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1448149729783570');
-    fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1448149729783570&ev=PageView&noscript=1"
-    /></noscript>
-    <!-- End Meta Pixel Code -->
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --sand:#F5F0E8;--sand-light:#FAF8F4;--sand-dark:#E8DFD0;
+  --terracotta:#C4846C;--terracotta-light:#D4A08E;--terracotta-dark:#A86B56;
+  --sage:#8B9E8B;--sage-dark:#6B7E6B;
+  --cream:#FFFDF9;--white:#FFFFFF;
+  --dark:#3D3228;--text-medium:#6B5E52;--text-light:#9B8E82;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Heebo',sans-serif;background:var(--cream);color:var(--dark);line-height:1.7;min-height:100vh}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+img{max-width:100%;display:block}
 
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Heebo', sans-serif;
-            background: #FFFDF9;
-            color: #6B5E52;
-            min-height: 100vh;
-        }
+/* ===== HEADER ===== */
+header{background:rgba(255,253,249,.96);backdrop-filter:blur(10px);padding:14px 24px;border-bottom:1px solid var(--sand-dark);position:sticky;top:0;z-index:50}
+.header-inner{max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.logo{font-size:18px;font-weight:400;letter-spacing:1.5px}
+.logo small{display:block;font-size:10px;color:var(--text-light);letter-spacing:2px;margin-top:2px}
+.back-link{font-size:13px;color:var(--text-medium);transition:color .2s}
+.back-link:hover{color:var(--terracotta)}
 
-        .hero {
-            background: linear-gradient(rgba(61, 50, 40, 0.55), rgba(61, 50, 40, 0.7)), url('yoga-outdoor-2.jpg');
-            background-size: cover;
-            background-position: center center;
-            color: white;
-            padding: 80px 20px 60px;
-            text-align: center;
-        }
+/* ===== HERO ===== */
+.hero{padding:60px 24px 40px;text-align:center;background:linear-gradient(180deg,var(--sand-light) 0%,var(--cream) 100%);position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;top:-80px;right:-80px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(196,132,108,.15),transparent 70%);pointer-events:none}
+.hero-badge{display:inline-block;background:var(--terracotta);color:#fff;font-size:12px;padding:6px 18px;border-radius:20px;margin-bottom:16px;font-weight:500;letter-spacing:.5px;position:relative;z-index:1}
+.hero h1{font-size:38px;font-weight:300;margin-bottom:12px;letter-spacing:-.5px;position:relative;z-index:1}
+.hero h1 em{font-style:normal;color:var(--terracotta);font-weight:400}
+.hero-deco{width:60px;height:2px;background:var(--terracotta);margin:0 auto 16px;border-radius:2px}
+.hero-sub{color:var(--text-medium);font-size:16px;font-weight:300;max-width:500px;margin:0 auto;position:relative;z-index:1}
 
-        .hero-icon { font-size: 60px; margin-bottom: 20px; }
-        .hero h1 { font-size: 38px; font-weight: 300; margin-bottom: 15px; letter-spacing: 1px; }
-        .hero p { font-size: 18px; opacity: 0.95; max-width: 600px; margin: 0 auto; font-weight: 300; }
+/* ===== MAIN ===== */
+.wrap{max-width:640px;margin:-30px auto 50px;padding:0 20px;position:relative;z-index:5}
 
-        .container {
-            max-width: 650px;
-            margin: -50px auto 60px;
-            padding: 0 20px;
-        }
+.card{background:var(--white);border-radius:28px;padding:40px 36px;border:1px solid var(--sand-dark);box-shadow:0 12px 48px rgba(61,50,40,.06);margin-bottom:18px}
 
-        .card {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            border: 1px solid #E8DFD0;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+/* Price */
+.price-card{text-align:center;padding:32px 28px}
+.price-was{font-size:16px;color:var(--text-light);text-decoration:line-through;opacity:.7;margin-bottom:4px;font-weight:300}
+.price-now{font-size:64px;font-weight:300;color:var(--terracotta);line-height:1;letter-spacing:-2px}
+.price-saving{display:inline-block;background:var(--sage);color:#fff;font-size:12px;padding:5px 14px;border-radius:16px;margin-top:12px;font-weight:500}
+.price-note{color:var(--text-medium);font-size:14px;font-weight:300;margin-top:14px;max-width:380px;margin-left:auto;margin-right:auto;line-height:1.6}
 
-        .card h2 { font-size: 28px; font-weight: 300; color: #3D3228; margin-bottom: 25px; }
+/* Features */
+.features-title{font-size:14px;color:var(--text-medium);font-weight:400;text-align:center;margin:0 0 20px;letter-spacing:.5px;text-transform:uppercase}
+.features{display:grid;gap:10px}
+.feature{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--sand-light);border-radius:14px;border:1px solid var(--sand-dark);transition:all .2s}
+.feature:hover{border-color:var(--terracotta-light);transform:translateX(-2px)}
+.feature-icon{width:40px;height:40px;background:var(--terracotta);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.feature-icon svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.feature-bonus{background:linear-gradient(135deg,#fff,var(--sand));border:1.5px dashed var(--terracotta);position:relative}
+.feature-bonus::before{content:"🎁";position:absolute;top:-12px;left:18px;background:#fff;padding:0 6px;font-size:18px}
+.feature-bonus .feature-icon{background:var(--dark)}
+.feature-text h3{font-size:15px;font-weight:500;color:var(--dark);margin-bottom:2px;line-height:1.3}
+.feature-text p{font-size:13px;color:var(--text-medium);font-weight:300;line-height:1.5}
 
-        .price-display {
-            background: #FAF8F4;
-            padding: 24px;
-            border-radius: 16px;
-            margin: 25px 0;
-            border: 1px solid #E8DFD0;
-        }
+/* Form */
+.section-title{font-size:15px;font-weight:500;color:var(--dark);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.section-title svg{width:16px;height:16px;fill:none;stroke:var(--terracotta);stroke-width:2}
 
-        .original-price {
-            font-size: 18px;
-            text-decoration: line-through;
-            opacity: 0.5;
-            margin-bottom: 5px;
-        }
+.field{margin-bottom:20px}
+.field input{width:100%;padding:14px 18px;border:1px solid var(--sand-dark);border-radius:14px;font-family:inherit;font-size:15px;color:var(--dark);background:var(--sand-light);outline:none;transition:.2s}
+.field input:focus{border-color:var(--terracotta);background:var(--white)}
 
-        .current-price {
-            font-size: 54px;
-            font-weight: 300;
-            color: #C4846C;
-            line-height: 1;
-        }
+.discount-row{display:flex;gap:8px}
+.discount-row input{flex:1;text-transform:uppercase;font-weight:500;letter-spacing:1px}
+.apply-btn{padding:0 22px;background:var(--dark);color:#fff;border-radius:14px;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;transition:.2s}
+.apply-btn:hover{background:#2a1f17}
 
-        .price-note { font-size: 14px; color: #9B8E82; margin-top: 10px; }
+.discount-msg{margin-top:10px;font-size:13px;font-weight:500;display:none;text-align:center;padding:10px 14px;border-radius:10px}
+.discount-msg.success{display:block;background:#e6f4ea;color:#137333}
+.discount-msg.error{display:block;background:#fee;color:#c53030}
 
-        .discount-section {
-            margin: 25px 0;
-            text-align: right;
-        }
+/* Share box */
+.share-box{background:linear-gradient(135deg,#e8f5e8,#d4e9d4);border-radius:18px;padding:22px;margin-bottom:22px;border:1px solid #b8dab8}
+.share-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.share-head span{font-size:24px}
+.share-head h3{font-size:16px;font-weight:500;color:#1f5d1f}
+.share-box p{font-size:13px;color:var(--text-medium);margin-bottom:14px;font-weight:300;line-height:1.5}
+.share-btn{width:100%;padding:14px;background:#25D366;color:#fff;border-radius:14px;font-size:15px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 14px rgba(37,211,102,.25);transition:all .2s}
+.share-btn:hover{transform:translateY(-1px);background:#20BD5A;box-shadow:0 8px 20px rgba(37,211,102,.35)}
+.share-btn:disabled{background:var(--sage-dark);cursor:not-allowed;transform:none}
+.share-success{margin-top:14px;background:var(--white);border-radius:12px;padding:14px;text-align:center;border:1px solid var(--sand-dark)}
+.share-success-label{font-size:12px;color:var(--text-light);margin-bottom:4px}
+.share-success-code{font-size:22px;font-weight:600;color:var(--terracotta);letter-spacing:3px}
 
-        .discount-section label {
-            display: block;
-            font-size: 16px;
-            font-weight: 600;
-            color: #3D3228;
-            margin-bottom: 10px;
-        }
+/* Pay button */
+.pay-btn{width:100%;padding:18px;background:var(--terracotta);color:#fff;border-radius:28px;font-size:16px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 8px 28px rgba(196,132,108,.3);transition:all .25s;margin-top:8px}
+.pay-btn:hover:not(:disabled){background:var(--terracotta-dark);transform:translateY(-2px);box-shadow:0 12px 36px rgba(196,132,108,.4)}
+.pay-btn:disabled{opacity:.7;cursor:not-allowed;transform:none}
+.pay-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2}
 
-        .discount-row {
-            display: flex;
-            gap: 10px;
-        }
+.security{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;color:var(--text-light);font-size:13px;font-weight:300}
+.security svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.5}
 
-        .discount-input {
-            flex: 1;
-            padding: 14px 20px;
-            border: 2px solid #F4EFE6;
-            border-radius: 50px;
-            font-family: 'Heebo', sans-serif;
-            font-size: 16px;
-            text-transform: uppercase;
-        }
+/* Payment frame */
+.payment-wrap{display:none}
+.payment-wrap .card{padding:0;overflow:hidden}
+.payment-wrap iframe{width:100%;height:600px;border:none;display:block}
+.close-payment{text-align:center;margin-top:14px;color:var(--text-medium);font-size:14px;cursor:pointer;text-decoration:underline}
+.close-payment:hover{color:var(--terracotta)}
 
-        .discount-input:focus { outline: none; border-color: #3D3228; }
+footer{background:var(--sand-light);padding:32px 20px;text-align:center;border-top:1px solid var(--sand-dark);color:var(--text-light);font-size:13px;font-weight:300}
+footer a{color:var(--terracotta);text-decoration:underline;text-underline-offset:2px}
+footer p{margin-bottom:6px}
+.footer-note{font-size:11px;opacity:.8;margin-top:10px}
 
-        .apply-btn {
-            padding: 14px 25px;
-            background: #3D3228;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-family: 'Heebo', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .discount-msg {
-            margin-top: 10px;
-            font-size: 15px;
-            font-weight: 600;
-            display: none;
-            text-align: center;
-        }
-
-        .discount-msg.success { color: #27ae60; }
-        .discount-msg.error { color: #e74c3c; }
-
-        .features {
-            text-align: right;
-            margin: 25px 0;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px;
-            background: #FAF8F4;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            border: 1px solid #E8DFD0;
-        }
-
-        .feature-icon {
-            width: 40px;
-            height: 40px;
-            background: #C4846C;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-
-        .feature-text { flex: 1; }
-        .feature-text h3 { font-size: 17px; font-weight: 700; color: #3D3228; }
-        .feature-text p { font-size: 14px; color: #6F6F6F; }
-
-        .pay-btn {
-            width: 100%;
-            padding: 20px;
-            background: #C4846C;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-family: 'Heebo', sans-serif;
-            font-size: 18px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 30px rgba(196,132,108,0.3);
-            margin-top: 10px;
-        }
-
-        .pay-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 36px rgba(196,132,108,0.4);
-            background: #A96B54;
-        }
-        .pay-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
-
-        .security { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 15px; color: #6F6F6F; font-size: 14px; }
-
-        footer { background: #F5F0E8; color: #6B5E52; padding: 30px 20px; text-align: center; border-top: 1px solid #E8DFD0; }
-    </style>
+@media (max-width:600px){
+  header{padding:12px 16px}
+  .hero{padding:44px 20px 30px}
+  .hero h1{font-size:28px}
+  .card{padding:28px 22px}
+  .price-now{font-size:48px}
+  .wrap{padding:0 14px;margin:-20px auto 40px}
+  .discount-row{flex-direction:column}
+  .apply-btn{width:100%;padding:12px}
+}
+</style>
 </head>
 <body>
-    <div class="hero">
-        <h1>כמעט שם! <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: inline-block;"><circle cx="12" cy="4" r="2"/><path d="M12 8c-3 0-5 2-7 5l2 1 2-3v4l-2 5h2.5l1.5-4 1.5 4H15l-2-5v-4l2 3 2-1c-2-3-4-5-7-5z"/></svg></h1>
-        <p>עוד רגע את מתחילה את המסע</p>
+
+<header>
+  <div class="header-inner">
+    <a href="https://yogashushan.com/landing" class="logo">YOGA SHUSHAN<small>התחלה מדויקת</small></a>
+    <a href="https://yogashushan.com/landing" class="back-link">← חזרה</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-badge">✨ כמעט שם</div>
+  <h1>את <em>בדרך</em> למסע החדש</h1>
+  <div class="hero-deco"></div>
+  <p class="hero-sub">ההחלטה ללמד היא כבר צעד ענק. עכשיו בואי נכניס לך לארגז הכלים את כל מה שצריך.</p>
+</section>
+
+<div class="wrap">
+
+  <div class="card price-card">
+    <div class="price-was">₪550</div>
+    <div class="price-now" id="currentPrice">₪399</div>
+    <div class="price-saving">🎉 מבצע חזרה לשגרה · חיסכון ₪151</div>
+    <p class="price-note">גישה ללא הגבלת זמן לכל החומרים + קבוצת וואטסאפ פרטית + מדריך אסאנות אינטראקטיבי</p>
+  </div>
+
+  <div class="card">
+    <div class="features-title">מה כלול בקורס</div>
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        <div class="feature-text">
+          <h3>5 שיעורים מוקלטים</h3>
+          <p>גישה ללא הגבלת זמן, מכל מכשיר</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg></div>
+        <div class="feature-text">
+          <h3>דפי עבודה מעשיים</h3>
+          <p>טבלאות ומדריכים להורדה והדפסה</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+        <div class="feature-text">
+          <h3>קבוצת ליווי בוואטסאפ</h3>
+          <p>שאלות, התייעצויות ותמיכה אישית</p>
+        </div>
+      </div>
+      <div class="feature feature-bonus">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+        <div class="feature-text">
+          <h3>בונוס: מדריך אסאנות אינטראקטיבי</h3>
+          <p>מאגר תנוחות, פראנימה, תבניות שיעור, צ'אקרות וסנקלפות — במתנה</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="field">
+      <div class="section-title">
+        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22 6 12 13 2 6"/></svg>
+        המייל שלך
+      </div>
+      <input type="email" id="buyerEmail" placeholder="your@email.com" required>
     </div>
 
-    <div class="container">
-        <div class="card">
-            <h2>רכישת הקורס</h2>
-
-            <!-- מחיר -->
-            <div class="price-display">
-                <div style="font-size:14px;color:#e74c3c;text-decoration:line-through;opacity:0.7;margin-bottom:2px;">₪550</div>
-                <div class="current-price" id="currentPrice">₪399</div>
-                <div class="price-note">🎉 מבצע חזרה לשגרה — גישה ללא הגבלת זמן לכל החומרים + קבוצת וואטסאפ פרטית</div>
-            </div>
-
-            <!-- מה מקבלים -->
-            <div class="features">
-                <div class="feature-item">
-                    <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg></div>
-                    <div class="feature-text">
-                        <h3>5 שיעורים מוקלטים</h3>
-                        <p>גישה ללא הגבלת זמן</p>
-                    </div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="9" y1="7" x2="16" y2="7"/><line x1="9" y1="11" x2="14" y2="11"/></svg></div>
-                    <div class="feature-text">
-                        <h3>דפי עבודה מעשיים</h3>
-                        <p>טבלאות ומדריכים להורדה</p>
-                    </div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/></svg></div>
-                    <div class="feature-text">
-                        <h3>קבוצת תמיכה</h3>
-                        <p>ליווי אישי בוואטסאפ</p>
-                    </div>
-                </div>
-                <div class="feature-item" style="background: linear-gradient(135deg, #FAF8F4, #F5F0E8); border: 2px dashed #C4846C;">
-                    <div class="feature-icon" style="background: #3D3228;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M12 8c-3 0-5 2-7 5l2 1 2-3v4l-2 5h2.5l1.5-4 1.5 4H15l-2-5v-4l2 3 2-1c-2-3-4-5-7-5z"/></svg></div>
-                    <div class="feature-text">
-                        <h3>🎁 בונוס: מדריך אסנות אינטראקטיבי</h3>
-                        <p>פלטפורמה מלאה עם מאגר תנוחות, פראנימה, תבניות שיעור, צ'אקרות וסנקלפות — במתנה!</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- מייל -->
-            <div class="discount-section">
-                <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3D3228" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-left: 6px;"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg> המייל שלך</h3>
-                <input type="email" id="buyerEmail" class="discount-input" placeholder="הכניסי את המייל שלך..." required style="width: 100%; margin-bottom: 15px;" />
-            </div>
-
-            <!-- שיתוף לקבלת הנחה -->
-            <div class="discount-section" id="shareSection">
-                <label style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#3D3228;">
-                    <span style="font-size:22px">📲</span> שתפי בוואטסאפ וקבלי 20% הנחה!
-                </label>
-                <p style="font-size:13px;color:#9B8E82;margin:6px 0 12px;line-height:1.6;">שתפי את הקורס עם חברה ותקבלי קוד הנחה מיידי</p>
-                <button onclick="shareAndDiscount()" id="shareBtn"
-                    style="width:100%;padding:14px;border:none;border-radius:12px;background:#25D366;color:#FFF;font-family:'Heebo',sans-serif;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all 0.3s ease;box-shadow:0 4px 15px rgba(37,211,102,0.3);"
-                    onmouseenter="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 25px rgba(37,211,102,0.4)'"
-                    onmouseleave="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 15px rgba(37,211,102,0.3)'">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                    שתפי בוואטסאפ
-                </button>
-                <div id="shareSuccess" style="display:none;margin-top:12px;text-align:center;">
-                    <div style="background:#d4edda;color:#155724;padding:12px 16px;border-radius:10px;font-size:14px;font-weight:600;">
-                        ✅ תודה ששיתפת! קוד ההנחה שלך: <span id="shareDiscountCode" style="font-size:18px;letter-spacing:2px;"></span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- קוד הנחה -->
-            <div class="discount-section">
-                <label>יש לך קוד הנחה?</label>
-                <div class="discount-row">
-                    <input type="text" id="discountCode" class="discount-input" placeholder="הזיני קוד..." />
-                    <button class="apply-btn" onclick="applyDiscount()">החל</button>
-                </div>
-                <div class="discount-msg" id="discountMsg"></div>
-            </div>
-
-            <button class="pay-btn" id="payBtn" onclick="goToPayment()">
-                המשך לתשלום מאובטח <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-            </button>
-
-            <div class="security"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6F6F6F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> תשלום מאובטח דרך PayMe</div>
-        </div>
-
-        <!-- PayMe iframe - מוסתר עד שלוחצים על כפתור תשלום -->
-        <div id="paymentFrame" style="display:none;">
-            <div class="card" style="padding: 0; overflow: hidden;">
-                <iframe id="paymeIframe" style="width: 100%; height: 600px; border: none; display: block;"></iframe>
-            </div>
-            <div style="text-align: center; margin-top: 14px;">
-                <a onclick="closePayment()" style="color: var(--text); font-size: 14px; cursor: pointer; text-decoration: underline;">חזרה לפרטי ההזמנה</a>
-            </div>
-        </div>
+    <div class="share-box" id="shareSection">
+      <div class="share-head">
+        <span>📲</span>
+        <h3>שתפי חברה וקבלי 20% הנחה</h3>
+      </div>
+      <p>שלחי את הקורס לחברה בוואטסאפ, וקוד הנחה של 20% יוטמע אוטומטית אצלך</p>
+      <button class="share-btn" id="shareBtn" onclick="shareAndDiscount()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.77.46 3.43 1.27 4.87L2 22l5.25-1.38C8.72 21.48 10.33 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>
+        שיתוף וקבלת הנחה
+      </button>
+      <div class="share-success" id="shareSuccess" style="display:none">
+        <div class="share-success-label">קוד ההנחה שלך</div>
+        <div class="share-success-code" id="shareDiscountCode">SHARE20</div>
+      </div>
     </div>
 
-    <footer>
-        <p>© 2026 שרון שושן - התחלה מדויקת</p>
-        <p style="margin-top: 10px; font-size: 13px;">
-            <a href="https://yogashushan.com/landing/terms.html" style="color: rgba(255,255,255,0.8); text-decoration: underline;">תנאי שימוש ומדיניות פרטיות</a>
-        </p>
-        <p style="margin-top: 12px; font-size: 11px; opacity: 0.7;">
-            * התוכן מנוסח בלשון נקבה מטעמי נוחות, אך הקורס פונה למורים ומורות יוגה כאחד.
-        </p>
-    </footer>
+    <div class="field">
+      <div class="section-title">
+        <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+        קוד הנחה (אופציונלי)
+      </div>
+      <div class="discount-row">
+        <input type="text" id="discountCode" placeholder="הזיני קוד...">
+        <button class="apply-btn" onclick="applyDiscount()">החלה</button>
+      </div>
+      <div class="discount-msg" id="discountMsg"></div>
+    </div>
 
-    <script>
-        const SUPABASE_URL = 'https://tyjlyfyqwgihbhhxbeqe.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR5amx5Znlxd2dpaGJoaHhiZXFlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzMDY2NDMsImV4cCI6MjA4Njg4MjY0M30.SA9hudQQdroQhdQAg6aYICNmhg8aSavE3qZ5YhTmCE0';
-        const { createClient } = supabase;
-        const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+    <button class="pay-btn" id="payBtn" onclick="goToPayment()">
+      <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      המשך לתשלום מאובטח
+    </button>
 
-        const BASE_PRICE = 399;
-        let finalPrice = 399;
-        let appliedCode = null;
-        const SHARE_CODE = 'SHARE20';
+    <div class="security">
+      <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      תשלום מאובטח דרך PayMe
+    </div>
+  </div>
 
-        function shareAndDiscount() {
-            const shareText = 'היי, ראיתי קורס למורים ומורות יוגה בתחילת הדרך שנראה שווה — 5 שיעורים לחיזוק הביטחון בהוראה 🧘‍♀️\nhttps://yogashushan.com/landing';
-            const whatsappUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(shareText);
-            window.open(whatsappUrl, '_blank');
+  <div class="payment-wrap" id="paymentFrame">
+    <div class="card">
+      <iframe id="paymeIframe"></iframe>
+    </div>
+    <div class="close-payment" onclick="closePayment()">חזרה לפרטי ההזמנה</div>
+  </div>
 
-            // Show discount code after sharing
-            setTimeout(() => {
-                document.getElementById('shareSuccess').style.display = 'block';
-                document.getElementById('shareDiscountCode').textContent = SHARE_CODE;
-                document.getElementById('shareBtn').style.background = '#1F3D34';
-                document.getElementById('shareBtn').innerHTML = '✓ שותף בהצלחה!';
-                document.getElementById('shareBtn').disabled = true;
+</div>
 
-                // Auto-fill the discount code
-                document.getElementById('discountCode').value = SHARE_CODE;
-                applyDiscount();
-            }, 2000);
-        }
+<footer>
+  <p>© 2026 שרון שושן — התחלה מדויקת</p>
+  <p><a href="https://yogashushan.com/landing/terms.html">תנאי שימוש ומדיניות פרטיות</a></p>
+  <p class="footer-note">* התוכן מנוסח בלשון נקבה מטעמי נוחות, אך הקורס פונה למורים ומורות יוגה כאחד.</p>
+</footer>
 
-        async function applyDiscount() {
-            const code = document.getElementById('discountCode').value.trim().toUpperCase();
-            const msg = document.getElementById('discountMsg');
+<script>
+const SUPABASE_URL = 'https://tyjlyfyqwgihbhhxbeqe.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR5amx5Znlxd2dpaGJoaHhiZXFlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzMDY2NDMsImV4cCI6MjA4Njg4MjY0M30.SA9hudQQdroQhdQAg6aYICNmhg8aSavE3qZ5YhTmCE0';
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-            if (!code) return;
+const BASE_PRICE = 399;
+let finalPrice = BASE_PRICE;
+let appliedCode = null;
+const SHARE_CODE = 'SHARE20';
 
-            const { data, error } = await db
-                .from('discount_codes')
-                .select('*')
-                .eq('code', code)
-                .eq('active', true)
-                .single();
+function shareAndDiscount(){
+  const text = 'היי, ראיתי קורס למורים ומורות יוגה בתחילת הדרך שנראה שווה — 5 שיעורים לחיזוק הביטחון בהוראה 🧘‍♀️\nhttps://yogashushan.com/landing';
+  window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(text), '_blank');
 
-            if (error || !data) {
-                msg.textContent = '❌ קוד לא תקין או לא פעיל';
-                msg.className = 'discount-msg error';
-                msg.style.display = 'block';
-                finalPrice = BASE_PRICE;
-                appliedCode = null;
-                document.getElementById('currentPrice').textContent = `₪${BASE_PRICE}`;
-                return;
-            }
+  setTimeout(() => {
+    document.getElementById('shareSuccess').style.display = 'block';
+    document.getElementById('shareDiscountCode').textContent = SHARE_CODE;
+    const btn = document.getElementById('shareBtn');
+    btn.style.background = 'var(--sage-dark)';
+    btn.innerHTML = '✓ שותף בהצלחה!';
+    btn.disabled = true;
+    document.getElementById('discountCode').value = SHARE_CODE;
+    applyDiscount();
+  }, 1500);
+}
 
-            if (data.used_count >= data.max_uses) {
-                msg.textContent = '❌ קוד זה הגיע למקסימום שימושים';
-                msg.className = 'discount-msg error';
-                msg.style.display = 'block';
-                return;
-            }
+async function applyDiscount(){
+  const code = document.getElementById('discountCode').value.trim().toUpperCase();
+  const msg = document.getElementById('discountMsg');
+  if(!code){ msg.style.display = 'none'; return; }
 
-            const discount = data.discount_percent;
-            finalPrice = Math.round(BASE_PRICE * (1 - discount / 100));
-            appliedCode = data;
+  const { data, error } = await sb.from('discount_codes').select('*').eq('code', code).eq('active', true).maybeSingle();
 
-            document.getElementById('currentPrice').textContent = `₪${finalPrice}`;
-            msg.textContent = `✅ קוד הנחה של ${discount}% הוחל! חסכת ₪${BASE_PRICE - finalPrice}`;
-            msg.className = 'discount-msg success';
-            msg.style.display = 'block';
-        }
+  if(error || !data){
+    msg.textContent = '❌ קוד לא תקין או לא פעיל';
+    msg.className = 'discount-msg error';
+    finalPrice = BASE_PRICE;
+    appliedCode = null;
+    document.getElementById('currentPrice').textContent = `₪${BASE_PRICE}`;
+    return;
+  }
 
-        async function goToPayment() {
-            const btn = document.getElementById('payBtn');
-            const emailInput = document.getElementById('buyerEmail');
-            const email = emailInput.value.trim();
+  if((data.used_count||0) >= (data.max_uses||Infinity)){
+    msg.textContent = '❌ קוד זה הגיע למקסימום שימושים';
+    msg.className = 'discount-msg error';
+    return;
+  }
 
-            if (!email || !email.includes('@')) {
-                alert('אנא הכניסי מייל תקין');
-                emailInput.focus();
-                return;
-            }
+  const discount = data.discount_percent;
+  finalPrice = Math.round(BASE_PRICE * (1 - discount / 100));
+  appliedCode = data;
+  document.getElementById('currentPrice').textContent = `₪${finalPrice}`;
+  msg.textContent = `✅ קוד הנחה של ${discount}% הוחל — חסכת ₪${BASE_PRICE - finalPrice}`;
+  msg.className = 'discount-msg success';
+}
 
-            fbq('track', 'InitiateCheckout', {
-                value: finalPrice,
-                currency: 'ILS',
-                content_name: 'קורס התחלה מדויקת'
-            });
+async function goToPayment(){
+  const btn = document.getElementById('payBtn');
+  const emailInput = document.getElementById('buyerEmail');
+  const email = emailInput.value.trim();
 
-            btn.disabled = true;
-            btn.textContent = 'יוצרת תשלום...';
+  if(!email || !email.includes('@')){
+    alert('אנא הכניסי מייל תקין');
+    emailInput.focus();
+    return;
+  }
 
-            try {
-                if (appliedCode) {
-                    sessionStorage.setItem('appliedCode', appliedCode.code);
-                    await db.from('discount_codes')
-                        .update({ used_count: appliedCode.used_count + 1 })
-                        .eq('id', appliedCode.id);
-                }
+  if(typeof fbq === 'function'){
+    fbq('track','InitiateCheckout',{ value: finalPrice, currency:'ILS', content_name:'קורס התחלה מדויקת' });
+  }
 
-                const response = await fetch('/.netlify/functions/generate-sale', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        price: finalPrice,
-                        email: email
-                    })
-                });
+  btn.disabled = true;
+  btn.innerHTML = '<span>יוצרת תשלום...</span>';
 
-                const data = await response.json();
+  try {
+    if(appliedCode){
+      sessionStorage.setItem('appliedCode', appliedCode.code);
+      await sb.from('discount_codes').update({ used_count: (appliedCode.used_count||0) + 1 }).eq('id', appliedCode.id);
+    }
 
-                if (data.sale_url) {
-                    showPaymentFrame(data.sale_url);
-                } else if (data.status_error_details) {
-                    alert('שגיאה: ' + data.status_error_details);
-                    btn.disabled = false;
-                    btn.textContent = 'המשך לתשלום מאובטח';
-                } else {
-                    alert('שגיאה ביצירת תשלום. נסי שוב.');
-                    btn.disabled = false;
-                    btn.textContent = 'המשך לתשלום מאובטח';
-                }
+    const res = await fetch('https://checkoutyogac.netlify.app/.netlify/functions/generate-sale', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json' },
+      body: JSON.stringify({ price: finalPrice, email })
+    });
+    const data = await res.json();
 
-            } catch (error) {
-                btn.disabled = false;
-                btn.textContent = 'המשך לתשלום מאובטח';
-                alert('שגיאה ביצירת תשלום. נסי שוב.');
-                console.error(error);
-            }
-        }
+    if(data.sale_url){
+      showPaymentFrame(data.sale_url);
+    } else {
+      alert('שגיאה: ' + (data.status_error_details || 'יצירת תשלום נכשלה. נסי שוב.'));
+      resetPayBtn();
+    }
+  } catch(err){
+    console.error(err);
+    alert('שגיאה ביצירת תשלום. נסי שוב.');
+    resetPayBtn();
+  }
+}
 
-        function showPaymentFrame(url) {
-            document.querySelector('.card').style.display = 'none';
-            const frameContainer = document.getElementById('paymentFrame');
-            frameContainer.style.display = 'block';
-            document.getElementById('paymeIframe').src = url;
-            frameContainer.scrollIntoView({ behavior: 'smooth' });
-        }
+function resetPayBtn(){
+  const btn = document.getElementById('payBtn');
+  btn.disabled = false;
+  btn.innerHTML = '<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> המשך לתשלום מאובטח';
+}
 
-        // בדיקה לוקאלית - אם הפונקציה לא זמינה, הצג iframe עם דמו
-        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-            document.getElementById('payBtn').onclick = function() {
-                showPaymentFrame('https://live.payme.io/sale/generate/SALE1774-670825OZ-ZDYYZUKX-G8DTIJAH');
-            };
-        }
+function showPaymentFrame(url){
+  document.querySelectorAll('.card').forEach(c => { if(!c.closest('.payment-wrap')) c.parentElement.style.display = 'none'; });
+  // Actually hide all main cards except the payment iframe
+  document.querySelectorAll('.wrap > .card').forEach(c => c.style.display = 'none');
+  const frame = document.getElementById('paymentFrame');
+  frame.style.display = 'block';
+  document.getElementById('paymeIframe').src = url;
+  frame.scrollIntoView({ behavior:'smooth' });
+}
 
-        function closePayment() {
-            document.getElementById('paymentFrame').style.display = 'none';
-            document.getElementById('paymeIframe').src = '';
-            document.querySelector('.card').style.display = 'block';
-            document.getElementById('payBtn').disabled = false;
-            document.getElementById('payBtn').textContent = 'המשך לתשלום מאובטח';
-        }
+function closePayment(){
+  document.getElementById('paymentFrame').style.display = 'none';
+  document.getElementById('paymeIframe').src = '';
+  document.querySelectorAll('.wrap > .card').forEach(c => c.style.display = 'block');
+  resetPayBtn();
+}
 
-        document.getElementById('discountCode').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') applyDiscount();
-        });
-    </script>
+// Local dev fallback
+if(window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'){
+  document.getElementById('payBtn').onclick = () => showPaymentFrame('https://live.payme.io/sale/generate/SALE1774-670825OZ-ZDYYZUKX-G8DTIJAH');
+}
+
+document.getElementById('discountCode').addEventListener('keypress', e => {
+  if(e.key === 'Enter'){ e.preventDefault(); applyDiscount(); }
+});
+</script>
 </body>
 </html>
